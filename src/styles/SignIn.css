@@ -52,6 +52,7 @@ body {
 .form-group2{
     display: flex;
     flex-direction: column;
+     margin-top: 10%;
 }
 .forgot{
     align-self: flex-end;
