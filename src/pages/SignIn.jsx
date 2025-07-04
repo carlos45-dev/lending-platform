@@ -11,7 +11,7 @@ function SignIn(){
         <div className="form-group2">
             <label htmlFor="password">Password:</label>
             <input type="password" id="password" name="password" className='input' required  placeholder='Enter your password'/>
-            <a className='forgot' >Forgot password</a>
+            <a className='forgot' >Forgot password?</a>
         </div>
         <button className='submit' type="submit">Sign In</button>
         </form>
