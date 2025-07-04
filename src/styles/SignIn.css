@@ -82,5 +82,8 @@ label{
 }
 .eye-container {
     align-self: flex-end;
-    margin-top: -10%;
+    margin-top: -11.5%;
+}
+.eye{
+    height: 35px;
 }
