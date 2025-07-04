@@ -5,9 +5,11 @@ import eye2 from '../assets/eye2.png';
 
 import { useState } from 'react';
 function SignIn(){
-
+    
+    // State to manage password visibility
     const[showpassword, setShowPassword] = useState(false);
-
+    
+    // Function to toggle password visibility
     const handlepasswordToggle = () => {
         setShowPassword(!showpassword);
     }
@@ -29,7 +31,7 @@ function SignIn(){
             <label htmlFor="password">Password:</label>
             <input type={showpassword ? "text" : "password"} id="password" name="password" className='input' required  placeholder='Enter your password'/>
             <span className='eye-container' onClick={handlepasswordToggle}>
-            <img className='eye' src={showpassword ? eye : eye2} alt="eye icon" />
+           <img className='eye' src={showpassword ? eye : eye2} alt="eye icon" />
             </span>
             <a className='forgot' >Forgot password?</a>
         </div>
