@@ -19,9 +19,11 @@ body {
     justify-content: space-between;
     background-color: #F9FAFB;
     padding: 20px;
-    width: 80vw;
-    height: 90vw;
+    width: 85vw;
+    height: 95vw;
     border-radius: 2%;
+    border:1px solid hsl(0, 0%, 84%);
+    box-shadow: 5PX 5px 5px hsla(0, 0%, 0%, 0.1);
 }
 h3{
 
@@ -35,7 +37,7 @@ h3{
     font-weight: bold;
     font-size: large;
     margin-top: 20%;
-
+    
 }
 .input{
     width: 70vw;
@@ -55,6 +57,8 @@ h3{
 }
 .forgot{
     align-self: flex-end;
+    font-size: 0.8rem;
+    margin-top: 2%;
 }
 label{
     margin-bottom: 3px;
