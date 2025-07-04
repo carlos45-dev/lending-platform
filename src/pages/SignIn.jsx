@@ -17,6 +17,7 @@ function SignIn(){
             <a className='forgot' >Forgot password?</a>
         </div>
         <button className='submit' type="submit">Sign In</button>
+        <p className='signup'>Don't have an account ? <a className='signup'>Sign Up</a></p>
         </form>
     </div>
     <p className='unifund'>UniFund</p>
