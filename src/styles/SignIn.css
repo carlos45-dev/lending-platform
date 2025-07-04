@@ -13,20 +13,63 @@ body {
     align-items: center;  
     font-family: 'Courier New', Courier, monospace sans-serif;
 }
+
 .signin-container {
     display: flex;
     flex-direction: column;
-    align-items:center;
+    align-items: center;
     justify-content: space-between;
     background-color: #F9FAFB;
     padding: 20px;
     width: 85vw;
     height: 95vw;
     border-radius: 2%;
-    border:1px solid hsl(0, 0%, 84%);
-    box-shadow: 5PX 5px 5px hsla(0, 0%, 0%, 0.1);
+    border: 1px solid hsl(0, 0%, 84%);
+    box-shadow: 5px 5px 5px hsla(0, 0%, 0%, 0.1);
 }
-.submit{
+
+.form-group, .form-group2 {
+    margin-bottom: 20px;
+    width: 100%;
+    position: relative;
+}
+
+.input {
+    width: 87%;
+    height: 4vh;
+    border-radius: 0.4rem;
+    padding-left: 2.5rem;
+}
+
+.input-icon {
+    position: absolute;
+    top: 65%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: #555;
+}
+.input-icon2 {
+    position: absolute;
+    top: 45%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: #555;
+}
+.eye-container {
+    position: absolute;
+    top: 50%;
+    right: 0%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    
+}
+
+.eye {
+    height: 20px;
+    width: 20px;
+}
+
+.submit {
     background-color: #1A2258;
     color: white;
     width: 100%;
@@ -35,128 +78,82 @@ body {
     font-weight: bold;
     font-size: large;
     margin-top: 20%;
-    
 }
-.input{
-    width: 75vw;
-    height: 4vh;
-    border-radius:0.4rem; 
-    padding-left: 9%;
-}
-.form-group{
-   margin-bottom: 20px;
-   display: flex;
-    flex-direction: column;
-    
-}
-.form-group2{
-    display: flex;
-    flex-direction: column;
-     margin-top: 10%;
-}
-.forgot{
-    align-self: flex-end;
-    font-size: 0.8rem;
-    margin-top: 2%;
-}
-label{
+
+label {
     margin-bottom: 3px;
     font-size: 0.9rem;
+    display: block;
 }
-.logo{
+
+.forgot {
+    align-self: flex-end;
+    font-size: 0.8rem;
+    margin-top: 8px;
+    display: inline-block;
+}
+
+.logo {
     margin-bottom: 20%;
-    margin-left: 43%;
     height: 70px;
 }
-.unifund{
+
+.unifund {
     font-size: 1.5rem;
     font-weight: bold;
     text-align: center;
     margin-bottom: -15%;
     margin-top: 10%;
 }
-.signup{
+
+.signup {
     font-size: 0.64rem;
     text-align: center;
-    
 }
-.eye-container {
-    align-self: flex-end;
-    margin-top: -9.5%;
-    
-}
-.eye{
-    height: 35px;
-} 
-.user{
-    align-self: flex-start;
-    margin-top: -8%;
-    margin-left: 2%;
-  
-}
-.lock{
-    align-self: flex-start;
-    margin-top: -8%;
-    margin-left: 2%;
-}  
+
 @media (min-width: 768px) {
     .signin-container {
-        padding: 20px;
         width: 85vw;
         height: 70vw;
-        border-radius: 2%;
+    }
+
+    .input {
+        height: 5vh;
+    }
+
+    .eye {
+        height: 24px;
+        width: 24px;
+    }
 }
-.eye-container {
-    align-self: flex-end;
-    margin-top: -7%;
-}
-.eye{
-    height: 40px;
-}  
-}
+
 @media (min-width: 1024px) {
     .signin-container {
         width: 55vw;
         height: 35vw;
     }
-    .submit{
-    background-color: #1A2258;
-    color: white;
-    width: 100%;
-    border-radius: 0.5rem;
-    height: 5vh;
-    font-weight: bold;
-    font-size: large;
-    margin-top: 20%;
+
+    .input {
+        width: 100%;
+        height: 6vh;
+        padding-left: 2.5rem;
+    }
+
+    .submit {
+        height: 7vh;
+        margin-top: 10%;
+    }
+
+    .unifund,
+    .logo {
+        display: none;
+    }
+    .eye-container {
+    position: absolute;
+    top: 50%;
+    right: -11%;
+    transform: translateY(-50%);
+    cursor: pointer;
     
-}
-.input{
-    width: 45vw;
-    height: 6vh;
-    border-radius:0.4rem; 
-    padding-left: 6%;
-}
-.submit{
-    border-radius: 0.5rem;
-    height: 7vh;
-    font-weight: bold;
-    font-size: large;
-    margin-top: 10%;
-}
-.unifund{
-    display: none;
-}
-.logo{
-    display: none;
-}
-.user{
-    align-self: flex-start;
-    margin-top: -5%;
-    margin-left: 2%;
-}
-.lock{
-    align-self: flex-start;
-    margin-top: -5%;
-    margin-left: 2%;
 }
 }

@@ -2,49 +2,66 @@ import '../styles/SignIn.css';
 import img from '../assets/favicon.ico';
 import eye from '../assets/eye.png';
 import eye2 from '../assets/eye2.png';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser,faLock } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
 
 import { useState } from 'react';
-function SignIn(){
-    
-    // State to manage password visibility
-    const[showpassword, setShowPassword] = useState(false);
-    
-    // Function to toggle password visibility
-    const handlepasswordToggle = () => {
-        setShowPassword(!showpassword);
-    }
-    
 
- return(
+function SignIn() {
+  const [showpassword, setShowPassword] = useState(false);
+
+  const handlepasswordToggle = () => {
+    setShowPassword(!showpassword);
+  };
+
+  return (
     <>
-      <img  className='logo' src={img} alt="UniFund Logo" />
-    <div className="signin-container">
+      <img className="logo" src={img} alt="UniFund Logo" />
+      <div className="signin-container">
         <h3>Sign In</h3>
         <form>
-            
-        <div className="form-group">
+          <div className="form-group">
             <label htmlFor="email">Student Email:</label>
-            <input type="email" id="email" name="email" required className='input' placeholder='Enter your email' />
-            <FontAwesomeIcon className='user' icon={faUser} />
-        </div>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              className="input"
+              placeholder="Enter your email"
+            />
+            <FontAwesomeIcon className="input-icon" icon={faUser} />
+          </div>
 
-        <div className="form-group2">
+          <div className="form-group2">
             <label htmlFor="password">Password:</label>
-            <input type={showpassword ? "text" : "password"} id="password" name="password" className='input' required  placeholder='Enter your password'/>
-            <FontAwesomeIcon className='lock' icon={faLock} />
-            <span className='eye-container' onClick={handlepasswordToggle}>
-           <img className='eye' src={showpassword ? eye : eye2} alt="eye icon" />
+            <input
+              type={showpassword ? 'text' : 'password'}
+              id="password"
+              name="password"
+              className="input"
+              required
+              placeholder="Enter your password"
+            />
+            <FontAwesomeIcon className="input-icon2" icon={faLock} />
+            <span className="eye-container" onClick={handlepasswordToggle}>
+              <img className="eye" src={showpassword ? eye : eye2} alt="eye icon" />
             </span>
-            <a className='forgot' >Forgot password?</a>
-        </div>
-        <button className='submit' type="submit">Sign In</button>
-        <p className='signup'>Don't have an account ? <a className='signup'>Sign Up</a></p>
+            <a className="forgot">Forgot password?</a>
+          </div>
+
+          <button className="submit" type="submit">
+            Sign In
+          </button>
+          <p className="signup">
+            Don't have an account? <a className="signup">Sign Up</a>
+          </p>
         </form>
-    </div>
-    <p className='unifund'>UniFund</p>
+      </div>
+      <p className="unifund">UniFund</p>
     </>
- )
+  );
 }
-export default SignIn
+
+export default SignIn;
