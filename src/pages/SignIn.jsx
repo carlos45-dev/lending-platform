@@ -48,7 +48,7 @@ function SignIn() {
             <span className="eye-container" onClick={handlepasswordToggle}>
               <img className="eye" src={showpassword ? eye : eye2} alt="eye icon" />
             </span>
-            <a className="forgot">Forgot password?</a>
+           <a className="forgot">Forgot password?</a>
           </div>
 
           <button className="submit" type="submit">
