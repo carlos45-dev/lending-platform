@@ -57,7 +57,7 @@ body {
 }
 .eye-container {
     position: absolute;
-    top: 50%;
+    top: 53%;
     right: 0%;
     transform: translateY(-50%);
     cursor: pointer;
@@ -65,8 +65,8 @@ body {
 }
 
 .eye {
-    height: 30px;
-    width: 30px;
+    height: 32px;
+    width: 32px;
 }
 
 .submit {
