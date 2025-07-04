@@ -80,3 +80,7 @@ label{
     text-align: center;
     
 }
+.eye-container {
+    align-self: flex-end;
+    margin-top: -10%;
+}
