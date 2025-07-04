@@ -8,6 +8,7 @@ html, body {
 body {
     background-color: #EFF6FF;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;  
     font-family: 'Courier New', Courier, monospace sans-serif;
@@ -24,9 +25,6 @@ body {
     border-radius: 2%;
     border:1px solid hsl(0, 0%, 84%);
     box-shadow: 5PX 5px 5px hsla(0, 0%, 0%, 0.1);
-}
-h3{
-
 }
 .submit{
     background-color: #1A2258;
@@ -63,4 +61,13 @@ h3{
 label{
     margin-bottom: 3px;
     font-size: 0.9rem;
+}
+.logo{
+    margin-bottom: 20%;
+    margin-left: 40%;
+}
+.unifund{
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
 }

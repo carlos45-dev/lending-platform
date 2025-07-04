@@ -1,6 +1,9 @@
 import '../styles/SignIn.css';
+import img from '../assets/favicon.ico';
 function SignIn(){
  return(
+    <>
+      <img  className='logo' src={img} alt="UniFund Logo" />
     <div className="signin-container">
         <h3>Sign In</h3>
         <form>
@@ -16,6 +19,8 @@ function SignIn(){
         <button className='submit' type="submit">Sign In</button>
         </form>
     </div>
+    <p className='unifund'>UniFund</p>
+    </>
  )
 }
 export default SignIn
