@@ -86,8 +86,14 @@ body {
     font-weight: bold;
     font-size: large;
     margin-top: 15%;
+    cursor: pointer;
+    
 }
-
+ .submit:hover {
+    background-color: #0F1A3C;
+    transform: scale(0.97);
+    cursor: pointer;
+}
 label {
     margin-bottom: 3px;
     font-size: 0.9rem;
