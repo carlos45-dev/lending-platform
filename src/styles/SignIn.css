@@ -164,9 +164,10 @@ label {
     margin-bottom: 35%;
 }
 .eye-container {
-    right: 4%;
-
-    
+    right: 4%; 
+}
+.forgot{
+    left: 60;
 }
 }
 @media(min-width: 708px) {
