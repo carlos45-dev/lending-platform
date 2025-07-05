@@ -1,8 +1,5 @@
 import '../styles/SignIn.css';
 import img from '../assets/favicon.ico';
-import eye from '../assets/eye.png';
-import eye2 from '../assets/eye2.png';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock,faEyeSlash,faEye } from '@fortawesome/free-solid-svg-icons';
 
@@ -17,7 +14,10 @@ function SignIn() {
 
   return (
     <>
+      <div className="header">
       <img className="logo" src={img} alt="UniFund Logo" />
+      <h2 className="title">UniFund</h2>
+      </div>
       <div className="signin-container">
         <h3>Sign In</h3>
         <form>
@@ -59,7 +59,6 @@ function SignIn() {
           </p>
         </form>
       </div>
-      <p className="unifund">UniFund</p>
     </>
   );
 }
