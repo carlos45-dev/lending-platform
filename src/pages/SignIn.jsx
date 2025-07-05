@@ -4,7 +4,7 @@ import eye from '../assets/eye.png';
 import eye2 from '../assets/eye2.png';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock,faEyeSlash,faEye } from '@fortawesome/free-solid-svg-icons';
 
 import { useState } from 'react';
 
@@ -46,7 +46,7 @@ function SignIn() {
             />
             <FontAwesomeIcon className="input-icon2" icon={faLock} />
             <span className="eye-container" onClick={handlepasswordToggle}>
-              <img className="eye" src={showpassword ? eye : eye2} alt="eye icon" />
+              {showpassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
             </span>
            <a className="forgot">Forgot password?</a>
           </div>
