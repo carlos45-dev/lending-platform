@@ -123,6 +123,15 @@ label {
     text-decoration: underline;
     margin-bottom: 25%;
 }
+.logo {
+    height: 50-px;
+    width: 50px;
+    border: solid 3px #1A2258 ;
+    border-radius: 50%;
+    padding-top: 0.7%;
+    padding-right: 0.5%;
+    margin-right: 1%;
+}
 
 @media (min-width: 768px) {
     .signin-container {

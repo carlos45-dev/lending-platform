@@ -15,7 +15,9 @@ function SignIn() {
   return (
     <>
       <div className="header">
-      <img className="logo" src={img} alt="UniFund Logo" />
+        <span className="logo">
+      <img  src={img} alt="UniFund Logo" />
+      </span>
       <h2 className="title">UniFund</h2>
       </div>
       <div className="signin-container">
