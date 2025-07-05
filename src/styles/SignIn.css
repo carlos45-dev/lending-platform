@@ -301,5 +301,7 @@ label {
     top: 65%;
     left: 12px;
     transform: translateY(-50%);
+}.forgot{
+    left: 85%;
 }
 }
