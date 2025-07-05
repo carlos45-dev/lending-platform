@@ -163,6 +163,11 @@ label {
     text-decoration: underline;
     margin-bottom: 35%;
 }
+.eye-container {
+    right: 4%;
+
+    
+}
 }
 @media(min-width: 708px) {
     .form-group{
