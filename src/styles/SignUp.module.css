@@ -11,9 +11,10 @@
 }
 
 .input {
-  width: 85%;
+  width: 100%;
   padding: 10px 10px 10px 35px; 
   border-radius: 5px;
+  margin-left: -8.5%;
   border: 1px solid #ccc;
 }
 
@@ -21,7 +22,7 @@
 .input-icon2 {
   position: absolute;
   top: 50%;
-  left: 10px;
+  left: -10px;
   transform: translateY(-50%);
   color: #999;
   font-size: 16px;
@@ -30,7 +31,7 @@
 .eye-container {
   position: absolute;
   top: 55%;
-  right: 6px;
+  right: 0px;
   transform: translateY(-50%);
   cursor: pointer;
   color: #666;
@@ -67,8 +68,8 @@
 .gender {
   display: flex;
   justify-content: flex-start;
-  gap: 15px;
-  padding: 10px 0;
+  gap:15px;
+  margin-left: -8%;
 }
 
 .gender2 {
@@ -79,6 +80,7 @@
 .label {
   margin-left: 5px;
   font-size: 0.9rem;
+  margin-bottom: -6px;
 }
 
 .checkbox {
@@ -89,6 +91,11 @@
 }
 
 .label2 {
-  margin-left: 5px;
+  margin-bottom: -6px;
+    padding-top: 2px;
   font-size: 0.85rem;
+
+}
+.checkbox1{
+    margin-left: -6%;
 }
