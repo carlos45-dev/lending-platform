@@ -19,19 +19,19 @@ function Signup() {
         </div>
         <form>
           <div className={styles.formGroup}>
-            <input type="text" className={styles.input} placeholder="Username" />
+            <input type="text" className={styles.input} placeholder="Username" required />
           </div>
 
           <div className={styles.formGroup}>
-            <input type="email" className={styles.input} placeholder="Email" />
+            <input type="email" className={styles.input} placeholder="Email" required/>
           </div>
 
           <div className={styles.formGroup}>
-            <input type="password" className={styles.input} placeholder="Password" />
+            <input type="password" className={styles.input} placeholder="Password" required />
           </div>
 
           <div className={styles.formGroup}>
-            <input type="password" className={styles.input} placeholder="Confirm Password" />
+            <input type="password" className={styles.input} placeholder="Confirm Password" required />
           </div>
 
           <div className={styles.gender}>
@@ -54,7 +54,7 @@ function Signup() {
           </div>
 
           <div className={styles.checkbox}>
-            <input type="checkbox" id="terms" />
+            <input type="checkbox" id="terms" required />
             <label  className={styles.label2} htmlFor="terms" style={{ marginLeft: '5px' }}>I agree to the terms and conditions of UniFund</label>
           </div>
 
