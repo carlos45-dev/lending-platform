@@ -31,7 +31,7 @@
 .eye-container {
   position: absolute;
   top: 55%;
-  right: 0px;
+  right: -10px;
   transform: translateY(-50%);
   cursor: pointer;
   color: #666;
