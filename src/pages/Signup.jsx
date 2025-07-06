@@ -7,6 +7,7 @@ import { faUser, faLock, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-i
 function Signup() {
   const [recaptchaValue, setRecaptchaValue] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
 
   const key = "6LeZCXorAAAAAG7KhM3jjBoyWRANY4SE5AMh6rXF";
 
@@ -17,6 +18,11 @@ function Signup() {
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword);
   };
+
+    const handlePasswordToggle2 = () => {
+    setShowPassword2(!showPassword2);
+  };
+
 
   return (
     <>
@@ -48,14 +54,14 @@ function Signup() {
 
           <div className={styles.formGroup}>
             <input
-              type={showPassword ? "text" : "password"}
+              type={showPassword2 ? "text" : "password"}
               className={styles.input}
               placeholder="Confirm Password"
               required
             />
             <FontAwesomeIcon className={styles["input-icon2"]} icon={faLock} />
-            <span className={styles["eye-container"]} onClick={handlePasswordToggle}>
-              {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
+            <span className={styles["eye-container"]} onClick={handlePasswordToggle2}>
+              {showPassword2 ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
             </span>
           </div>
 
