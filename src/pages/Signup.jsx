@@ -35,14 +35,22 @@ function Signup() {
           </div>
 
           <div className={styles.gender}>
-            <input type="radio" name="gender" value="male" id="male" />
-            <label htmlFor="male" className={styles.radio}>Male</label>
 
+            <div className={styles.gender2}>
+            <input type="radio"  name="gender" value="male" id="male" />
+            <label htmlFor="male" className={styles.radio}>Male</label>
+            </div>
+             
+             <div className={styles.gender2}>
             <input type="radio" name="gender" value="female" id="female" />
             <label htmlFor="female" className={styles.radio}>Female</label>
-
+            </div>
+            
+            <div className={styles.gender2}>
             <input type="radio" name="gender" value="other" id="other" />
             <label htmlFor="other" className={styles.radio}>Other</label>
+            </div>
+
           </div>
 
           <div className={styles.checkbox}>
