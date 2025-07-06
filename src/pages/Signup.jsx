@@ -6,7 +6,7 @@ function Signup() {
 
     useEffect(() => {
         document.title = "Sign Up";
-        document.body.style.backgroundColor = "#f0f0f0";
+        document.body.style.backgroundColor = "";
      } , []);
 
 
