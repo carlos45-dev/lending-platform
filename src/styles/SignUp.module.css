@@ -1,7 +1,8 @@
 .gender{
     display:flex;
     justify-content: flex-start;
-    
+    padding-bottom: 10px;
+    padding-top: 10px;
 
 }
 .checkbox{
@@ -49,5 +50,6 @@ h2{
 }
 .label{
     margin-bottom: -6px;
-
+    position: relative;
+    top:15%;
 }
