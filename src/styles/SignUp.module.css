@@ -8,6 +8,7 @@
     display: flex;
     margin-bottom: 30px;
     margin-top: 40px;
+    
 }
 .input{
     width: 93%;
@@ -46,6 +47,6 @@ h2{
     flex-direction: row;
     margin-right: 4%;
 }
-radio{
-    
+label{
+    margin-bottom:-4px;
 }
