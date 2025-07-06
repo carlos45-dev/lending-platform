@@ -71,7 +71,7 @@
   display: flex;
   justify-content: flex-start;
   gap:15px;
-  margin-left: -8%;
+
 }
 
 .gender2 {
@@ -98,6 +98,4 @@
   font-size: 0.85rem;
 
 }
-.checkbox1{
-    margin-left: -6%;
-}
+
