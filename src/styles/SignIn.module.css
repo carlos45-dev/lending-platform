@@ -109,6 +109,7 @@ label {
 .signup {
     font-size: 0.64rem;
     text-align: center;
+    text-decoration: none;
 }
 .title {
     text-align: center;

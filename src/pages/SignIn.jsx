@@ -1,9 +1,9 @@
-import '../styles/SignIn.css';
+import styles from '../styles/SignIn.module.css';
 import img from '../assets/favicon.ico';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLock,faEyeSlash,faEye } from '@fortawesome/free-solid-svg-icons';
-
+import { faUser, faLock, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function SignIn() {
   const [showpassword, setShowPassword] = useState(false);
@@ -14,50 +14,52 @@ function SignIn() {
 
   return (
     <>
-      <div className="header">
-        <span className="logo">
-      <img  src={img} alt="UniFund Logo" />
-      </span>
-      <h2 className="title">UniFund</h2>
+      <div className={styles.header}>
+        <span className={styles.logo}>
+          <img src={img} alt="UniFund Logo" />
+        </span>
+        <h2 className={styles.title}>UniFund</h2>
       </div>
-      <div className="signin-container">
+
+      <div className={styles['signin-container']}>
         <h3>Sign In</h3>
         <form>
-          <div className="form-group">
+          <div className={styles['form-group']}>
             <label htmlFor="email">Student Email:</label>
             <input
               type="email"
               id="email"
               name="email"
               required
-              className="input"
+              className={styles.input}
               placeholder="Enter your email"
             />
-            <FontAwesomeIcon className="input-icon" icon={faUser} />
+            <FontAwesomeIcon className={styles['input-icon']} icon={faUser} />
           </div>
 
-          <div className="form-group2">
+          <div className={styles['form-group2']}>
             <label htmlFor="password">Password:</label>
             <input
               type={showpassword ? 'text' : 'password'}
               id="password"
               name="password"
-              className="input"
               required
+              className={styles.input}
               placeholder="Enter your password"
             />
-            <FontAwesomeIcon className="input-icon2" icon={faLock} />
-            <span className="eye-container" onClick={handlepasswordToggle}>
+            <FontAwesomeIcon className={styles['input-icon2']} icon={faLock} />
+            <span className={styles['eye-container']} onClick={handlepasswordToggle}>
               {showpassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
             </span>
-           <a className="forgot">Forgot password?</a>
+            <a className={styles.forgot}>Forgot password?</a>
           </div>
 
-          <button className="submit" type="submit">
+          <button className={styles.submit} type="submit">
             Sign In
           </button>
-          <p className="signup">
-            Don't have an account? <a className="signup">Sign Up</a>
+
+          <p className={styles.signup}>
+            Don't have an account? <Link to="/SignUp" className={styles.signup}>Sign Up</Link>
           </p>
         </form>
       </div>
