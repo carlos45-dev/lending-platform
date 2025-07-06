@@ -27,6 +27,8 @@
     color: white;
     cursor: pointer;
     align-self: flex-end;
+    font-size: 1rem;
+    font-weight: bold;
 }
  .submit:hover {
     background-color: #0F1A3C;
@@ -52,4 +54,9 @@ h2{
     margin-bottom: -6px;
     position: relative;
     top:15%;
+}
+    
+.label2{
+    margin-bottom: -6px;
+    padding-top: 2px;
 }

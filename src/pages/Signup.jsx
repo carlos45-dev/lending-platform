@@ -55,7 +55,7 @@ function Signup() {
 
           <div className={styles.checkbox}>
             <input type="checkbox" id="terms" />
-            <label  className={styles.label} htmlFor="terms" style={{ marginLeft: '5px' }}>I agree to the terms and conditions of UniFund</label>
+            <label  className={styles.label2} htmlFor="terms" style={{ marginLeft: '5px' }}>I agree to the terms and conditions of UniFund</label>
           </div>
 
           <div className={styles.recaptchaWrapper}>
