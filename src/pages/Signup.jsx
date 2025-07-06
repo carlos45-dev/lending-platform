@@ -20,7 +20,7 @@ function Signup() {
 
   return (
     <>
-      <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Get started with your account</h2>
+      <h2 style={{ textAlign: 'center', marginBottom: '60px', fontSize: '1.2rem' }}>Get started with your account</h2>
       <div className={styles.signup}>
         <form>
           <div className={styles.formGroup}>

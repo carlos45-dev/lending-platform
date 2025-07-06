@@ -7,20 +7,20 @@
 .header {
   text-align: center;
   margin-bottom: 20px;
+  font-size: 1.3rem;
 }
 
 .input {
-  width: 93%;
-  padding: 10px 10px 10px 35px; /* space for icon */
+  width: 85%;
+  padding: 10px 10px 10px 35px; 
   border-radius: 5px;
   border: 1px solid #ccc;
-  margin-bottom: 20px;
 }
 
 .input-icon,
 .input-icon2 {
   position: absolute;
-  top: 30%;
+  top: 50%;
   left: 10px;
   transform: translateY(-50%);
   color: #999;
@@ -29,8 +29,8 @@
 
 .eye-container {
   position: absolute;
-  top: 40%;
-  right: -3px;
+  top: 55%;
+  right: 6px;
   transform: translateY(-50%);
   cursor: pointer;
   color: #666;
