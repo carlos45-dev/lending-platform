@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import styles from '../styles/SignUp.module.css';
 
@@ -38,24 +38,24 @@ function Signup() {
 
             <div className={styles.gender2}>
             <input type="radio"  name="gender" value="male" id="male" />
-            <label htmlFor="male" className={styles.radio}>Male</label>
+            <label htmlFor="male" className={styles.label}>Male</label>
             </div>
              
              <div className={styles.gender2}>
             <input type="radio" name="gender" value="female" id="female" />
-            <label htmlFor="female" className={styles.radio}>Female</label>
+            <label htmlFor="female" className={styles.label}>Female</label>
             </div>
             
             <div className={styles.gender2}>
             <input type="radio" name="gender" value="other" id="other" />
-            <label htmlFor="other" className={styles.radio}>Other</label>
+            <label htmlFor="other" className={styles.label}>Other</label>
             </div>
 
           </div>
 
           <div className={styles.checkbox}>
             <input type="checkbox" id="terms" />
-            <label htmlFor="terms" style={{ marginLeft: '5px' }}>I agree to the terms and conditions of UniFund</label>
+            <label  className={styles.label} htmlFor="terms" style={{ marginLeft: '5px' }}>I agree to the terms and conditions of UniFund</label>
           </div>
 
           <div className={styles.recaptchaWrapper}>
