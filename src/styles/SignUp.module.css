@@ -1,0 +1,31 @@
+.gender{
+    display:flex;
+    justify-content: space-between;
+
+}
+.checkbox{
+    display: flex;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.input{
+    width: 93%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+.submit{
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #1A2258;
+    color: white;
+    cursor: pointer;
+}
+ .submit:hover {
+    background-color: #0F1A3C;
+    transform: scale(0.97);
+    cursor: pointer;
+}

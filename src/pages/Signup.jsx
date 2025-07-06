@@ -16,7 +16,6 @@ function Signup() {
       <h2>Get started with your account</h2>
       <div className={styles.signup}>
         <div className={styles.header}>
-          <h1>Sign Up</h1>
         </div>
         <form>
           <div className={styles.formGroup}>
@@ -48,7 +47,7 @@ function Signup() {
 
           <div className={styles.checkbox}>
             <input type="checkbox" id="terms" />
-            <label htmlFor="terms">I agree to the terms and conditions</label>
+            <label htmlFor="terms">I agree to the terms and conditions of UniFund</label>
           </div>
 
         
