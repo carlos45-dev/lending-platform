@@ -4,11 +4,7 @@ import styles from '../styles/SignUp.module.css';
 
 function Signup() {
 
-    useEffect(() => {
-        document.title = "Sign Up";
-        document.body.style.backgroundColor = "";
-     } , []);
-
+ const key = "6LeZCXorAAAAAG7KhM3jjBoyWRANY4SE5AMh6rXF";
 
   return (
     <div className={styles.signup}>
@@ -46,6 +42,11 @@ function Signup() {
           <input type="checkbox" id="terms" />
           <label for="terms">I agree to the terms and conditions</label>
         </div>
+
+        <div
+            className="g-recaptcha"
+            data-sitekey={key}
+        ></div>
 
         <button type="submit" className={styles.submit}>Sign Up</button>
       </form>
