@@ -79,7 +79,7 @@ function Signup() {
           <div className={styles.checkbox}>
             <input className={styles.checkbox1} type="checkbox" id="terms" required />
             <label htmlFor="terms" className={styles.label2}>
-              I agree to the terms and conditions of UniFund
+              I agree to the terms and conditions 
             </label>
           </div>
 
