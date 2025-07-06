@@ -5,8 +5,8 @@
 }
 .checkbox{
     display: flex;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin-bottom: 30px;
+    margin-top: 40px;
 }
 .input{
     width: 93%;
@@ -35,3 +35,8 @@
     display: flex;
     justify-content: center;
 }
+h2{
+    text-align: center;
+    margin-bottom: 20%;
+    font-size: 1.1rem;
+    }
