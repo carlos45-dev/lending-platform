@@ -23,9 +23,15 @@
     background-color: #1A2258;
     color: white;
     cursor: pointer;
+    align-self: flex-end;
 }
  .submit:hover {
     background-color: #0F1A3C;
     transform: scale(0.97);
     cursor: pointer;
+}
+.recaptchaWrapper{
+    margin-bottom: 20%;
+    display: flex;
+    justify-content: center;
 }

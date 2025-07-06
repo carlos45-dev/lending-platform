@@ -50,7 +50,6 @@ function Signup() {
             <label htmlFor="terms">I agree to the terms and conditions of UniFund</label>
           </div>
 
-        
           <div className={styles.recaptchaWrapper}>
             <ReCAPTCHA
               sitekey={key}
