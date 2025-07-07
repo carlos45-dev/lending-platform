@@ -60,7 +60,7 @@ function SignIn() {
           </button>
 
           <p className={styles.signup}>
-            Don't have an account? <Link to="/signUp" className={styles.signup}>Sign Up</Link>
+            Don't have an account? <Link to="/signup" className={styles.signup}>Sign Up</Link>
           </p>
         </form>
       </div>

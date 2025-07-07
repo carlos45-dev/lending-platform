@@ -98,4 +98,24 @@
   font-size: 0.85rem;
 
 }
+@media (min-width:1084px) {
+    .submit{
+       width: 35vw; 
+    }
+    .input-icon,
+    .input-icon2 {
+        position: absolute;
+        top: 50%;
+        left: -20px;
+        transform: translateY(-50%);
+        color: #999;
+        font-size: 16px;
+}
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+
+}
 
