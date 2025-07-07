@@ -101,6 +101,7 @@
 @media (min-width:1084px) {
     .submit{
        width: 35vw; 
+       margin-top: -15%;
     }
     .input-icon,
     .input-icon2 {
@@ -109,13 +110,20 @@
         left: -20px;
         transform: translateY(-50%);
         color: #999;
-        font-size: 16px;
+              font-size: 16px;
+      }
+      .gender{
+        margin-top: -2%;
+      }
+      .checkbox{
+        margin-top: 5%;
+      }
+      .formGroup {
+      position: relative;
+      margin-bottom: 20px;
 }
-.header {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 1.3rem;
-}
+      
+
 
 }
 
