@@ -1,4 +1,4 @@
-.signup {
+ .signup {
   width: 90%;
   max-width: 400px;
   margin: auto;
@@ -22,7 +22,7 @@
 .input-icon2 {
   position: absolute;
   top: 50%;
-  margin-left: 2%;
+  left: -12px;
   transform: translateY(-50%);
   color: #999;
   font-size: 16px;
@@ -43,8 +43,8 @@
 }
 
 .submit {
-  width: 120%;
-  margin-left: -9%;
+  width: 85vw;
+  margin-left: -6%;
   margin-top: 30px;
   padding: 10px;
   border-radius: 9px;
@@ -98,9 +98,9 @@
   font-size: 0.85rem;
 
 }
-@media (min-width:184px) {
+@media (min-width:768px) {
     .submit{
-       width: 120%; 
+       width: 35vw; 
        margin-top: -15%;
     }
     .input-icon,
@@ -122,8 +122,5 @@
       position: relative;
       margin-bottom: 20px;
 }
-      
-
-
 }
 
