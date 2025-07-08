@@ -56,7 +56,7 @@ function SignIn() {
           </div>
 
           <button className={styles.submit} type="submit">
-            Sign In
+            <Link to="/home" style={{textDecoration: 'none', color: 'white'}}>Sign In</Link>
           </button>
 
           <p className={styles.signup}>
