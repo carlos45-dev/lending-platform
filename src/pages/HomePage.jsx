@@ -15,7 +15,7 @@ function HomePage(){
       <>
         <Header/>
         <div className={styles.homeImage}>
-        <img src={img} alt="home Image" style={{borderRadius: '20px'}} />
+        <img src={img} alt="home Image" style={{borderRadius: '20px', height:136}} />
         </div>
         </>
    )
