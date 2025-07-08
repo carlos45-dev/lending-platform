@@ -20,10 +20,14 @@ function HomePage(){
         width:'350px'}} />
         </div>
         <div className={styles.servicesContainer}>
-          <Services/>
-          <Services/>
-          <Services/>
-          <Services/>
+            <div>
+                <Services/>
+                <Services/>
+            </div>
+           <div className={styles.servicesContainer2}>
+              <Services />
+              <Services/>
+          </div>
         </div>
         </>
    )

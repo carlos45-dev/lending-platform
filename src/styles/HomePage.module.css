@@ -9,8 +9,7 @@
     margin-top: 60px; 
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
-    margin-top: 60px;
-    margin-left: 1.5%;
+    justify-content: space-around;
 }
+
 
