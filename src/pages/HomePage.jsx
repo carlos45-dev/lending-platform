@@ -25,8 +25,23 @@ function HomePage(){
         <div className={styles.servicesContainer}>
               <Services title={<p> Lend <br /> Money</p>} image={img3}/>
               <Services title={<p>Borrow <br/> Money</p>} image={img4}/>
-              <Services className={styles.services2} title = {<p>Loan <br/> History</p>} image={img4}/>
-              <Services className={styles.services2} title={<p>Track <br/> Payments</p>} image={img2}/>
+              <Services title = {<p>Loan <br/> History</p>} image={img4}/>
+              <Services  title={<p>Track <br/> Payments</p>} image={img2}/>
+        </div>
+         <h2 style={{textAlign:'center'}}>Our impact on campus</h2>
+         <div className={styles.impact}>
+             <div className={styles.processed}>
+              <h4>+250</h4>
+              <p>Processed loans</p>
+             </div>
+             <div className={styles.processed}>
+              <h4>+$5000</h4>
+              <p>Total amount processed</p>
+             </div>
+             <div className={styles.processed}>
+              <h4>99%</h4>
+              <p>Payment rate</p>
+             </div>
         </div>
         </>
    )

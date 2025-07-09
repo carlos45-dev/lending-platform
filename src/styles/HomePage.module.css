@@ -10,6 +10,14 @@
     flex-wrap: wrap;
     justify-content: space-around;
 }
+.impact{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    color:#1A2258;
 
-
-
+}
+.processed{
+    text-align: center;
+    padding: 5px;
+}
