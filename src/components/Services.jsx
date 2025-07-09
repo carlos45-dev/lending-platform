@@ -5,8 +5,7 @@ function Services(props){
    return(
       <div className={styles.services}>
         <img className={styles.image} src={props.image} alt="" />
-        <h2 className={styles.title}>jeke</h2>
-        <p className="description">jekedido</p>
+        <h2 className={styles.title}>{props.title}</h2>
       </div>
    )
 }

@@ -24,10 +24,10 @@ function HomePage(){
         </div>
         <div className={styles.servicesContainer}>
             
-              <Services image={img3}/>
-              <Services image={img4}/>
-              <Services />
-              <Services image={img2}/>
+              <Services title={<p> Lend <br /> Money</p>} image={img3}/>
+              <Services title={<p>Borrow <br/> Money</p>} image={img4}/>
+              <Services className={styles.services2} title = {<p>Loan <br/> History</p>} image={img4}/>
+              <Services className={styles.services2} title={<p>Track <br/> Payments</p>} image={img2}/>
         </div>
         </>
    )
