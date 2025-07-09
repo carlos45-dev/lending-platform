@@ -1,6 +1,9 @@
 import Header from "../components/Header"
 import { useEffect } from "react";
 import img from '../assets/HomeImage.png';
+import img2 from '../assets/tracking.jfif';
+import img3  from '../assets/Lend.jfif';
+import img4  from '../assets/borrow.jfif';
 import styles from '../styles/HomePage.module.css';
 import Services from "../components/Services";
 function HomePage(){
@@ -20,14 +23,11 @@ function HomePage(){
         width:'350px'}} />
         </div>
         <div className={styles.servicesContainer}>
-            <div>
-                <Services/>
-                <Services/>
-            </div>
-           <div className={styles.servicesContainer2}>
+            
+              <Services image={img3}/>
+              <Services image={img4}/>
               <Services />
-              <Services/>
-          </div>
+              <Services image={img2}/>
         </div>
         </>
    )
