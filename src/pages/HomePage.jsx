@@ -19,8 +19,8 @@ function HomePage(){
       <>
         <Header/>
         <div className={styles.homeImage}>
-        <img src={img} alt="home Image" style={{borderRadius: '20px', height:'200px',
-        width:'350px'}} />
+        <img src={img} alt="home Image" style={{borderRadius: '7px', height:'35vh',
+        width:'96vw'}} />
         </div>
         <div className={styles.servicesContainer}>
             
