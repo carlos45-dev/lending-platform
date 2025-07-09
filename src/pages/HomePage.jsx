@@ -23,7 +23,6 @@ function HomePage(){
         width:'93vw'}} />
         </div>
         <div className={styles.servicesContainer}>
-            
               <Services title={<p> Lend <br /> Money</p>} image={img3}/>
               <Services title={<p>Borrow <br/> Money</p>} image={img4}/>
               <Services className={styles.services2} title = {<p>Loan <br/> History</p>} image={img4}/>
