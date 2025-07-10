@@ -4,6 +4,7 @@ import img from '../assets/HomeImage.png';
 import img2 from '../assets/tracking.jfif';
 import img3  from '../assets/Lend.jfif';
 import img4  from '../assets/borrow.jfif';
+import img5 from '../assets/history.jfif'
 import styles from '../styles/HomePage.module.css';
 import Services from "../components/Services";
 import Footer  from "../components/Footer";
@@ -29,7 +30,7 @@ function HomePage(){
         <div className={styles.servicesContainer}>
               <Services title={<p> Lend <br /> Money</p>} image={img3}/>
               <Services title={<p>Borrow <br/> Money</p>} image={img4}/>
-              <Services title = {<p>Loan <br/> History</p>} image={img4}/>
+              <Services title = {<p>Loan <br/> History</p>} image={img5}/>
               <Services  title={<p>Track <br/> Payments</p>} image={img2}/>
         </div>
          <h2 style={{textAlign:'center'}}>Our impact on campus</h2>
