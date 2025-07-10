@@ -14,6 +14,8 @@ function Header() {
     setIsOpen(false);
   };
 
+  const menuItems = ['Home', 'Services', 'About', 'Contact', 'Logout'];
+
   return (
     <>
       <div className={styles.header}>
@@ -29,23 +31,28 @@ function Header() {
       </div>
 
       {/* Overlay to close the sidebar */}
-      {isOpen && <div onClick={closeSidebar} style={{
-        position: 'fixed',
-        top: '60px',
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.3)',
-        zIndex: 998
-      }}></div>}
+      {isOpen && (
+        <div
+          onClick={closeSidebar}
+          style={{
+            position: 'fixed',
+            top: '60px',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.3)',
+            zIndex: 998
+          }}
+        ></div>
+      )}
 
       <div className={`${styles.sidebar} ${isOpen ? styles.show : ''}`}>
         <ul className={styles.mainmenu}>
-          <li><a href="#" className={styles.menu}>Home</a></li>
-          <li><a href="#" className={styles.menu}>Services</a></li>
-          <li><a href="#" className={styles.menu}>About</a></li>
-          <li><a href="#" className={styles.menu}>Contact</a></li>
-          <li><a href="#" className={styles.menu}>Logout</a></li>
+          {menuItems.map((item, index) => (
+            <li key={index} className={`${styles.menuItem} ${isOpen ? styles['menu-item'] : ''}`}>
+              <a href="#" className={styles.menu}>{item}</a>
+            </li>
+          ))}
         </ul>
       </div>
     </>
