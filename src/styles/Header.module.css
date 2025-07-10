@@ -53,8 +53,9 @@
   flex-direction: column;
   gap: 25px;
   list-style: none;
-  padding: 0;
+  padding-top: 15px;
   margin: 0;
+
 }
 
 .menu {
