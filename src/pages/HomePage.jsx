@@ -24,7 +24,7 @@ function HomePage(){
         <img src={img} alt="home Image" style={{borderRadius: '15px', height:'27vh',
         width:'93vw'}} />
         </div>
-        <p style={{textAlign:'center', padding:'10px'}}>💬'I borrowed K30,000 for textbooks and paid it off in 3 months — super helpful!' — James, UNIMA"</p>
+        <p style={{textAlign:'center', padding:'10px', fontFamily:'Inter',marginTop:'50px'}}>💬'I borrowed K30,000 for textbooks and paid it off in 3 months — super helpful!' — James, UNIMA"</p>
         <div className={styles.servicesContainer}>
               <Services title={<p> Lend <br /> Money</p>} image={img3}/>
               <Services title={<p>Borrow <br/> Money</p>} image={img4}/>
