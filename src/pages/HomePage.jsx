@@ -20,11 +20,12 @@ function HomePage(){
    return(
       <>
         <Header/>
+        <h3 style={{textAlign:'center', color:'#1A2258'}}>Welcome Carlos Muleke</h3>
         <div className={styles.homeImage}>
         <img src={img} alt="home Image" style={{borderRadius: '15px', height:'27vh',
         width:'93vw'}} />
         </div>
-        <p style={{textAlign:'center', padding:'10px', fontFamily:'Inter',marginTop:'50px'}}>💬'I borrowed K30,000 for textbooks and paid it off in 3 months — super helpful!' — James, UNIMA"</p>
+        <p style={{textAlign:'center', padding:'10px', fontFamily:'Inter',marginTop:'50px',color:'#1A2258'}}>💬'I borrowed K30,000 for textbooks and paid it off in 3 months — super helpful!' — James, UNIMA"</p>
         <div className={styles.servicesContainer}>
               <Services title={<p> Lend <br /> Money</p>} image={img3}/>
               <Services title={<p>Borrow <br/> Money</p>} image={img4}/>
