@@ -3,9 +3,13 @@
     color: white;
     padding: 10px;
     margin-top: 50px;
+    padding-left: 20px;
+    font-family: 'Inter', sans-serif;
+
 }
 .social{
     display: flex;
     flex-direction: row;
     gap:45px;
+    font-size: 25px;
 }

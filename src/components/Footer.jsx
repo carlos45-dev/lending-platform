@@ -14,7 +14,7 @@ function Footer(){
        </div>
        <div className={styles.social}>
         <a href="https://www.linkedin.com/in/carlos-muleke-084552362" className="footer__icon">
-          <FontAwesomeIcon icon={faLinkedin} style={{ color: '#0077B5' }} />
+          <FontAwesomeIcon icon={faLinkedin} style={{ color: '#0077B5'  }} />
         </a>
         <a href="https://github.com/carlos45-dev" className="footer__icon">
           <FontAwesomeIcon icon={faGithub} style={{ color: '#ffffff' }} />
