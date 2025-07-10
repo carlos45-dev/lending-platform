@@ -6,6 +6,8 @@ import img3  from '../assets/Lend.jfif';
 import img4  from '../assets/borrow.jfif';
 import styles from '../styles/HomePage.module.css';
 import Services from "../components/Services";
+import Footer  from "../components/Footer";
+
 function HomePage(){
     useEffect(() => {
      const originalDisplay = document.body.style.display;
@@ -43,6 +45,7 @@ function HomePage(){
               <p>Payment rate</p>
              </div>
         </div>
+          <Footer/>
         </>
    )
 }
