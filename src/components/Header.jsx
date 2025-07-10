@@ -6,12 +6,9 @@ function Header(){
     return(
        <div className={styles.header}>
         <div className={styles.user}>
-            <FontAwesomeIcon icon={faCircleUser} size='2x'/>
-             <h3>Carlos Muleke</h3>
+            <FontAwesomeIcon icon={faCircleUser} size='2x'/>    
         </div>
-
-    
-
+        <h2 style={{textAlign:'center'}}>UniFund</h2>
          <div>
          <FontAwesomeIcon icon={faBars} size='2x'/>
          </div>
