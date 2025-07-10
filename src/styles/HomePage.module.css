@@ -4,6 +4,10 @@
     align-items: center;
     margin-top: 30px;
 }
+.homeImage2{
+    height:27vh;
+    width:93vw;
+}
 .servicesContainer{
     margin-top: 40px; 
     display: flex;
@@ -22,3 +26,12 @@
     padding: 5px;
 }
 
+@media  (min-width: 768px) {
+    .homeImage2{
+        height:63vh;
+    }
+    .welcome{
+        font-size: x-large;
+    }
+    
+}

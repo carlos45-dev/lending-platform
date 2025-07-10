@@ -23,10 +23,9 @@ function HomePage(){
       <>
         <Header/>
 
-        <h3 style={{textAlign:'center', paddingTop:'10px', fontFamily:'Inter',marginTop:'80px',color:'#1A2258'}}>Welcome back Carlos Muleke</h3>
+        <h3 style={{textAlign:'center', paddingTop:'10px', fontFamily:'Inter',marginTop:'80px',color:'#1A2258'}} className={styles.welcome}>Welcome back Carlos Muleke</h3>
         <div className={styles.homeImage}>
-        <img src={img} alt="home Image" style={{borderRadius: '15px', height:'27vh',
-        width:'93vw'}} />
+        <img src={img} className={styles.homeImage2} alt="home Image" style={{borderRadius:'20px'}} />
         </div>
         <p style={{textAlign:'center', padding:'10px', fontFamily:'Inter',marginTop:'50px',color:'#1A2258'}}>💬'I borrowed K30,000 for textbooks and paid it off in 3 months — super helpful!' — James, UNIMA"</p>
         <div className={styles.servicesContainer}>

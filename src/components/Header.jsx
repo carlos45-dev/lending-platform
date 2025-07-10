@@ -23,10 +23,27 @@ function Header() {
           <FontAwesomeIcon icon={faCircleUser} size="2x" />
         </div>
 
-        <h2>UniFund</h2>
+        <h2 className={styles.title}>UniFund</h2>
+
+         <div>
+        <ul  className={styles.nav}>
+          <li>
+            <a href="#" style={{color:'#1A2258', fontWeight:'bold'}}>Home</a>
+          </li>
+          <li>
+            <a href="#" style={{color:'#1A2258', fontWeight:'bold'}} >Services</a>
+          </li>
+          <li>
+            <a href="#" style={{color:'#1A2258', fontWeight:'bold'}}>About</a>
+          </li>
+          <li>
+            <a href="#" style={{color:'#1A2258', fontWeight:'bold'}}>Contact</a>
+          </li>
+        </ul>
+      </div>
 
         <div onClick={toggleSidebar}>
-          <FontAwesomeIcon icon={faBars} size="2x" />
+          <FontAwesomeIcon className={styles.bars} icon={faBars} size="2x" />
         </div>
       </div>
 

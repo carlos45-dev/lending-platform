@@ -31,3 +31,9 @@
      margin: 0;
      text-align: center;
 }
+@media (min-width: 1024px) {
+    .services{
+        width: 200px;
+    }
+    
+}

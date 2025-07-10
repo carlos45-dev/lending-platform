@@ -64,6 +64,9 @@
   font: 1.2em 'Poppins', sans-serif;
   font-weight: 500;
 }
+.nav{
+  display: none;
+}
 @keyframes slideInItem {
   from {
     opacity: 0;
@@ -87,3 +90,32 @@
 .menuItem:nth-child(5) { animation-delay: 0.5s; }
 
 
+/* src/styles/Header.module.css */
+
+/* ... existing styles ... */
+
+/* Add this media query for larger screens */
+@media (min-width: 1024px) {
+  .nav{
+    display: flex;
+    flex-direction: row;
+    margin-left:10%;
+    gap: 20px;
+    list-style: none;
+    color:black;
+    font: 1.3em 'Poppins', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+
+  }
+  .bars{
+    display: none;
+  }
+  a{
+    text-decoration: none;
+  }
+  .title{
+    text-align: center;
+   margin-left: 30%;
+  }
+}

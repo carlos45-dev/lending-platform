@@ -13,3 +13,21 @@
     gap:45px;
     font-size: 25px;
 }
+@media  (min-width: 1024px) {
+
+    .footerContainer{
+        display: flex;
+        flex-direction: row;
+        gap: 65px;;
+    }
+    .termscontainer{
+        display: flex;
+        flex-direction: row;
+        gap:65px;
+    }
+    .social{
+        padding-top: 1%;
+    }
+    
+    }
+    
