@@ -1,5 +1,5 @@
 import Header from "../components/Header"
-import { useEffect } from "react";
+import { useEffect} from "react";
 import img from '../assets/HomeImage.png';
 import img2 from '../assets/tracking.jfif';
 import img3  from '../assets/Lend.jfif';
@@ -10,6 +10,7 @@ import Services from "../components/Services";
 import Footer  from "../components/Footer";
 
 function HomePage(){
+  
     useEffect(() => {
      const originalDisplay = document.body.style.display;
      document.body.style.display = 'block';
@@ -21,7 +22,6 @@ function HomePage(){
    return(
       <>
         <Header/>
-        <h3 style={{textAlign:'center', color:'#1A2258', paddingTop:'20px'}}>Welcome Carlos Muleke</h3>
         <div className={styles.homeImage}>
         <img src={img} alt="home Image" style={{borderRadius: '15px', height:'27vh',
         width:'93vw'}} />
