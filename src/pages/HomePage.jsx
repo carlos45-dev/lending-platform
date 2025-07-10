@@ -22,6 +22,8 @@ function HomePage(){
    return(
       <>
         <Header/>
+
+        <h3 style={{textAlign:'center', paddingTop:'10px', fontFamily:'Inter',marginTop:'80px',color:'#1A2258'}}>Welcome back Carlos Muleke</h3>
         <div className={styles.homeImage}>
         <img src={img} alt="home Image" style={{borderRadius: '15px', height:'27vh',
         width:'93vw'}} />
