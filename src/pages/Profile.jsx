@@ -41,7 +41,7 @@ function Profile() {
       <FontAwesomeIcon
         icon={faArrowLeft}
         className={styles.backArrow}
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/home")}
       />
 
       <h1 className={styles.title}>Profile</h1>
