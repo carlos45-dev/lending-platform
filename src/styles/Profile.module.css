@@ -54,7 +54,7 @@
 .name {
   font-size: 1.3rem;
   margin-bottom: 3rem;
-  margin-left: -10%;
+  margin-left: -5%;
   color: #333;
   font-weight: bold;
   text-align: center;
@@ -79,6 +79,7 @@
   flex-direction: column;
   gap: 1rem;
   color: #1a2258;
+  border-top: solid #1a2258;
 }
 
 .actions div {
