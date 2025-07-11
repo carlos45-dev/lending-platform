@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser, faBars } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import styles from '../styles/Header.module.css';
+import { Link } from 'react-router-dom';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,9 +20,11 @@ function Header() {
   return (
     <>
       <div className={styles.header}>
+        <Link to ="/profile" style={{color:'#1A2258'}}>
         <div className={styles.user}>
           <FontAwesomeIcon icon={faCircleUser} size="2x" />
         </div>
+       </Link>
 
         <h2 className={styles.title}>UniFund</h2>
 
