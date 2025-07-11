@@ -110,3 +110,9 @@
   color: #555;
   margin-bottom: 1rem;
 }
+@media (min-width: 700px) {
+    .name{
+        margin-left: -5%;
+    }
+    
+}
