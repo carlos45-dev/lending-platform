@@ -28,67 +28,70 @@ function Signup() {
     <>
       <h2 style={{ textAlign: 'center', marginBottom: '60px', fontSize: '1.2rem' }}>Get started with your account</h2>
       <div className={styles.signup}>
-        <form>
+          <form>
           <div className={styles.formGroup}>
-            <input type="text" className={styles.input} placeholder="Username" required />
-            <FontAwesomeIcon className={styles["input-icon"]} icon={faUser} />
+                  <input type="text" className={styles.input} placeholder="Username" required />
+                  <FontAwesomeIcon className={styles["input-icon"]} icon={faUser} />
           </div>
 
           <div className={styles.formGroup}>
-            <input type="email" className={styles.input} placeholder="Email" required />
-            <FontAwesomeIcon className={styles["input-icon"]} icon={faUser} />
+                  <input type="email" className={styles.input} placeholder="Email" required />
+                  <FontAwesomeIcon className={styles["input-icon"]} icon={faUser} />
           </div>
 
           <div className={styles.formGroup}>
             <input
-              type={showPassword ? "text" : "password"}
-              className={styles.input}
-              placeholder="Password"
-              required
-            />
+                      type={showPassword ? "text" : "password"}
+                      className={styles.input}
+                      placeholder="Password"
+                      required
+                    />
             <FontAwesomeIcon className={styles["input-icon2"]} icon={faLock} />
             <span className={styles["eye-container"]} onClick={handlePasswordToggle}>
-              {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
+                {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon=   {faEye} />}
             </span>
           </div>
 
+         
           <div className={styles.formGroup}>
             <input
-              type={showPassword2 ? "text" : "password"}
-              className={styles.input}
-              placeholder="Confirm Password"
-              required
-            />
+                  type={showPassword2 ? "text" : "password"}
+                  className={styles.input}
+                  placeholder="Confirm Password"
+                  required
+                />
             <FontAwesomeIcon className={styles["input-icon2"]} icon={faLock} />
             <span className={styles["eye-container"]} onClick={handlePasswordToggle2}>
               {showPassword2 ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
             </span>
           </div>
 
+        {/*gender*/}
           <div className={styles.gender}>
             <div className={styles.gender2}>
-              <input type="radio" name="gender" value="male" id="male" />
-              <label htmlFor="male" className={styles.label}>Male</label>
+                    <input type="radio" name="gender" value="male" id="male" />
+                     <label htmlFor="male" className={styles.label}>Male</label>
             </div>
 
             <div className={styles.gender2}>
-              <input type="radio" name="gender" value="female" id="female" />
-              <label htmlFor="female" className={styles.label}>Female</label>
+                  <input type="radio" name="gender" value="female" id="female" />
+                  <label htmlFor="female" className={styles.label}>Female</label>
             </div>
 
             <div className={styles.gender2}>
-              <input type="radio" name="gender" value="other" id="other" />
-              <label htmlFor="other" className={styles.label}>Other</label>
+                   <input type="radio" name="gender" value="other" id="other" />
+                   <label htmlFor="other" className={styles.label}>Other</label>
             </div>
           </div>
 
           <div className={styles.checkbox}>
-            <input className={styles.checkbox1} type="checkbox" id="terms" required />
-            <label htmlFor="terms" className={styles.label2}>
-              I agree to the terms and conditions 
-            </label>
+                 <input className={styles.checkbox1} type="checkbox" id="terms" required />
+                 <label htmlFor="terms" className={styles.label2}>
+                 I agree to the terms and conditions 
+                </label>
           </div>
 
+                {/* ReCAPTCHA */}
           <div className={styles.recaptchaWrapper}>
             <ReCAPTCHA sitekey={key} onChange={handleRecaptchaChange} />
           </div>

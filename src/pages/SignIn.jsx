@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 
 function SignIn() {
 
+  //manage state of the showpassword icon
   const [showpassword, setShowPassword] = useState(false);
 
   const handlepasswordToggle = () => {
@@ -15,52 +16,58 @@ function SignIn() {
 
   return (
     <>
-      <div className={styles.header}>
-        <span className={styles.logo}>
-          <img src={img} alt="UniFund Logo" />
-        </span>
-        <h2 className={styles.title}>UniFund</h2>
-      </div>
+    {/*header section*/}
+        <div className={styles.header}>
+                     <span className={styles.logo}>
+                           <img src={img} alt="UniFund Logo" />
+                     </span>
+                     <h2 className={styles.title}>UniFund</h2>
+        </div>
 
       <div className={styles['signin-container']}>
-        <h3>Sign In</h3>
-        <form>
-          <div className={styles['form-group']}>
-            <label htmlFor="email">Student Email:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              className={styles.input}
-              placeholder="Enter your email"
-            />
-            <FontAwesomeIcon className={styles['input-icon']} icon={faUser} />
+
+                <h3>Sign In</h3>
+
+                <form>
+                 <div className={styles['form-group']}>
+                        <label htmlFor="email">Student Email:</label>
+                              <input
+                              type="email"
+                              id="email"
+                              name="email"
+                              required
+                              className={styles.input}
+                              placeholder="Enter your email"
+                            />
+                         <FontAwesomeIcon className={styles['input-icon']} icon={faUser} />
           </div>
 
+         {/*password section*/}
           <div className={styles['form-group2']}>
-            <label htmlFor="password">Password:</label>
-            <input
-              type={showpassword ? 'text' : 'password'}
-              id="password"
-              name="password"
-              required
-              className={styles.input}
-              placeholder="Enter your password"
-            />
-            <FontAwesomeIcon className={styles['input-icon2']} icon={faLock} />
+                   <label htmlFor="password">Password:</label>
+                   <input
+                      type={showpassword ? 'text' : 'password'}
+                      id="password"
+                      name="password"
+                      required
+                      className={styles.input}
+                      placeholder="Enter your password"
+                    />
+               <FontAwesomeIcon className={styles['input-icon2']} icon={faLock} />
             <span className={styles['eye-container']} onClick={handlepasswordToggle}>
-              {showpassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
+                 {showpassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
             </span>
-            <a className={styles.forgot}>Forgot password?</a>
+                <a className={styles.forgot}>Forgot password?</a>
           </div>
+
+          {/*sign in button*/}
 
           <button className={styles.submit} type="submit">
             <Link to="/home" style={{textDecoration: 'none', color: 'white'}}>Sign In</Link>
           </button>
 
           <p className={styles.signup}>
-            Don't have an account? <Link to="/signup" className={styles.signup}>Sign Up</Link>
+             Don't have an account? <Link to="/signup" className={styles.signup}>Sign Up</Link>
           </p>
         </form>
       </div>
