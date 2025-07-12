@@ -46,7 +46,7 @@ function LendPage() {
               <strong>Jeke Muleke</strong>
               <p>Asked for <span>MWK20000</span> for <span>2 weeks</span></p>
               <p>Interest: <span>7.8%</span></p>
-              <button>View</button>
+              <button onClick={() => navigate("/view")}>View</button>
             </div>
           </section>
 
@@ -57,7 +57,7 @@ function LendPage() {
               <p>Offered <span>MWK400000</span> for <span>2 weeks</span></p>
               <p>Interest : <span>7.8%</span></p>
               <p>Progress : <span>One week</span></p>
-              <button onClick={() => navigate("/lend")}>Remind</button>
+              <button >Remind</button>
             </div>
           </section>
         </main>
