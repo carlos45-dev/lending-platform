@@ -21,7 +21,7 @@
 .contactForm {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 4rem;
 }
 
 .contactInput {
@@ -42,6 +42,39 @@
   font-size: 1rem;
 }
 
+@media (min-width: 768px) {
+    .contact {
+  padding: 2rem 0;
+}
 
+.sectionTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.contactContainer {
+  display: grid;
+  gap: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contactInput {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+ 
+}
   
 
