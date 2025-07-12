@@ -29,9 +29,9 @@ function Profile() {
     if (navigator.share) {
       navigator
         .share({
-          title: "My Profile",
-          text: "Check out this profile!",
-          url: window.location.href,
+          title: "UniFund",
+          text: "Check out this Website!",
+          url: "https://unifund-lending-platform.netlify.app",
         })
         .then(() => console.log("Shared successfully"))
         .catch((error) => console.error("Error sharing:", error));
