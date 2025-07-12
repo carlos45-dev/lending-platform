@@ -1,5 +1,5 @@
 import Header from '../components/Header';
-import Footer from '../components/Footer'; // Optional if you have one
+import Footer from '../components/Footer';
 import styles from '../styles/TrackPayments.module.css';
 import { useEffect } from 'react';
 
