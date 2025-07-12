@@ -3,7 +3,10 @@ import styles from '../styles/Lend.module.css';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 function LendPage() {
+
+  const navigate = useNavigate();
 
   useEffect(() => {
                 const originalDisplay = document.body.style.display;
@@ -37,7 +40,7 @@ function LendPage() {
               <strong>Amina Tinve</strong>
               <p>Asked for <span>MWK400000</span> for <span>2 weeks</span></p>
               <p>Interest: <span>7.8%</span></p>
-              <button>View</button>
+              <button onClick={() => navigate("/view")}>View</button>
             </div>
             <div className={styles.card}>
               <strong>Jeke Muleke</strong>
@@ -54,7 +57,7 @@ function LendPage() {
               <p>Offered <span>MWK400000</span> for <span>2 weeks</span></p>
               <p>Interest : <span>7.8%</span></p>
               <p>Progress : <span>One week</span></p>
-              <button>Remind</button>
+              <button onClick={() => navigate("/lend")}>Remind</button>
             </div>
           </section>
         </main>

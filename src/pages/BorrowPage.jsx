@@ -32,7 +32,7 @@ function BorrowPage() {
 
         <main className={styles.main}>
           <section className={styles.loanRequests}>
-            <h3>LOAN REQUESTS</h3>
+            <h3>Student Lenders Available</h3>
             <div className={styles.card}>
               <strong>Amina Tinve</strong>
               <p>Offers Up To <span>MWK400000</span> for <span>2 weeks</span></p>
@@ -48,7 +48,7 @@ function BorrowPage() {
           </section>
 
           <section className={styles.activeLoans}>
-            <h3>Active Loans</h3>
+            <h3>My Active Loans</h3>
             <div className={styles.card}>
               <strong>Borrowed From : Carlos Muleke</strong>
               <p><span>MWK400000</span> for <span>2 weeks</span></p>

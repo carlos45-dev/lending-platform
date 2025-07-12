@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage.jsx'
 import Profile from './pages/Profile.jsx'
 import LendPage from './pages/LendPage.jsx'
 import BorrowPage from './pages/BorrowPage.jsx'
+import View from './pages/View.jsx'
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
 
 const router = createBrowserRouter([
@@ -16,7 +17,8 @@ const router = createBrowserRouter([
   {path: "/home", element: <HomePage />},
   {path: "/profile", element: <Profile />},
   {path: "/lend", element: <LendPage />},
-  {path: "/borrow", element: <BorrowPage />}
+  {path: "/borrow", element: <BorrowPage />},
+  {path: "/view", element: <View />}
 
 ])
 
