@@ -1,5 +1,6 @@
 import Header from "../components/Header"
 import { useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import img from '../assets/HomeImage.png';
 import img2 from '../assets/tracking.jfif';
 import img3  from '../assets/Lend.jfif';
@@ -9,7 +10,10 @@ import styles from '../styles/HomePage.module.css';
 import Services from "../components/Services";
 import Footer  from "../components/Footer";
 
+
 function HomePage(){
+
+  const navigate = useNavigate();
   
   //resetting the display settings
     useEffect(() => {
@@ -38,7 +42,7 @@ function HomePage(){
 
               {/*cards to display services offered by unifund*/}
                <div className={styles.servicesContainer}>
-                          <Services title={<p> Lend <br /> Money</p>} image={img3}/>
+                          <Services title={<p> Lend <br /> Money</p>} image={img3} onClick={() => navigate("/lend")}/>
                           <Services title={<p>Borrow <br/> Money</p>} image={img4}/>
                           <Services title = {<p>Loan <br/> History</p>} image={img5}/>
                           <Services  title={<p>Track <br/> Payments</p>} image={img2}/>
