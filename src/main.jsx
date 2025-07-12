@@ -9,6 +9,7 @@ import LendPage from './pages/LendPage.jsx'
 import BorrowPage from './pages/BorrowPage.jsx'
 import LoanHistory from './pages/LoanHistory.jsx'
 import View from './pages/View.jsx'
+import Contact from './pages/Contact.jsx'
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
 
 const router = createBrowserRouter([
@@ -20,7 +21,8 @@ const router = createBrowserRouter([
   {path: "/lend", element: <LendPage />},
   {path: "/borrow", element: <BorrowPage />},
   {path: "/view", element: <View />},
-  {path:"/loan-history", element:<LoanHistory />}
+  {path:"/loan-history", element:<LoanHistory />},
+  {path:"/contact", element:<Contact />}
 
 
 ])

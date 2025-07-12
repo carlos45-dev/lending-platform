@@ -40,7 +40,7 @@ function Header() {
               <a href="#" style={{ color: '#1A2258', fontWeight: 'bold' }}>About</a>
             </li>
             <li>
-              <a href="#" style={{ color: '#1A2258', fontWeight: 'bold' }}>Contact</a>
+              <Link to="/contact" style={{ color: '#1A2258', fontWeight: 'bold' }}>Contact</Link>
             </li>
           </ul>
         </div>
@@ -50,7 +50,6 @@ function Header() {
         </div>
       </div>
 
-      {/* Overlay to close the sidebar */}
       {isOpen && (
         <div
           onClick={closeSidebar}
@@ -75,6 +74,10 @@ function Header() {
             >
               {item === 'Home' ? (
                 <Link to="/home" className={styles.menu}>{item}</Link>
+              ) : item === 'Contact' ? (
+                <Link to="/contact" className={styles.menu}>{item}</Link>
+              ) : item === 'Logout' ? (
+                <Link to="/" className={styles.menu}>{item}</Link>
               ) : (
                 <a href="#" className={styles.menu}>{item}</a>
               )}
