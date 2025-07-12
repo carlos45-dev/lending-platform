@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage.jsx'
 import Profile from './pages/Profile.jsx'
 import LendPage from './pages/LendPage.jsx'
 import BorrowPage from './pages/BorrowPage.jsx'
+import TrackPayments from './pages/TrackPayments.jsx'
 import View from './pages/View.jsx'
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
 
@@ -18,7 +19,9 @@ const router = createBrowserRouter([
   {path: "/profile", element: <Profile />},
   {path: "/lend", element: <LendPage />},
   {path: "/borrow", element: <BorrowPage />},
-  {path: "/view", element: <View />}
+  {path: "/view", element: <View />},
+  {path:"/track-payments", element:<TrackPayments />}
+
 
 ])
 

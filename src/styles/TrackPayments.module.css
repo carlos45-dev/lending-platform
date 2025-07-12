@@ -1,0 +1,46 @@
+.container {
+  padding: 3rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.heading {
+  color: #1A2258;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.paymentTable {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  background-color: white;
+}
+
+.paymentTable th,
+.paymentTable td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.paymentTable th {
+  background-color: #f5f5f5;
+  color: #1A2258;
+}
+
+.paid {
+  color: green;
+  font-weight: bold;
+}
+
+.pending {
+  color: orange;
+  font-weight: bold;
+}

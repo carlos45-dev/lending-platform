@@ -45,7 +45,8 @@ function HomePage(){
                           <Services title={<p> Lend <br /> Money</p>} image={img3} onClick={() => navigate("/lend")}/>
                           <Services title={<p>Borrow <br/> Money</p>} image={img4} onClick={() => navigate("/borrow")}/>
                           <Services title = {<p>Loan <br/> History</p>} image={img5}/>
-                          <Services  title={<p>Track <br/> Payments</p>} image={img2}/>
+                          <Services  title={<p>Track <br/> Payments</p>} image={img2}
+                          onClick={() => navigate("/track-payments")}/>
               </div>
 
 
