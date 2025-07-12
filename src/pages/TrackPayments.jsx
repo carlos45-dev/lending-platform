@@ -13,7 +13,7 @@ function TrackPayments() {
   }, []);
 
   return (
-    <>
+    <div className={styles.outer}>
       <Header />
       <div className={styles.container}>
         <h1 className={styles.heading}>Track Your Payments</h1>
@@ -76,7 +76,7 @@ function TrackPayments() {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 
