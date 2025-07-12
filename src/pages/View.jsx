@@ -21,6 +21,7 @@ function View() {
         <img src={user} alt="Profile image" className={styles.profileImage} />
       </div>
       <div className={styles.details}>
+        <p><strong>Name:</strong> Carlos Muleke</p>
         <p><strong>Phone:</strong> 0992779347</p>
         <p><strong>Student email:</strong> bsc-02-23@unima.ac.mw</p>
         <p><strong>Requested amount:</strong> MWK588888</p>
