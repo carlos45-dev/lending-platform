@@ -25,6 +25,21 @@ function Profile() {
     }
   };
 
+  const shareWebsite = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "My Profile",
+          text: "Check out this profile!",
+          url: window.location.href,
+        })
+        .then(() => console.log("Shared successfully"))
+        .catch((error) => console.error("Error sharing:", error));
+    } else {
+      alert("Sharing is not supported on this device.");
+    }
+  };
+
   useEffect(() => {
     const originalDisplay = document.body.style.display;
     document.body.style.display = "block";
@@ -88,7 +103,7 @@ function Profile() {
             <FontAwesomeIcon icon={faSignOutAlt} />
             <p>Log Out</p>
           </div>
-          <div>
+          <div onClick={shareWebsite}>
             <FontAwesomeIcon icon={faShareAlt} />
             <p>Share</p>
           </div>
