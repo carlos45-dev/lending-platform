@@ -25,8 +25,8 @@ function LendPage() {
         <aside className={styles.sidebar}>
           <h3>LOAN STATUS</h3>
           <ul>
-            <li>Active Loans <b>(2)</b></li>
-            <li>Completed loans <b>(0)</b></li>
+            <li>Active Loans <b style={{color:'green'}}>(2)</b></li>
+            <li>Completed loans <b style={{color:'green'}}>(0)</b></li>
           </ul>
         </aside>
 

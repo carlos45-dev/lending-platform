@@ -26,7 +26,7 @@ function BorrowPage() {
           <h3>My Loan Summary</h3>
           <ul>
             <li>Completed Loans <b style={{color:'green'}}>(2)</b></li>
-            <li>Overdue Loan <b style={{color:'red'}}>(0)</b></li>
+            <li>Overdue Loan <b style={{color:'red'}}>(1)</b></li>
           </ul>
         </aside>
 
