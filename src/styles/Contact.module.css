@@ -43,36 +43,37 @@
 }
 
 @media (min-width: 768px) {
-    .contact {
-  padding: 2rem 0;
-}
+  .contact {
+    padding: 2rem 0;
+  }
 
-.sectionTitle {
-  font-size: 2rem;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 2rem;
-}
+  .sectionTitle {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
 
-.contactContainer {
-  display: grid;
-  gap: 2rem;
-  max-width: 600px;
-  margin: 0 auto;
-}
+  .contactContainer {
+    display: grid;
+    gap: 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
 
-.contactForm {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
+  .contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 
-.contactInput {
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-}
+  .contactInput {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
 
  
 }
