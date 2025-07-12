@@ -35,13 +35,13 @@ function LendPage() {
             <h3>LOAN REQUESTS</h3>
             <div className={styles.card}>
               <strong>Amina Tinve</strong>
-              <p>Offers Up To <span>MWK400000</span> for <span>2 weeks</span></p>
+              <p>Asked for <span>MWK400000</span> for <span>2 weeks</span></p>
               <p>Interest: <span>7.8%</span></p>
               <button>View</button>
             </div>
             <div className={styles.card}>
-              <strong>Amina Tinve</strong>
-              <p>Offers Up To <span>MWK400000</span> for <span>2 weeks</span></p>
+              <strong>Jeke Muleke</strong>
+              <p>Asked for <span>MWK20000</span> for <span>2 weeks</span></p>
               <p>Interest: <span>7.8%</span></p>
               <button>View</button>
             </div>
