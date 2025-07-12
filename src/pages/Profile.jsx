@@ -84,7 +84,7 @@ function Profile() {
             <FontAwesomeIcon icon={faLock} />
             <p>Reset Password</p>
           </div>
-          <div>
+          <div onClick={() => navigate("/")}>
             <FontAwesomeIcon icon={faSignOutAlt} />
             <p>Log Out</p>
           </div>
