@@ -3,7 +3,7 @@ import Footer from '../components/Footer';
 import styles from '../styles/TrackPayments.module.css';
 import { useEffect } from 'react';
 
-function TrackPayments() {
+function LoanHistory() {
   useEffect(() => {
     const originalDisplay = document.body.style.display;
     document.body.style.display = 'block';
@@ -16,7 +16,7 @@ function TrackPayments() {
     <div className={styles.outer}>
       <Header />
       <div className={styles.container}>
-        <h1 className={styles.heading}>Track Your Payments</h1>
+        <h1 className={styles.heading}>Loan History</h1>
         <div className={styles.tableWrapper}>
           <table className={styles.paymentTable}>
             <thead>
@@ -85,4 +85,4 @@ function TrackPayments() {
   );
 }
 
-export default TrackPayments;
+export default LoanHistory;
