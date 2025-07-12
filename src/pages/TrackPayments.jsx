@@ -75,7 +75,12 @@ function TrackPayments() {
           </table>
         </div>
       </div>
-      <Footer />
+
+      <div className={styles.footerWrapper}>
+        <div className={styles.footerContent}>
+          <Footer />
+        </div>
+      </div>
     </div>
   );
 }
