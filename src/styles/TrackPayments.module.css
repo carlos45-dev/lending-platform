@@ -102,6 +102,10 @@
   font-size: 1.5rem;
   color: #facc15;
 }
+.footerWrapper {
+  width: 100vw; 
+  overflow-x: hidden;
+}
 
 @media (min-width: 768px) {
   .trackContainer {

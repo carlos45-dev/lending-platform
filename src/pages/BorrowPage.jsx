@@ -3,7 +3,10 @@ import styles from '../styles/Lend.module.css';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 function BorrowPage() {
+
+  const navigate = useNavigate();
 
   useEffect(() => {
                 const originalDisplay = document.body.style.display;
@@ -54,7 +57,7 @@ function BorrowPage() {
               <p><span>MWK400000</span> for <span>2 weeks</span></p>
               <p>Interest : <span>7.8%</span></p>
               <p>Progress : <span style={{color:'red'}}>Due date in 2 days</span></p>
-              <button>Repay</button>
+              <button onClick={() => navigate("/mark-paid")}>Mark as Paid</button>
             </div>
           </section>
         </main>

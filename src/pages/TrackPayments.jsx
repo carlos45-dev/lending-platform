@@ -30,6 +30,7 @@ const navigate = useNavigate();
   const calculatePercentage = (paid, total) => Math.round((paid / total) * 100);
 
   return (
+    <>
     <div className={styles.trackContainer}>
       <Header />
       <div className={styles.section}>
@@ -88,9 +89,11 @@ const navigate = useNavigate();
           ⭐⭐⭐⭐☆ 4.0 / 5
         </div>
       </div>
-
-      <Footer />
     </div>
+    <div className={styles.footerWrapper}>
+    <Footer />
+  </div>
+  </>
   );
 }
 
