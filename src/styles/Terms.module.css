@@ -1,0 +1,59 @@
+.wrapper {
+  min-height: 100vh;
+  width: 100vw;
+  background-color: #f9fafb;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20%;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.termsSection {
+  max-width: 1100px;
+  margin: auto;
+  padding: 2rem 1rem;
+  color: #1A2258;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.heading {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #1A2258;
+}
+
+.block {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.block h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #1A2258;
+}
+
+.block p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #333;
+}
+
+@media (min-width: 768px) {
+  .termsSection {
+    padding: 3rem 1rem;
+  }
+
+  .heading {
+    font-size: 2.2rem;
+  }
+
+  .block {
+    padding: 2rem;
+  }
+}

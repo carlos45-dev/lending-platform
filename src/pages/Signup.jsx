@@ -3,6 +3,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import styles from '../styles/SignUp.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 function Signup() {
   const [recaptchaValue, setRecaptchaValue] = useState(null);
@@ -87,7 +88,7 @@ function Signup() {
           <div className={styles.checkbox}>
                  <input className={styles.checkbox1} type="checkbox" id="terms" required />
                  <label htmlFor="terms" className={styles.label2}>
-                 I agree to the terms and conditions 
+                 I agree to the <Link to="/terms" style={{textDecoration: 'none'}}>terms and conditions </Link>
                 </label>
           </div>
 

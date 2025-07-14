@@ -10,7 +10,7 @@ function LendPage() {
   const navigate = useNavigate();
 
   function sendReminder(name) {
-    toast.success(`Reminder has been sent to ${name} `, {
+    toast.success(` A reminder has been sent to ${name} `, {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,

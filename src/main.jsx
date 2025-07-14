@@ -13,6 +13,7 @@ import Contact from './pages/Contact.jsx'
 import TrackPayments from './pages/TrackPayments.jsx'
 import MarkAsPaid from './pages/MarkPaid.jsx'
 import AboutPage from './pages/AboutPage.jsx'
+import TermsPage from './pages/Terms.jsx'
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
 
 const router = createBrowserRouter([
@@ -28,7 +29,8 @@ const router = createBrowserRouter([
   {path:"/contact", element:<Contact />},
   {path:"/track-payments", element:<TrackPayments />},
   {path:"/mark-paid", element:<MarkAsPaid />},
-  {path:"/about", element:<AboutPage />}
+  {path:"/about", element:<AboutPage />},
+  {path:"/terms", element:<TermsPage />}
 
 
 ])

@@ -1,13 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin, faGithub, faWhatsapp, faFacebook } from "@fortawesome/free-brands-svg-icons";
 import styles from '../styles/Footer.module.css';
+import { useNavigate } from "react-router-dom";
 
 function Footer(){
 
+ const navigate = useNavigate();
      return(
       <div className={styles.footerContainer}>
        <div className={ styles.termscontainer}>
-        <p>Terms and Conditions</p>
+        <p onClick={() => navigate("/terms")}>Terms and Conditions</p>
         <p>Cookies</p>
         <p>FAQS</p>
         <p>&copy; {new Date().getFullYear()} UniFund. All rights reserved.</p>
