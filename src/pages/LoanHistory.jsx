@@ -1,6 +1,6 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import styles from '../styles/TrackPayments.module.css';
+import styles from '../styles/LoanHistory.module.css';
 import { useEffect } from 'react';
 
 function LoanHistory() {
