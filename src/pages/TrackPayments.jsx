@@ -5,8 +5,7 @@ import { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
 function TrackPayments() {
-
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const originalDisplay = document.body.style.display;
@@ -31,69 +30,74 @@ const navigate = useNavigate();
 
   return (
     <>
-    <div className={styles.trackContainer}>
-      <Header />
-      <div className={styles.section}>
-        <h2 className={styles.heading}>Loans You Borrowed</h2>
-        <div className={styles.tableWrapper}>
-          <table className={styles.paymentTable}>
-            <thead>
-              <tr>
-                <th>Lender</th>
-                <th>Amount</th>
-                <th>Status</th>
-                <th>Date</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {borrowedLoans.map((loan, idx) => (
-                <tr key={idx}>
-                  <td>{loan.lender}</td>
-                  <td>MK {loan.amount.toLocaleString()}</td>
-                  <td className={loan.status === 'Paid' ? styles.paid : styles.pending}>{loan.status}</td>
-                  <td>{loan.date}</td>
-                  <td>
-                    {loan.status === "Pending" && (
-                      <button className={styles.confirmBtn } onClick={() => navigate("/mark-paid")}>Mark as Paid</button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div className={styles.section}>
-        <h2 className={styles.heading}>Loans You Lent</h2>
-        {lentLoans.map((loan, idx) => {
-          const percent = calculatePercentage(loan.paid, loan.total);
-          return (
-            <div key={idx} className={styles.skillBox}>
-              <div className={styles.skillHeader}>
-                <span>{loan.borrower}</span>
-                <span>{percent}%</span>
-              </div>
-              <div className={styles.progressBar}>
-                <div className={styles.progressFill} style={{ width: `${percent}%` }}></div>
-              </div>
+      <div className={styles.pageWrapper}>
+        <Header />
+        <main className={styles.mainContent}>
+          <div className={styles.section}>
+            <h2 className={styles.heading}>Loans You Borrowed</h2>
+            <div className={styles.tableWrapper}>
+              <table className={styles.paymentTable}>
+                <thead>
+                  <tr>
+                    <th>Lender</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {borrowedLoans.map((loan, idx) => (
+                    <tr key={idx}>
+                      <td>{loan.lender}</td>
+                      <td>MK {loan.amount.toLocaleString()}</td>
+                      <td className={loan.status === 'Paid' ? styles.paid : styles.pending}>
+                        {loan.status}
+                      </td>
+                      <td>{loan.date}</td>
+                      <td>
+                        {loan.status === "Pending" && (
+                          <button className={styles.confirmBtn} onClick={() => navigate("/mark-paid")}>
+                            Mark as Paid
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          );
-        })}
+          </div>
+
+          <div className={styles.section}>
+            <h2 className={styles.heading}>Loans You Lent</h2>
+            {lentLoans.map((loan, idx) => {
+              const percent = calculatePercentage(loan.paid, loan.total);
+              return (
+                <div key={idx} className={styles.skillBox}>
+                  <div className={styles.skillHeader}>
+                    <span>{loan.borrower}</span>
+                    <span>{percent}%</span>
+                  </div>
+                  <div className={styles.progressBar}>
+                    <div className={styles.progressFill} style={{ width: `${percent}%` }}></div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className={styles.ratingSection}>
+            <h2 className={styles.heading}>Your Trust Rating</h2>
+            <div className={styles.stars}>⭐⭐⭐⭐☆ 4.0 / 5</div>
+          </div>
+        </main>
       </div>
 
-      <div className={styles.ratingSection}>
-        <h2 className={styles.heading}>Your Trust Rating</h2>
-        <div className={styles.stars}>
-          ⭐⭐⭐⭐☆ 4.0 / 5
-        </div>
-      </div>
-    </div>
-    <div className={styles.footerWrapper}>
-    <Footer />
-  </div>
-  </>
+      <footer className={styles.footerContainer}>
+        <Footer />
+      </footer>
+    </>
   );
 }
 
