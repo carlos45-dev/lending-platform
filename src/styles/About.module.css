@@ -4,7 +4,7 @@
   background-color: #f9fafb;
   display: flex;
   flex-direction: column;
-  padding-top: 280%; /* for fixed header on small screens */
+  padding-top: 10%;
 }
 
 .aboutSection {
@@ -75,9 +75,8 @@
 
 @media (min-width: 768px) {
   .aboutWrapper {
-    padding-top: 70%; /* cleaner spacing below fixed header */
+    padding-top: 2%;
   }
-
   .aboutSection {
     flex-direction: row;
     align-items: center;

@@ -2,9 +2,17 @@ import React from 'react';
 import styles from '../styles/About.module.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import aboutImg from '../assets/borrow.jfif'; // Replace with your image path
+import aboutImg from '../assets/borrow.jfif'; 
+import { useEffect } from 'react';
 
 function AboutPage() {
+     useEffect(() => {
+                    const originalDisplay = document.body.style.display;
+                    document.body.style.display = 'block';
+                    return () => {
+                    document.body.style.display = originalDisplay;
+                      };
+         }, []);
   return (
     <>
       <div className={styles.aboutWrapper}>
@@ -41,7 +49,7 @@ function AboutPage() {
         {/* Second Section: Text Left, Image Right */}
         <section className={styles.aboutSection}>
           <div className={styles.aboutContent}>
-            <div className={styles.aboutBlock} style={{paddingLeft:'20px'}}>
+            <div className={styles.aboutBlock} style={{paddingLeft:'5px'}}>
               <h3>Description</h3>
               <p>
                 The app works by allowing lenders to post loan offers on their own terms, which are then made
