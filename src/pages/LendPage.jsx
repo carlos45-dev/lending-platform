@@ -56,17 +56,17 @@ function LendPage() {
   }
 
   useEffect(() => {
+    const originalDisplay = document.body.style.display;
     document.body.style.display = 'block';
 
-    // Get offer from localStorage if available
     const newOffer = JSON.parse(localStorage.getItem('newOffer'));
     if (newOffer) {
       setOffers(prev => [...prev, newOffer]);
-      localStorage.removeItem('newOffer'); // clear after use
+      localStorage.removeItem('newOffer');
     }
 
     return () => {
-      document.body.style.display = 'initial';
+      document.body.style.display = originalDisplay;
     };
   }, []);
 
