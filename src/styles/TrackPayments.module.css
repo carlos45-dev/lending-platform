@@ -1,5 +1,134 @@
-
 .pageWrapper {
+  min-height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  background-color: #f9fafb;
+  display: flex;
+  flex-direction: column;
+  margin-top: 15%;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 1.25rem 1rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.03);
+}
+
+.heading {
+  text-align: center;
+  color: #1A2258;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+/* Table */
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: 6px;
+}
+
+.paymentTable {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+}
+
+.paymentTable th,
+.paymentTable td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.paymentTable th {
+  background-color: #f9f9f9;
+  color: #1A2258;
+}
+
+.paid {
+  color: green;
+  font-weight: bold;
+}
+
+.pending {
+  color: orange;
+  font-weight: bold;
+}
+
+.confirmBtn {
+  background-color: #1A2258;
+  color: white;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.confirmBtn:hover {
+  background-color: #333c7b;
+}
+
+/* Progress Bars */
+.skillBox {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.skillHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.progressBar {
+  height: 8px;
+  background-color: #eee;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progressFill {
+  background-color: #1A2258;
+  height: 100%;
+  transition: width 0.3s ease;
+  border-radius: 6px;
+}
+
+/* Rating */
+.ratingSection {
+  text-align: center;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.stars {
+  font-size: 1.5rem;
+  color: #facc15;
+}
+
+/* Footer */
+.footerContainer {
+  width: 100%;
+  background: white;
+  box-shadow: 0 -1px 5px rgba(0,0,0,0.05);
+}
+
+/* Responsive Improvements */
+@media (min-width: 768px) {
+  .pageWrapper {
   min-height: 100vh;
   width: 100vw;
   overflow-x: hidden;
@@ -121,11 +250,4 @@
   background: white;
   box-shadow: 0 -1px 5px rgba(0,0,0,0.05);
 }
-
-@media (min-width: 768px) {
-  .mainContent {
-    padding: 2rem;
-    max-width: 1100px;
-    margin: auto;
-  }
 }
