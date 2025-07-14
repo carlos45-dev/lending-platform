@@ -8,6 +8,8 @@ function BorrowPage() {
 
   const navigate = useNavigate();
 
+  
+
   useEffect(() => {
                 const originalDisplay = document.body.style.display;
                 document.body.style.display = 'block';
