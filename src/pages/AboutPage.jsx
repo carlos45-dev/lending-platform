@@ -52,7 +52,7 @@ function AboutPage() {
             <div className={styles.aboutBlock} style={{paddingLeft:'5px'}}>
               <h3>Description</h3>
               <p>
-                The app works by allowing lenders to post loan offers on their own terms, which are then made
+                The platform works by allowing lenders to post loan offers on their own terms, which are then made
                 visible to all users. Interested borrowers can send requests to lenders through the platform.
                 Once the lender accepts and a transaction occurs, the app begins tracking repayment progress.
                 Borrowers build a trust score over time, and those with higher ratings are shown first when they

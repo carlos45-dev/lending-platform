@@ -34,10 +34,10 @@ function Header() {
               <Link to="/home" style={{ color: '#1A2258', fontWeight: 'bold' }}>Home</Link>
             </li>
             <li>
-              <a href="#" style={{ color: '#1A2258', fontWeight: 'bold' }}>Services</a>
+              <Link to="/services" style={{ color: '#1A2258', fontWeight: 'bold' }}>Services</Link>
             </li>
             <li>
-              <a href="#" style={{ color: '#1A2258', fontWeight: 'bold' }}>About</a>
+              <Link to="/about" style={{ color: '#1A2258', fontWeight: 'bold' }}>About</Link>
             </li>
             <li>
               <Link to="/contact" style={{ color: '#1A2258', fontWeight: 'bold' }}>Contact</Link>
@@ -76,7 +76,9 @@ function Header() {
                 <Link to="/home" className={styles.menu}>{item}</Link>
               ) : item === 'Contact' ? (
                 <Link to="/contact" className={styles.menu}>{item}</Link>
-              ) : item === 'Logout' ? (
+              )  : item === 'About' ? (
+                <Link to="/about" className={styles.menu}>{item}</Link>
+              ): item === 'Logout' ? (
                 <Link to="/" className={styles.menu}>{item}</Link>
               ) : (
                 <a href="#" className={styles.menu}>{item}</a>
