@@ -14,6 +14,7 @@ import TrackPayments from './pages/TrackPayments.jsx'
 import MarkAsPaid from './pages/MarkPaid.jsx'
 import AboutPage from './pages/AboutPage.jsx'
 import TermsPage from './pages/Terms.jsx'
+import AddOfferPage from './pages/AddOfferPage.jsx'
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
 
 const router = createBrowserRouter([
@@ -30,9 +31,8 @@ const router = createBrowserRouter([
   {path:"/track-payments", element:<TrackPayments />},
   {path:"/mark-paid", element:<MarkAsPaid />},
   {path:"/about", element:<AboutPage />},
-  {path:"/terms", element:<TermsPage />}
-
-
+  {path:"/terms", element:<TermsPage />},
+  {path:"/add-offer", element:<AddOfferPage />}
 ])
 
 createRoot(document.getElementById('root')).render(

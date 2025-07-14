@@ -22,7 +22,7 @@ function HomePage(){
               return () => {
               document.body.style.display = originalDisplay;
                 };
-   }, []);
+   }, []);                  
 
    return(
       <>
