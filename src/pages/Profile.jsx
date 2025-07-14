@@ -107,8 +107,8 @@ function Profile() {
             <FontAwesomeIcon icon={faShareAlt} />
             <p>Share</p>
           </div>
-          <div>
-            <FontAwesomeIcon icon={faInfoCircle} />
+          <div onClick={() => navigate("/about")}>
+            <FontAwesomeIcon icon={faInfoCircle}  />
             <p>About Us</p>
           </div>
         </div>

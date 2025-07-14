@@ -1,0 +1,105 @@
+.aboutWrapper {
+  min-height: 100vh;
+  width: 100vw;
+  background-color: #f9fafb;
+  display: flex;
+  flex-direction: column;
+  padding-top: 280%; /* for fixed header on small screens */
+}
+
+.aboutSection {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem 1rem;
+  max-width: 1100px;
+  margin: auto;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Alternate layout for second block (text left, image right) */
+.reverseSection {
+  flex-direction: column;
+}
+
+.aboutImage img {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.aboutContent {
+  color: #1A2258;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+/* Headings */
+.heading {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #1A2258;
+}
+
+.aboutBlock {
+  margin-bottom: 2rem;
+}
+
+.aboutBlock h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #1A2258;
+}
+
+.aboutBlock p,
+.aboutBlock ul {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.aboutBlock ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+
+/* For additional description layout */
+.descriptionSection {
+  padding: 2rem 1rem;
+  max-width: 1100px;
+  margin: auto;
+  font-family: 'Segoe UI', sans-serif;
+  color: #1A2258;
+}
+
+@media (min-width: 768px) {
+  .aboutWrapper {
+    padding-top: 70%; /* cleaner spacing below fixed header */
+  }
+
+  .aboutSection {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    padding: 3rem 1rem;
+  }
+
+  
+
+  .aboutContent {
+    flex: 1;
+  }
+
+  .aboutImage {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .descriptionSection {
+    margin-top: 3rem;
+    padding: 3rem 1rem 2rem;
+  }
+}
