@@ -3,11 +3,13 @@
   max-width: 400px;
   margin: auto;
 }
-
-.header {
+.title {
   text-align: center;
-  margin-bottom: 20px;
-  font-size: 1.3rem;
+ font-size:1.2rem ;
+  color: #1A2258;
+  margin-top: 20%;
+  margin-bottom:10% ;
+  
 }
 
 .input {
@@ -130,7 +132,7 @@
       .formGroup {
       position: relative;
       margin-bottom: 20px;
-}
+   }
    .label{
     margin-left: -30%;
    }
