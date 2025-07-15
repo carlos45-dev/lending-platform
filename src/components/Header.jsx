@@ -2,10 +2,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUser, faBars } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import styles from '../styles/Header.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -13,6 +15,24 @@ function Header() {
 
   const closeSidebar = () => {
     setIsOpen(false);
+  };
+
+  const scrollToServices = () => {
+    const scroll = () => {
+      const section = document.getElementById('services');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+        closeSidebar();
+      }
+    };
+
+    if (location.pathname !== '/home') {
+      navigate('/home');
+      // Wait for the next render
+      setTimeout(scroll, 300); // Delay helps wait for page render
+    } else {
+      scroll();
+    }
   };
 
   const menuItems = ['Home', 'Services', 'About', 'Contact', 'Logout'];
@@ -34,7 +54,12 @@ function Header() {
               <Link to="/home" style={{ color: '#1A2258', fontWeight: 'bold' }}>Home</Link>
             </li>
             <li>
-              <Link to="/services" style={{ color: '#1A2258', fontWeight: 'bold' }}>Services</Link>
+              <button
+                onClick={scrollToServices}
+                style={{ background: 'none', border: 'none', color: '#1A2258', fontWeight: 'bold', cursor: 'pointer' }}
+              >
+                Services
+              </button>
             </li>
             <li>
               <Link to="/about" style={{ color: '#1A2258', fontWeight: 'bold' }}>About</Link>
@@ -73,15 +98,19 @@ function Header() {
               className={`${styles.menuItem} ${isOpen ? styles['menu-item'] : ''}`}
             >
               {item === 'Home' ? (
-                <Link to="/home" className={styles.menu}>{item}</Link>
+                <Link to="/home" className={styles.menu} onClick={closeSidebar}>{item}</Link>
               ) : item === 'Contact' ? (
-                <Link to="/contact" className={styles.menu}>{item}</Link>
-              )  : item === 'About' ? (
-                <Link to="/about" className={styles.menu}>{item}</Link>
-              ): item === 'Logout' ? (
-                <Link to="/" className={styles.menu}>{item}</Link>
+                <Link to="/contact" className={styles.menu} onClick={closeSidebar}>{item}</Link>
+              ) : item === 'About' ? (
+                <Link to="/about" className={styles.menu} onClick={closeSidebar}>{item}</Link>
+              ) : item === 'Logout' ? (
+                <Link to="/" className={styles.menu} onClick={closeSidebar}>{item}</Link>
+              ) : item === 'Services' ? (
+                <button onClick={scrollToServices} className={styles.menu} style={{ background: 'none', border: 'none' }}>
+                  {item}
+                </button>
               ) : (
-                <a href="#" className={styles.menu}>{item}</a>
+                <span className={styles.menu}>{item}</span>
               )}
             </li>
           ))}

@@ -41,7 +41,7 @@ function HomePage(){
           💬'I borrowed K30,000 for textbooks and paid it off in 3 months — super helpful!' — James, UNIMA"</p>
 
               {/*cards to display services offered by unifund*/}
-               <div className={styles.servicesContainer}>
+               <div id="services" className={styles.servicesContainer}>
                           <Services title={<p> Lend <br /> Money</p>} image={img3} onClick={() => navigate("/lend")}/>
                           <Services title={<p>Borrow <br/> Money</p>} image={img4} onClick={() => navigate("/borrow")}/>
                           <Services title = {<p>Loan <br/> History</p>} image={img5} onClick={() => navigate("/loan-history")}/>
