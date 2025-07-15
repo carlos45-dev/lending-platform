@@ -3,7 +3,7 @@ import styles from '../styles/About.module.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import aboutImg from '../assets/about.jfif'; 
-import about2 from '../assets/about2.jfif';
+import about2 from '../assets/borrow.jfif';
 import { useEffect } from 'react';
 
 function AboutPage() {
