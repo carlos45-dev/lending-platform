@@ -2,7 +2,8 @@ import React from 'react';
 import styles from '../styles/About.module.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import aboutImg from '../assets/borrow.jfif'; 
+import aboutImg from '../assets/about.jfif'; 
+import about2 from '../assets/about2.jfif';
 import { useEffect } from 'react';
 
 function AboutPage() {
@@ -21,7 +22,7 @@ function AboutPage() {
         {/* First Section: Image Left, Text Right */}
         <main className={styles.aboutSection}>
           <div className={styles.aboutImage}>
-            <img src={aboutImg} alt="Students collaborating" />
+            <img src={about2} alt="Students collaborating" />
           </div>
 
           <div className={styles.aboutContent}>
