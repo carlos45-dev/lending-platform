@@ -12,8 +12,6 @@ function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [responseTime, setResponseTime] = useState(null);
   const navigate = useNavigate();
 
   const handlePasswordToggle = () => {
@@ -22,9 +20,6 @@ function SignIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    setIsLoading(true);
-    const startTime = performance.now();
 
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -37,19 +32,15 @@ function SignIn() {
       if (docSnap.exists()) {
         const userData = docSnap.data();
         console.log("User profile:", userData);
+        // You can store this in context or local storage if needed
       } else {
         console.log("No profile found in Firestore.");
       }
-
-      const endTime = performance.now();
-      setResponseTime(Math.round(endTime - startTime));
       navigate("/home");
 
     } catch (error) {
       console.error("Error signing in:", error.message);
       alert(error.message);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -79,7 +70,6 @@ function SignIn() {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              disabled={isLoading}
             />
             <FontAwesomeIcon className={styles['input-icon']} icon={faUser} />
           </div>
@@ -96,7 +86,6 @@ function SignIn() {
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              disabled={isLoading}
             />
             <FontAwesomeIcon className={styles['input-icon2']} icon={faLock} />
             <span className={styles['eye-container']} onClick={handlePasswordToggle}>
@@ -106,16 +95,9 @@ function SignIn() {
           </div>
 
           {/* Submit */}
-          <button className={styles.submit} type="submit" disabled={isLoading}>
-            {isLoading ? "Signing In..." : "Sign In"}
+          <button className={styles.submit} type="submit">
+            Sign In
           </button>
-
-          {/* Response Time */}
-          {responseTime !== null && (
-            <p style={{ textAlign: "center", color: "#888", marginTop: "10px" }}>
-              ⏱ Response time: {responseTime}ms
-            </p>
-          )}
 
           <p className={styles.signup}>
             Don't have an account? <Link to="/signup" className={styles.signup}>Sign Up</Link>
