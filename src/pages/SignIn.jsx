@@ -3,71 +3,90 @@ import img from '../assets/favicon.ico';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 function SignIn() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  //manage state of the showpassword icon
-  const [showpassword, setShowPassword] = useState(false);
+  const handlePasswordToggle = () => {
+    setShowPassword(!showPassword);
+  };
 
-  const handlepasswordToggle = () => {
-    setShowPassword(!showpassword);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log("User signed in:", userCredential.user);
+      alert("Login successful!");
+      navigate("/home"); // redirect after successful login
+    } catch (error) {
+      console.error("Error signing in:", error.message);
+      alert(error.message);
+    }
   };
 
   return (
     <>
-    {/*header section*/}
-        <div className={styles.header}>
-                     <span className={styles.logo}>
-                           <img src={img} alt="UniFund Logo" />
-                     </span>
-                     <h2 className={styles.title}>UniFund</h2>
-        </div>
+      {/* Header */}
+      <div className={styles.header}>
+        <span className={styles.logo}>
+          <img src={img} alt="UniFund Logo" />
+        </span>
+        <h2 className={styles.title}>UniFund</h2>
+      </div>
 
       <div className={styles['signin-container']}>
+        <h3>Sign In</h3>
 
-                <h3>Sign In</h3>
-
-                <form>
-                 <div className={styles['form-group']}>
-                        <label htmlFor="email">Student Email:</label>
-                              <input
-                              type="email"
-                              id="email"
-                              name="email"
-                              required
-                              className={styles.input}
-                              placeholder="Enter your email"
-                            />
-                         <FontAwesomeIcon className={styles['input-icon']} icon={faUser} />
+        <form onSubmit={handleSubmit}>
+          <div className={styles['form-group']}>
+            <label htmlFor="email">Student Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              className={styles.input}
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <FontAwesomeIcon className={styles['input-icon']} icon={faUser} />
           </div>
 
-         {/*password section*/}
+          {/* Password */}
           <div className={styles['form-group2']}>
-                   <label htmlFor="password">Password:</label>
-                   <input
-                      type={showpassword ? 'text' : 'password'}
-                      id="password"
-                      name="password"
-                      required
-                      className={styles.input}
-                      placeholder="Enter your password"
-                    />
-               <FontAwesomeIcon className={styles['input-icon2']} icon={faLock} />
-            <span className={styles['eye-container']} onClick={handlepasswordToggle}>
-                 {showpassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
+            <label htmlFor="password">Password:</label>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              id="password"
+              name="password"
+              required
+              className={styles.input}
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <FontAwesomeIcon className={styles['input-icon2']} icon={faLock} />
+            <span className={styles['eye-container']} onClick={handlePasswordToggle}>
+              {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
             </span>
-                <a className={styles.forgot}>Forgot password?</a>
+            <a className={styles.forgot}>Forgot password?</a>
           </div>
 
-          {/*sign in button*/}
-
+          {/* Submit */}
           <button className={styles.submit} type="submit">
-            <Link to="/home" style={{textDecoration: 'none', color: 'white'}}>Sign In</Link>
+            Sign In
           </button>
 
           <p className={styles.signup}>
-             Don't have an account? <Link to="/signup" className={styles.signup}>Sign Up</Link>
+            Don't have an account? <Link to="/signup" className={styles.signup}>Sign Up</Link>
           </p>
         </form>
       </div>
