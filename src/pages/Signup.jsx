@@ -5,7 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEyeSlash, faEye, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
+import { doc, setDoc } from "firebase/firestore";
+import { useNavigate } from 'react-router-dom';
 
 function Signup() {
   const [recaptchaValue, setRecaptchaValue] = useState(null);
@@ -26,38 +28,44 @@ function Signup() {
     setRecaptchaValue(value);
   };
 
-  const handlePasswordToggle = () => {
-    setShowPassword(!showPassword);
-  };
+  const handlePasswordToggle = () => setShowPassword(!showPassword);
+  const handlePasswordToggle2 = () => setShowPassword2(!showPassword2);
 
-  const handlePasswordToggle2 = () => {
-    setShowPassword2(!showPassword2);
-  };
+  const navigate = useNavigate(); 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (!recaptchaValue) {
-      alert("Please complete the reCAPTCHA.");
-      return;
-    }
+  if (!recaptchaValue) {
+    alert("Please complete the reCAPTCHA.");
+    return;
+  }
 
-    if (password !== confirmPassword) {
-      alert("Passwords do not match.");
-      return;
-    }
+  if (password !== confirmPassword) {
+    alert("Passwords do not match.");
+    return;
+  }
 
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      console.log("User signed up:", user);
-      alert("Account created successfully!");
-      // Optionally redirect or store more user info in Firestore here
-    } catch (error) {
-      console.error("Signup error:", error.message);
-      alert(error.message);
-    }
-  };
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    await setDoc(doc(db, "users", user.uid), {
+      email,
+      username,
+      phone,
+      gender,
+      createdAt: new Date()
+    });
+
+    //REDIRECT A USER AFTER A SUCESSFUL LOGIN
+    navigate("/home"); 
+
+  } catch (error) {
+    console.error("Signup error:", error.message);
+    alert(error.message);
+  }
+};
 
   return (
     <>
@@ -130,40 +138,22 @@ function Signup() {
             </span>
           </div>
 
-          {/* Gender selection */}
+          {/* Gender Selection */}
           <div className={styles.gender}>
-            <div className={styles.gender2}>
-              <input
-                type="radio"
-                name="gender"
-                value="male"
-                id="male"
-                onChange={(e) => setGender(e.target.value)}
-              />
-              <label htmlFor="male" className={styles.label}>Male</label>
-            </div>
-
-            <div className={styles.gender2}>
-              <input
-                type="radio"
-                name="gender"
-                value="female"
-                id="female"
-                onChange={(e) => setGender(e.target.value)}
-              />
-              <label htmlFor="female" className={styles.label}>Female</label>
-            </div>
-
-            <div className={styles.gender2}>
-              <input
-                type="radio"
-                name="gender"
-                value="other"
-                id="other"
-                onChange={(e) => setGender(e.target.value)}
-              />
-              <label htmlFor="other" className={styles.label}>Other</label>
-            </div>
+            {["male", "female", "other"].map((value) => (
+              <div key={value} className={styles.gender2}>
+                <input
+                  type="radio"
+                  name="gender"
+                  value={value}
+                  id={value}
+                  onChange={(e) => setGender(e.target.value)}
+                />
+                <label htmlFor={value} className={styles.label}>
+                  {value.charAt(0).toUpperCase() + value.slice(1)}
+                </label>
+              </div>
+            ))}
           </div>
 
           <div className={styles.checkbox}>

@@ -5,7 +5,8 @@ import { faUser, faLock, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-i
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,9 +23,21 @@ function SignIn() {
 
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log("User signed in:", userCredential.user);
-      alert("Login successful!");
-      navigate("/home"); // redirect after successful login
+      const user = userCredential.user;
+
+      // Fetch user data from Firestore
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const userData = docSnap.data();
+        console.log("User profile:", userData);
+        // You can store this in context or local storage if needed
+      } else {
+        console.log("No profile found in Firestore.");
+      }
+      navigate("/home");
+
     } catch (error) {
       console.error("Error signing in:", error.message);
       alert(error.message);
@@ -45,6 +58,7 @@ function SignIn() {
         <h3>Sign In</h3>
 
         <form onSubmit={handleSubmit}>
+          {/* Email */}
           <div className={styles['form-group']}>
             <label htmlFor="email">Student Email:</label>
             <input
