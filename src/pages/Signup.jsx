@@ -4,7 +4,7 @@ import styles from '../styles/SignUp.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEyeSlash, faEye, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword,onAuthStateChanged  } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
@@ -59,7 +59,11 @@ const handleSubmit = async (e) => {
     });
 
     //REDIRECT A USER AFTER A SUCESSFUL LOGIN
-    navigate("/home"); 
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate("/home");
+      }
+    }) 
 
   } catch (error) {
     console.error("Signup error:", error.message);
