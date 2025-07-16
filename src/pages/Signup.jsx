@@ -3,16 +3,17 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import styles from '../styles/SignUp.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEyeSlash, faEye, faPhone } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
-import { createUserWithEmailAndPassword,onAuthStateChanged  } from "firebase/auth";
+import { Link, useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
-import { useNavigate } from 'react-router-dom';
 
 function Signup() {
   const [recaptchaValue, setRecaptchaValue] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [responseTime, setResponseTime] = useState(null);
 
   // Form state
   const [email, setEmail] = useState('');
@@ -23,53 +24,52 @@ function Signup() {
   const [gender, setGender] = useState('');
 
   const siteKey = "6LeZCXorAAAAAG7KhM3jjBoyWRANY4SE5AMh6rXF";
+  const navigate = useNavigate(); 
 
-  const handleRecaptchaChange = (value) => {
-    setRecaptchaValue(value);
-  };
-
+  const handleRecaptchaChange = (value) => setRecaptchaValue(value);
   const handlePasswordToggle = () => setShowPassword(!showPassword);
   const handlePasswordToggle2 = () => setShowPassword2(!showPassword2);
 
-  const navigate = useNavigate(); 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+    if (!recaptchaValue) {
+      alert("Please complete the reCAPTCHA.");
+      return;
+    }
 
-  if (!recaptchaValue) {
-    alert("Please complete the reCAPTCHA.");
-    return;
-  }
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
 
-  if (password !== confirmPassword) {
-    alert("Passwords do not match.");
-    return;
-  }
+    setIsLoading(true);
+    const startTime = performance.now();
 
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-    await setDoc(doc(db, "users", user.uid), {
-      email,
-      username,
-      phone,
-      gender,
-      createdAt: new Date()
-    });
+      await setDoc(doc(db, "users", user.uid), {
+        email,
+        username,
+        phone,
+        gender,
+        createdAt: new Date()
+      });
 
-    //REDIRECT A USER AFTER A SUCESSFUL LOGIN
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigate("/home");
-      }
-    }) 
+      const endTime = performance.now();
+      setResponseTime(Math.round(endTime - startTime));
 
-  } catch (error) {
-    console.error("Signup error:", error.message);
-    alert(error.message);
-  }
-};
+      navigate("/home");
+
+    } catch (error) {
+      console.error("Signup error:", error.message);
+      alert(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -84,6 +84,7 @@ const handleSubmit = async (e) => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
+              disabled={isLoading}
             />
             <FontAwesomeIcon className={styles["input-icon"]} icon={faUser} />
           </div>
@@ -96,6 +97,7 @@ const handleSubmit = async (e) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={isLoading}
             />
             <FontAwesomeIcon className={styles["input-icon"]} icon={faUser} />
           </div>
@@ -108,6 +110,7 @@ const handleSubmit = async (e) => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
+              disabled={isLoading}
             />
             <FontAwesomeIcon className={styles["input-icon"]} icon={faPhone} />
           </div>
@@ -120,6 +123,7 @@ const handleSubmit = async (e) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              disabled={isLoading}
             />
             <FontAwesomeIcon className={styles["input-icon2"]} icon={faLock} />
             <span className={styles["eye-container"]} onClick={handlePasswordToggle}>
@@ -135,6 +139,7 @@ const handleSubmit = async (e) => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
+              disabled={isLoading}
             />
             <FontAwesomeIcon className={styles["input-icon2"]} icon={faLock} />
             <span className={styles["eye-container"]} onClick={handlePasswordToggle2}>
@@ -152,6 +157,7 @@ const handleSubmit = async (e) => {
                   value={value}
                   id={value}
                   onChange={(e) => setGender(e.target.value)}
+                  disabled={isLoading}
                 />
                 <label htmlFor={value} className={styles.label}>
                   {value.charAt(0).toUpperCase() + value.slice(1)}
@@ -161,7 +167,7 @@ const handleSubmit = async (e) => {
           </div>
 
           <div className={styles.checkbox}>
-            <input className={styles.checkbox1} type="checkbox" id="terms" required />
+            <input className={styles.checkbox1} type="checkbox" id="terms" required disabled={isLoading} />
             <label htmlFor="terms" className={styles.label2}>
               I agree to the <Link to="/terms" style={{ textDecoration: 'none' }}>terms and conditions</Link>
             </label>
@@ -171,9 +177,16 @@ const handleSubmit = async (e) => {
             <ReCAPTCHA sitekey={siteKey} onChange={handleRecaptchaChange} />
           </div>
 
-          <button type="submit" className={styles.submit} disabled={!recaptchaValue}>
-            Sign Up
+          <button type="submit" className={styles.submit} disabled={!recaptchaValue || isLoading}>
+            {isLoading ? "Creating Account..." : "Sign Up"}
           </button>
+
+          {/* Show response time */}
+          {responseTime !== null && (
+            <p style={{ textAlign: "center", color: "#666", marginTop: "10px" }}>
+              ⏱ Signup response time: {responseTime}ms
+            </p>
+          )}
         </form>
       </div>
     </>
