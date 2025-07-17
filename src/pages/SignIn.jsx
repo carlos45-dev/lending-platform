@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword,sendPasswordResetEmail} from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 
@@ -59,6 +59,19 @@ function SignIn() {
       setIsLoading(false);
     }
   };
+  const handleForgotPassword = async () => {
+  if (!email) {
+    alert("Please enter your email above first.");
+    return;
+  }
+  try {
+    await sendPasswordResetEmail(auth, email);
+    alert("Password reset email sent! Check your inbox.");
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
 
   return (
     <>
@@ -109,7 +122,7 @@ function SignIn() {
             <span className={styles['eye-container']} onClick={handlePasswordToggle}>
               {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
             </span>
-            <a className={styles.forgot}>Forgot password?</a>
+            <a className={styles.forgot} onClick={handleForgotPassword}>Forgot password?</a>
           </div>
 
           {/* Submit */}
