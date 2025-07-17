@@ -5,18 +5,16 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getAuth } from 'firebase/auth';
+import { db } from '../firebase';
+import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 
 function LendPage() {
   const navigate = useNavigate();
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
 
-  const [offers, setOffers] = useState([
-    {
-      amount: "400000",
-      rate: "9.3",
-      duration: "2"
-    }
-  ]);
-
+  const [offers, setOffers] = useState([]);
   const [loanRequests] = useState([
     {
       name: "Amina Tinve",
@@ -30,7 +28,6 @@ function LendPage() {
       duration: "2 weeks",
       interest: "7.8%"
     },
-    
   ]);
 
   const [activeLoans] = useState([
@@ -43,21 +40,46 @@ function LendPage() {
     }
   ]);
 
+  const fetchUserOffers = async () => {
+    if (!currentUser) return;
+
+    try {
+      const querySnapshot = await getDocs(collection(db, 'offers'));
+      const filtered = [];
+      querySnapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        if (data.lenderId === currentUser.uid) {
+          filtered.push({ id: docSnap.id, ...data });
+        }
+      });
+      setOffers(filtered);
+    } catch (error) {
+      toast.error("Failed to load offers.");
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteDoc(doc(db, 'offers', id));
+      setOffers(prev => prev.filter(offer => offer.id !== id));
+      toast.success("Offer deleted successfully");
+    } catch (err) {
+      toast.error("Could not delete offer");
+    }
+  };
+
   function sendReminder(name) {
-    toast.success(` A reminder has been sent to ${name} `, {
+    toast.success(`A reminder has been sent to ${name}`, {
       position: "top-right",
       autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      theme: "light",
     });
   }
 
   useEffect(() => {
     const originalDisplay = document.body.style.display;
     document.body.style.display = 'block';
+
+    fetchUserOffers();
 
     const newOffer = JSON.parse(localStorage.getItem('newOffer'));
     if (newOffer) {
@@ -82,13 +104,18 @@ function LendPage() {
         <div className={styles.container}>
           <aside className={styles.sidebar}>
             <h3>Current Offer</h3>
-            {offers.map((offer, index) => (
-              <ul key={index}>
-                <li>Offering <b style={{ color: 'green' }}>MKW{offer.amount}</b></li>
-                <li>Rate <b style={{ color: 'green' }}>{offer.rate}%</b></li>
-                <li>Duration <b style={{ color: 'green' }}>{offer.duration} Weeks</b></li>
-              </ul>
-            ))}
+            {offers.length === 0 ? (
+              <p style={{ color: 'gray' }}>No active offers found.</p>
+            ) : (
+              offers.map((offer, index) => (
+                <ul key={offer.id || index}>
+                  <li>Offering <b style={{ color: 'green' }}>MKW{offer.amount}</b></li>
+                  <li>Rate <b style={{ color: 'green' }}>{offer.rate || offer.weeklyRates?.[0]?.rate}%</b></li>
+                  <li>Duration <b style={{ color: 'green' }}>{offer.duration || offer.weeklyRates?.length} Weeks</b></li>
+                  <button className={styles.deleteBtn} onClick={() => handleDelete(offer.id)}style={{backgroundColor:" #1A2258",color:"white",borderRadius:"5px"}}>Delete Offer</button>
+                </ul>
+              ))
+            )}
             <button className={styles.addOfferBtn} onClick={() => navigate("/add-offer")}>Add a new offer</button>
           </aside>
 
@@ -109,10 +136,10 @@ function LendPage() {
               <h3>Active Loans</h3>
               {activeLoans.map((loan, index) => (
                 <div className={styles.card} key={index}>
-                  <strong>Borrowed To : {loan.borrower}</strong>
+                  <strong>Borrowed To: {loan.borrower}</strong>
                   <p>Offered <span>{loan.amount}</span> for <span>{loan.duration}</span></p>
-                  <p>Interest : <span>{loan.interest}</span></p>
-                  <p>Progress : <span>{loan.progress}</span></p>
+                  <p>Interest: <span>{loan.interest}</span></p>
+                  <p>Progress: <span>{loan.progress}</span></p>
                   <button onClick={() => sendReminder(loan.borrower)}>Remind</button>
                 </div>
               ))}

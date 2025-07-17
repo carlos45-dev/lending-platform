@@ -1,37 +1,17 @@
 import styles from '../styles/Lend.module.css';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../firebase';
-import { getAuth } from 'firebase/auth';
+import { useAuth } from '../AuthContext'; 
 
 function BorrowPage() {
   const navigate = useNavigate();
-  const [offers, setOffers] = useState([]);
-  const auth = getAuth();
-  const currentUser = auth.currentUser;
+  const { offers, currentUser } = useAuth(); 
 
   useEffect(() => {
     const originalDisplay = document.body.style.display;
     document.body.style.display = 'block';
-
-    // Fetch offers from Firestore
-    const fetchOffers = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, 'offers'));
-        const fetchedOffers = [];
-        querySnapshot.forEach((doc) => {
-          fetchedOffers.push({ id: doc.id, ...doc.data() });
-        });
-        setOffers(fetchedOffers);
-      } catch (error) {
-        console.error("Error fetching offers:", error);
-      }
-    };
-
-    fetchOffers();
 
     return () => {
       document.body.style.display = originalDisplay;
@@ -62,6 +42,7 @@ function BorrowPage() {
 
           <main className={styles.main}>
             <section className={styles.loanRequests}>
+              {/*displaying the loans available*/}
               <h3>Offers Available</h3>
 
               {filteredOffers.length > 0 ? (
@@ -90,7 +71,7 @@ function BorrowPage() {
                 <p style={{ color: 'gray' }}>No offers available at the moment.</p>
               )}
             </section>
-
+            {/*displaying active loans */}
             <section className={styles.activeLoans}>
               <h3>My Active Loans</h3>
               <div className={styles.card}>
