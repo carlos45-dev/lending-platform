@@ -9,9 +9,12 @@ import img5 from '../assets/history.jfif'
 import styles from '../styles/HomePage.module.css';
 import Services from "../components/Services";
 import Footer  from "../components/Footer";
-
+import { useContext } from 'react';
+import { UserContext } from '../UserContext';
 
 function HomePage(){
+
+   const { userData } = useContext(UserContext);
 
   const navigate = useNavigate();
   
@@ -29,7 +32,7 @@ function HomePage(){
         <Header/>
 
         <h3 style={{textAlign:'center', paddingTop:'10px', fontFamily:'Inter',marginTop:'80px',color:'#1A2258'}} className={styles.welcome}>
-                    Welcome back Carlos Muleke</h3>
+                    Welcome Back {userData.username}</h3>
 
 
                <div className={styles.homeImage}>

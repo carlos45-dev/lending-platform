@@ -13,11 +13,19 @@ import {
   faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import user from "../assets/user.jfif";
+import { useContext } from 'react';
+import { UserContext } from '../UserContext';
 
 function Profile() {
+  //PROFILE IMAGE
   const [image, setImage] = useState(user);
+
   const navigate = useNavigate();
 
+  //USER DATA FROM FIRESTORE
+  const { userData } = useContext(UserContext);
+
+  //HANDLING IMAGE UPLOAD
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -25,6 +33,7 @@ function Profile() {
     }
   };
 
+   //HANDLING SHARE BUTTON
   const shareWebsite = () => {
     if (navigator.share) {
       navigator
@@ -80,18 +89,18 @@ function Profile() {
       </div>
 
       <div className={styles.information}>
-        <p className={styles.name}>Carlos Muleke</p>
+        <p className={styles.name}>{userData.username}</p>
 
         <div className={styles.detailLeft}>
           <FontAwesomeIcon icon={faEnvelope} />
           <span>Email:</span>
-          <p>example2@gmail.com</p>
+          <p>{userData.email}</p>
         </div>
 
         <div className={styles.detailLeft}>
           <FontAwesomeIcon icon={faPhone} />
           <span>Phone:</span>
-          <p>+265992779387</p>
+          <p>{userData.phone}</p>
         </div>
 
         <div className={styles.actions}>
