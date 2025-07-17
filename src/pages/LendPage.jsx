@@ -71,7 +71,7 @@ function LendPage() {
   function sendReminder(name) {
     toast.success(`A reminder has been sent to ${name}`, {
       position: "top-right",
-      autoClose: 3000,
+      autoClose: 1000,
     });
   }
 
