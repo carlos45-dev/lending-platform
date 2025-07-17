@@ -4,7 +4,7 @@ import styles from '../styles/SignUp.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEyeSlash, faEye, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 
@@ -15,7 +15,6 @@ function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const [responseTime, setResponseTime] = useState(null);
 
-  // Form state
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -24,7 +23,7 @@ function Signup() {
   const [gender, setGender] = useState('');
 
   const siteKey = "6LeZCXorAAAAAG7KhM3jjBoyWRANY4SE5AMh6rXF";
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleRecaptchaChange = (value) => setRecaptchaValue(value);
   const handlePasswordToggle = () => setShowPassword(!showPassword);
@@ -50,6 +49,11 @@ function Signup() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
+      // 📨 Send Email Verification
+      await sendEmailVerification(user);
+      alert("A verification email has been sent to your inbox. Please verify before logging in.");
+
+      // Save user info in Firestore
       await setDoc(doc(db, "users", user.uid), {
         email,
         username,
@@ -61,7 +65,8 @@ function Signup() {
       const endTime = performance.now();
       setResponseTime(Math.round(endTime - startTime));
 
-      navigate("/home");
+      // Redirect to verification info page
+      navigate("/verify-email");
 
     } catch (error) {
       console.error("Signup error:", error.message);
@@ -76,89 +81,53 @@ function Signup() {
       <h2 className={styles.title}>Get started with your account</h2>
       <div className={styles.signup}>
         <form onSubmit={handleSubmit}>
+          {/* Username */}
           <div className={styles.formGroup}>
-            <input
-              type="text"
-              className={styles.input}
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              disabled={isLoading}
-            />
+            <input type="text" className={styles.input} placeholder="Username"
+              value={username} onChange={(e) => setUsername(e.target.value)} required disabled={isLoading} />
             <FontAwesomeIcon className={styles["input-icon"]} icon={faUser} />
           </div>
 
+          {/* Email */}
           <div className={styles.formGroup}>
-            <input
-              type="email"
-              className={styles.input}
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              disabled={isLoading}
-            />
+            <input type="email" className={styles.input} placeholder="Email"
+              value={email} onChange={(e) => setEmail(e.target.value)} required disabled={isLoading} />
             <FontAwesomeIcon className={styles["input-icon"]} icon={faUser} />
           </div>
 
+          {/* Phone */}
           <div className={styles.formGroup}>
-            <input
-              type="tel"
-              className={styles.input}
-              placeholder="Phone Number"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-              disabled={isLoading}
-            />
+            <input type="tel" className={styles.input} placeholder="Phone Number"
+              value={phone} onChange={(e) => setPhone(e.target.value)} required disabled={isLoading} />
             <FontAwesomeIcon className={styles["input-icon"]} icon={faPhone} />
           </div>
 
+          {/* Password */}
           <div className={styles.formGroup}>
-            <input
-              type={showPassword ? "text" : "password"}
-              className={styles.input}
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              disabled={isLoading}
-            />
+            <input type={showPassword ? "text" : "password"} className={styles.input} placeholder="Password"
+              value={password} onChange={(e) => setPassword(e.target.value)} required disabled={isLoading} />
             <FontAwesomeIcon className={styles["input-icon2"]} icon={faLock} />
             <span className={styles["eye-container"]} onClick={handlePasswordToggle}>
               {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
             </span>
           </div>
 
+          {/* Confirm Password */}
           <div className={styles.formGroup}>
-            <input
-              type={showPassword2 ? "text" : "password"}
-              className={styles.input}
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              disabled={isLoading}
-            />
+            <input type={showPassword2 ? "text" : "password"} className={styles.input} placeholder="Confirm Password"
+              value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required disabled={isLoading} />
             <FontAwesomeIcon className={styles["input-icon2"]} icon={faLock} />
             <span className={styles["eye-container"]} onClick={handlePasswordToggle2}>
               {showPassword2 ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
             </span>
           </div>
 
-          {/* Gender Selection */}
+          {/* Gender */}
           <div className={styles.gender}>
             {["male", "female", "other"].map((value) => (
               <div key={value} className={styles.gender2}>
-                <input
-                  type="radio"
-                  name="gender"
-                  value={value}
-                  id={value}
-                  onChange={(e) => setGender(e.target.value)}
-                  disabled={isLoading}
-                />
+                <input type="radio" name="gender" value={value} id={value}
+                  onChange={(e) => setGender(e.target.value)} disabled={isLoading} />
                 <label htmlFor={value} className={styles.label}>
                   {value.charAt(0).toUpperCase() + value.slice(1)}
                 </label>
@@ -166,6 +135,7 @@ function Signup() {
             ))}
           </div>
 
+          {/* Terms */}
           <div className={styles.checkbox}>
             <input className={styles.checkbox1} type="checkbox" id="terms" required disabled={isLoading} />
             <label htmlFor="terms" className={styles.label2}>
@@ -173,15 +143,17 @@ function Signup() {
             </label>
           </div>
 
+          {/* reCAPTCHA */}
           <div className={styles.recaptchaWrapper}>
             <ReCAPTCHA sitekey={siteKey} onChange={handleRecaptchaChange} />
           </div>
 
+          {/* Submit */}
           <button type="submit" className={styles.submit} disabled={!recaptchaValue || isLoading}>
             {isLoading ? "Creating Account..." : "Sign Up"}
           </button>
 
-          {/* Show response time */}
+          {/* Response Time */}
           {responseTime !== null && (
             <p style={{ textAlign: "center", color: "#666", marginTop: "10px" }}>
               ⏱ Signup response time: {responseTime}ms

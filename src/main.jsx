@@ -15,12 +15,14 @@ import MarkAsPaid from './pages/MarkPaid.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 import TermsPage from './pages/Terms.jsx';
 import AddOfferPage from './pages/AddOfferPage.jsx';
+import VerifyEmail from './pages/VerifyEmail.jsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { AuthProvider } from './AuthContext.jsx';
 import PrivateRoute from './PrivateRoute.jsx';
 
 const router = createBrowserRouter([
+  //The initial pages 
   { path: "/", element: <SignIn /> },
   { path: "/signup", element: <SignUp /> },
 
@@ -35,6 +37,7 @@ const router = createBrowserRouter([
   { path: "/track-payments", element: <PrivateRoute><TrackPayments /></PrivateRoute> },
   { path: "/mark-paid", element: <PrivateRoute><MarkAsPaid /></PrivateRoute> },
   { path: "/add-offer", element: <PrivateRoute><AddOfferPage /></PrivateRoute> },
+  {path: "/verify-email",element:<PrivateRoute><VerifyEmail/></PrivateRoute>},
 
   // Public pages
   { path: "/about", element: <AboutPage /> },
