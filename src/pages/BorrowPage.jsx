@@ -69,15 +69,20 @@ function BorrowPage() {
                   <div className={styles.card} key={offer.id}>
                     <strong>{offer.lenderUsername}</strong>
                     <p>
-                      Offers Up To <span>MWK{offer.amount}</span> for{' '}
+                      Offers Up To <span>MWK{offer.amount}</span> for{" "}
                       <span>
                         {offer.weeklyRates?.length || 1}{" "}
                         {(offer.weeklyRates?.length || 1) === 1 ? "week" : "weeks"}
                       </span>
                     </p>
-                    <p>
-                      Interest: <span>{offer.weeklyRates?.[0]?.rate || 0}%</span>
-                    </p>
+                    <p><b>Interest Breakdown:</b></p>
+                    <ul style={{ paddingLeft: "20px", marginTop: "4px" }}>
+                      {offer.weeklyRates?.map((week, index) => (
+                        <li key={index}>
+                          Week {index + 1}: {week.rate}%
+                        </li>
+                      ))}
+                    </ul>
                     <button>Borrow</button>
                   </div>
                 ))
