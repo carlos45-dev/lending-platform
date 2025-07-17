@@ -22,7 +22,7 @@ function VerifyEmail() {
     <div style={{ textAlign: "center", padding: "2rem" }}>
       <h2>📧 Please verify your email</h2>
       <p>We've sent a verification link to your email address.</p>
-      <p>Once verified, you'll be automatically redirected to your dashboard.</p>
+      <p>Please check your **Spam** or **Promotions** folder if you don't see it</p>
     </div>
   );
 }
