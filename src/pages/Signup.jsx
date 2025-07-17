@@ -51,8 +51,7 @@ function Signup() {
 
       // 📨 Send Email Verification
       await sendEmailVerification(user);
-      alert("A verification email has been sent to your inbox. Please verify before logging in.");
-
+      
       // Save user info in Firestore
       await setDoc(doc(db, "users", user.uid), {
         email,

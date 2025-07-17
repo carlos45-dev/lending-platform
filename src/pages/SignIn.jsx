@@ -30,7 +30,14 @@ function SignIn() {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Fetch user data from Firestore
+      // 🚫 Prevent login if email not verified
+      if (!user.emailVerified) {
+        alert("Please verify your email address before logging in.");
+        setIsLoading(false);
+        return;
+      }
+
+      // ✅ Load Firestore user profile
       const docRef = doc(db, "users", user.uid);
       const docSnap = await getDoc(docRef);
 
