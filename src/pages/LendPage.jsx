@@ -54,7 +54,7 @@ function LendPage() {
       });
       setOffers(filtered);
     } catch (error) {
-      toast.error("Failed to load offers.");
+      toast.error("Failed to load offers.", { autoClose: 1000 });
     }
   };
 
@@ -62,9 +62,9 @@ function LendPage() {
     try {
       await deleteDoc(doc(db, 'offers', id));
       setOffers(prev => prev.filter(offer => offer.id !== id));
-      toast.success("Offer deleted successfully");
+      toast.success("Offer deleted successfully", { autoClose: 1000 });
     } catch (err) {
-      toast.error("Could not delete offer");
+      toast.error("Could not delete offer", { autoClose: 1000 });
     }
   };
 
@@ -122,7 +122,6 @@ function LendPage() {
                       <b style={{ color: 'green' }}> {offer.rate || 'N/A'}%</b>
                     )}
                   </li>
-                  
                   <button
                     className={styles.deleteBtn}
                     onClick={() => handleDelete(offer.id)}
