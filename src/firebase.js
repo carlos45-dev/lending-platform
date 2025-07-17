@@ -6,13 +6,13 @@ import { getFirestore } from "firebase/firestore";
 
 // Your Firebase configuration (corrected)
 const firebaseConfig = {
-  apiKey: "AIzaSyCyMn-5rA06QuMZC3l4BxxidLjo_VH67FA",
-  authDomain: "unifund-lending-application.firebaseapp.com",
-  projectId: "unifund-lending-application",
-  storageBucket: "unifund-lending-application.appspot.com", // ✅ FIXED
-  messagingSenderId: "659826185839",
-  appId: "1:659826185839:web:ff5df12888451660359f9a",
-  measurementId: "G-WN5L1WRG2D"
+  apiKey: "AIzaSyDXQhkZ0-QC2lM4Xzy4wb_LruzkRuJfgrg",
+  authDomain: "unifund-lending-applicat-c2347.firebaseapp.com",
+  projectId: "unifund-lending-applicat-c2347",
+  storageBucket: "unifund-lending-applicat-c2347.firebasestorage.app",
+  messagingSenderId: "510300911232",
+  appId: "1:510300911232:web:ad6255b79e9de9eea9d865",
+  measurementId: "G-9RRFGB89XG"
 };
 
 // Initialize Firebase
