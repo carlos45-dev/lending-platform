@@ -2,7 +2,7 @@ import { useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import styles from '../styles/SignUp.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLock, faEyeSlash, faEye, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock, faEyeSlash, faEye, faPhone,faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth, db } from "../firebase";
@@ -49,7 +49,7 @@ function Signup() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // 📨 Send Email Verification
+      // Send Email Verification
       await sendEmailVerification(user);
       
       // Save user info in Firestore
@@ -138,7 +138,8 @@ function Signup() {
           <div className={styles.checkbox}>
             <input className={styles.checkbox1} type="checkbox" id="terms" required disabled={isLoading} />
             <label htmlFor="terms" className={styles.label2}>
-              I agree to the <Link to="/terms" style={{ textDecoration: 'none' }}>terms and conditions</Link>
+              I agree to the <Link to="/terms" style={{ textDecoration: 'none' }}>terms and conditions <FontAwesomeIcon icon={faUpRightFromSquare} style={{fontWeight:'1px'}}/>
+</Link>
             </label>
           </div>
 
