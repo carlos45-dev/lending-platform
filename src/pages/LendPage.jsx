@@ -110,9 +110,26 @@ function LendPage() {
               offers.map((offer, index) => (
                 <ul key={offer.id || index}>
                   <li>Offering <b style={{ color: 'green' }}>MKW{offer.amount}</b></li>
-                  <li>Rate <b style={{ color: 'green' }}>{offer.rate || offer.weeklyRates?.[0]?.rate}%</b></li>
-                  <li>Duration <b style={{ color: 'green' }}>{offer.duration || offer.weeklyRates?.length} Weeks</b></li>
-                  <button className={styles.deleteBtn} onClick={() => handleDelete(offer.id)}style={{backgroundColor:" #1A2258",color:"white",borderRadius:"5px"}}>Delete Offer</button>
+                  <li>
+                    Rate:
+                    {offer.weeklyRates?.length ? (
+                      <ul className={styles.breakdown}>
+                        {offer.weeklyRates.map((week, idx) => (
+                          <li key={idx}>Week {idx + 1}: <b style={{ color: 'green' }}>{week.rate}%</b></li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <b style={{ color: 'green' }}> {offer.rate || 'N/A'}%</b>
+                    )}
+                  </li>
+                  
+                  <button
+                    className={styles.deleteBtn}
+                    onClick={() => handleDelete(offer.id)}
+                    style={{ backgroundColor: "#1A2258", color: "white", borderRadius: "5px" }}
+                  >
+                    Delete Offer
+                  </button>
                 </ul>
               ))
             )}
