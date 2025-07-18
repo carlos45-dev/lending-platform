@@ -2,7 +2,7 @@ import { useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import styles from '../styles/SignUp.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLock, faEyeSlash, faEye, faPhone,faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock, faEyeSlash, faEye, faPhone, faUpRightFromSquare,faEnvelope, faEnvelopeCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth, db } from "../firebase";
@@ -28,51 +28,60 @@ function Signup() {
   const handleRecaptchaChange = (value) => setRecaptchaValue(value);
   const handlePasswordToggle = () => setShowPassword(!showPassword);
   const handlePasswordToggle2 = () => setShowPassword2(!showPassword2);
-const handleSubmit = async (e) => {
-  e.preventDefault();
 
-  if (!recaptchaValue) {
-    alert("Please complete the reCAPTCHA.");
-    return;
-  }
+  const validatePhoneNumber = (number) => {
+    const phoneRegex = /^(\+?\d{10,15}|0\d{9})$/;
+    return phoneRegex.test(number);
+  };
 
-  if (password !== confirmPassword) {
-    alert("Passwords do not match.");
-    return;
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  setIsLoading(true);
-  const startTime = performance.now();
+    if (!recaptchaValue) {
+      alert("Please complete the reCAPTCHA.");
+      return;
+    }
 
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
 
-    // Send Email Verification
-    await sendEmailVerification(user);
+    if (!validatePhoneNumber(phone)) {
+      alert("Please enter a valid phone number.");
+      return;
+    }
 
-    // Save user info in Firestore
-    await setDoc(doc(db, "users", user.uid), {
-      email,
-      username,
-      phone,
-      gender,
-      createdAt: new Date(),
-      borrowerRating: 4.5,
-    });
+    setIsLoading(true);
+    const startTime = performance.now();
 
-    const endTime = performance.now();
-    setResponseTime(Math.round(endTime - startTime));
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-    navigate("/verify-email");
+      await sendEmailVerification(user);
 
-  } catch (error) {
-    console.error("Signup error:", error.message);
-    alert(error.message);
-  } finally {
-    setIsLoading(false);
-  }
-};
+      await setDoc(doc(db, "users", user.uid), {
+        email,
+        username,
+        phone,
+        gender,
+        createdAt: new Date(),
+        borrowerRating: 4.5,
+      });
+
+      const endTime = performance.now();
+      setResponseTime(Math.round(endTime - startTime));
+
+      navigate("/verify-email");
+
+    } catch (error) {
+      console.error("Signup error:", error.message);
+      alert(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -81,21 +90,21 @@ const handleSubmit = async (e) => {
         <form onSubmit={handleSubmit}>
           {/* Username */}
           <div className={styles.formGroup}>
-            <input type="text" className={styles.input} placeholder="Username"
+            <input type="text" className={styles.input} placeholder="John Doe"
               value={username} onChange={(e) => setUsername(e.target.value)} required disabled={isLoading} />
             <FontAwesomeIcon className={styles["input-icon"]} icon={faUser} />
           </div>
 
           {/* Email */}
           <div className={styles.formGroup}>
-            <input type="email" className={styles.input} placeholder="Email"
+            <input type="email" className={styles.input} placeholder="example1@gmail.com"
               value={email} onChange={(e) => setEmail(e.target.value)} required disabled={isLoading} />
-            <FontAwesomeIcon className={styles["input-icon"]} icon={faUser} />
+            <FontAwesomeIcon className={styles["input-icon"]} icon={faEnvelope} />
           </div>
 
           {/* Phone */}
           <div className={styles.formGroup}>
-            <input type="tel" className={styles.input} placeholder="Phone Number"
+            <input type="tel" className={styles.input} placeholder="+265 9xxx xxxx"
               value={phone} onChange={(e) => setPhone(e.target.value)} required disabled={isLoading} />
             <FontAwesomeIcon className={styles["input-icon"]} icon={faPhone} />
           </div>
@@ -137,8 +146,9 @@ const handleSubmit = async (e) => {
           <div className={styles.checkbox}>
             <input className={styles.checkbox1} type="checkbox" id="terms" required disabled={isLoading} />
             <label htmlFor="terms" className={styles.label2}>
-              I agree to the <Link to="/terms" style={{ textDecoration: 'none' }}>terms and conditions <FontAwesomeIcon icon={faUpRightFromSquare} style={{fontWeight:'1px'}}/>
-</Link>
+              I agree to the <Link to="/terms" style={{ textDecoration: 'none' }}>
+                terms and conditions <FontAwesomeIcon icon={faUpRightFromSquare} style={{ fontWeight: '1px' }} />
+              </Link>
             </label>
           </div>
 
