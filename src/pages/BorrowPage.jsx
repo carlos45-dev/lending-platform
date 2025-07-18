@@ -3,16 +3,15 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext'; 
+import { useAuth } from '../AuthContext';
 
 function BorrowPage() {
   const navigate = useNavigate();
-  const { offers, currentUser } = useAuth(); 
+  const { offers, currentUser } = useAuth();
 
   useEffect(() => {
     const originalDisplay = document.body.style.display;
     document.body.style.display = 'block';
-
     return () => {
       document.body.style.display = originalDisplay;
     };
@@ -42,9 +41,7 @@ function BorrowPage() {
 
           <main className={styles.main}>
             <section className={styles.loanRequests}>
-              {/*displaying the loans available*/}
               <h3>Offers Available</h3>
-
               {filteredOffers.length > 0 ? (
                 filteredOffers.map((offer) => (
                   <div className={styles.card} key={offer.id}>
@@ -64,14 +61,16 @@ function BorrowPage() {
                         </li>
                       ))}
                     </ul>
-                    <button>Borrow</button>
+                    <button onClick={() => navigate('/borrow-form', { state: { offer } })}>
+                      Borrow
+                    </button>
                   </div>
                 ))
               ) : (
                 <p style={{ color: 'gray' }}>No offers available at the moment.</p>
               )}
             </section>
-            {/*displaying active loans */}
+
             <section className={styles.activeLoans}>
               <h3>My Active Loans</h3>
               <div className={styles.card}>

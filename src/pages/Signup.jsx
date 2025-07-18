@@ -28,52 +28,51 @@ function Signup() {
   const handleRecaptchaChange = (value) => setRecaptchaValue(value);
   const handlePasswordToggle = () => setShowPassword(!showPassword);
   const handlePasswordToggle2 = () => setShowPassword2(!showPassword2);
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  if (!recaptchaValue) {
+    alert("Please complete the reCAPTCHA.");
+    return;
+  }
 
-    if (!recaptchaValue) {
-      alert("Please complete the reCAPTCHA.");
-      return;
-    }
+  if (password !== confirmPassword) {
+    alert("Passwords do not match.");
+    return;
+  }
 
-    if (password !== confirmPassword) {
-      alert("Passwords do not match.");
-      return;
-    }
+  setIsLoading(true);
+  const startTime = performance.now();
 
-    setIsLoading(true);
-    const startTime = performance.now();
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
 
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+    // Send Email Verification
+    await sendEmailVerification(user);
 
-      // Send Email Verification
-      await sendEmailVerification(user);
-      
-      // Save user info in Firestore
-      await setDoc(doc(db, "users", user.uid), {
-        email,
-        username,
-        phone,
-        gender,
-        createdAt: new Date()
-      });
+    // Save user info in Firestore
+    await setDoc(doc(db, "users", user.uid), {
+      email,
+      username,
+      phone,
+      gender,
+      createdAt: new Date(),
+      borrowerRating: 4.5,
+    });
 
-      const endTime = performance.now();
-      setResponseTime(Math.round(endTime - startTime));
+    const endTime = performance.now();
+    setResponseTime(Math.round(endTime - startTime));
 
-      // Redirect to verification info page
-      navigate("/verify-email");
+    navigate("/verify-email");
 
-    } catch (error) {
-      console.error("Signup error:", error.message);
-      alert(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  } catch (error) {
+    console.error("Signup error:", error.message);
+    alert(error.message);
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <>

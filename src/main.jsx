@@ -16,6 +16,8 @@ import AboutPage from './pages/AboutPage.jsx';
 import TermsPage from './pages/Terms.jsx';
 import AddOfferPage from './pages/AddOfferPage.jsx';
 import VerifyEmail from './pages/VerifyEmail.jsx';
+import BorrowForm from './pages/BorrowForm.jsx';
+
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AuthProvider } from './AuthContext.jsx';
@@ -30,6 +32,7 @@ const router = createBrowserRouter([
   { path: "/profile", element: <PrivateRoute><Profile /></PrivateRoute> },
   { path: "/lend", element: <PrivateRoute><LendPage /></PrivateRoute> },
   { path: "/borrow", element: <PrivateRoute><BorrowPage /></PrivateRoute> },
+  { path: "/borrow-form", element: <PrivateRoute><BorrowForm /></PrivateRoute> }, // ✅ Added this
   { path: "/view", element: <PrivateRoute><View /></PrivateRoute> },
   { path: "/loan-history", element: <PrivateRoute><LoanHistory /></PrivateRoute> },
   { path: "/contact", element: <PrivateRoute><Contact /></PrivateRoute> },
@@ -41,6 +44,7 @@ const router = createBrowserRouter([
   { path: "/about", element: <AboutPage /> },
   { path: "/terms", element: <TermsPage /> },
 ]);
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
