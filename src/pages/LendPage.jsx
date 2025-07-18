@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getAuth } from 'firebase/auth';
 import { db } from '../firebase';
-import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, deleteDoc, doc, query, where } from 'firebase/firestore';
 
 function LendPage() {
   const navigate = useNavigate();
@@ -15,21 +15,7 @@ function LendPage() {
   const currentUser = auth.currentUser;
 
   const [offers, setOffers] = useState([]);
-  const [loanRequests] = useState([
-    {
-      name: "Amina Tinve",
-      amount: "MWK400000",
-      duration: "2 weeks",
-      interest: "7.8%"
-    },
-    {
-      name: "Jeke Muleke",
-      amount: "MWK20000",
-      duration: "2 weeks",
-      interest: "7.8%"
-    },
-  ]);
-
+  const [loanRequests, setLoanRequests] = useState([]);
   const [activeLoans] = useState([
     {
       borrower: "Selina Nkope",
@@ -58,6 +44,23 @@ function LendPage() {
     }
   };
 
+  const fetchLoanRequests = async () => {
+    if (!currentUser) return;
+
+    try {
+      const q = query(collection(db, 'loanRequests'), where("lenderId", "==", currentUser.uid));
+      const snapshot = await getDocs(q);
+      const requests = [];
+      snapshot.forEach(doc => {
+        requests.push({ id: doc.id, ...doc.data() });
+      });
+      requests.sort((a, b) => b.borrowerRating - a.borrowerRating);
+      setLoanRequests(requests);
+    } catch (error) {
+      toast.error("Failed to load loan requests.", { autoClose: 1000 });
+    }
+  };
+
   const handleDelete = async (id) => {
     try {
       await deleteDoc(doc(db, 'offers', id));
@@ -80,6 +83,7 @@ function LendPage() {
     document.body.style.display = 'block';
 
     fetchUserOffers();
+    fetchLoanRequests();
 
     const newOffer = JSON.parse(localStorage.getItem('newOffer'));
     if (newOffer) {
@@ -140,10 +144,11 @@ function LendPage() {
               <h3>LOAN REQUESTS</h3>
               {loanRequests.map((request, index) => (
                 <div className={styles.card} key={index}>
-                  <strong>{request.name}</strong>
-                  <p>Asked for <span>{request.amount}</span> for <span>{request.duration}</span></p>
-                  <p>Interest: <span>{request.interest}</span></p>
-                  <button onClick={() => navigate("/view")}>View</button>
+                  <strong>{request.borrowerName}</strong>
+                  <p>Asked for <span>MKW{request.amount}</span> for <span>{request.weeks} weeks</span></p>
+                  <p>Collateral: <span>{request.collateral}</span></p>
+                  <p>Borrower Rating: <span>{request.borrowerRating}/5</span></p>
+                  <button onClick={() => navigate("/view", { state: { request } })}>View</button>
                 </div>
               ))}
             </section>

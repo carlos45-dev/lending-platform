@@ -10,6 +10,8 @@ function BorrowForm() {
   const [weeks, setWeeks] = useState('');
   const [collateral, setCollateral] = useState('');
   const [borrowerRating, setBorrowerRating] = useState(null);
+  const [borrowerName, setBorrowerName] = useState('');
+  const [borrowerPhone, setBorrowerPhone] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
   const offer = location.state?.offer;
@@ -24,23 +26,25 @@ function BorrowForm() {
   }, []);
 
   useEffect(() => {
-    const fetchBorrowerRating = async () => {
+    const fetchUserData = async () => {
       if (currentUser) {
         try {
           const docRef = doc(db, "users", currentUser.uid);
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
             const data = docSnap.data();
-            setBorrowerRating(data.borrowerRating || 0); // fallback to 0 if not found
+            setBorrowerRating(data.borrowerRating || 0);
+            setBorrowerName(data.username || currentUser.email);
+            setBorrowerPhone(data.phone || "N/A");
           } else {
             console.warn("User document not found.");
           }
         } catch (error) {
-          console.error("Error fetching borrower rating:", error);
+          console.error("Error fetching user data:", error);
         }
       }
     };
-    fetchBorrowerRating();
+    fetchUserData();
   }, [currentUser]);
 
   const handleSubmit = async (e) => {
@@ -62,7 +66,9 @@ function BorrowForm() {
       collateral,
       borrowerId: currentUser.uid,
       borrowerEmail: currentUser.email,
-      borrowerRating: borrowerRating || 0, // include rating
+      borrowerName: borrowerName || "Anonymous",
+      borrowerPhone: borrowerPhone || "N/A",
+      borrowerRating: borrowerRating || 0,
       lenderId: offer.lenderId,
       lenderEmail: offer.lenderEmail,
       lenderUsername: offer.lenderUsername,
