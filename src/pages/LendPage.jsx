@@ -140,18 +140,24 @@ function LendPage() {
           </aside>
 
           <main className={styles.main}>
+            {/*displaying the loan requests*/}
             <section className={styles.loanRequests}>
-              <h3>LOAN REQUESTS</h3>
-              {loanRequests.map((request, index) => (
-                <div className={styles.card} key={index}>
-                  <strong>{request.borrowerName}</strong>
-                  <p>Asked for <span>MKW{request.amount}</span> for <span>{request.weeks} weeks</span></p>
-                  <p>Collateral: <span>{request.collateral}</span></p>
-                  <p>Borrower Rating: <span>{request.borrowerRating}/5</span></p>
-                  <button onClick={() => navigate("/view", { state: { request } })}>View</button>
-                </div>
-              ))}
-            </section>
+                      <h3>LOAN REQUESTS</h3>
+                      {loanRequests.length === 0 ? (
+                        <p style={{ color: 'gray' }}>No loan requests available.</p>
+                      ) : (
+                      loanRequests.map((request, index) => (
+                    <div className={styles.card} key={index}>
+                      <strong>{request.borrowerName}</strong>
+                      <p>Asked for <span>MKW{request.amount}</span> for <span>{request.weeks} weeks</span></p>
+                      <p>Collateral: <span>{request.collateral}</span></p>
+                      <p>Borrower Rating: <span>{request.borrowerRating}/5</span></p>
+                      <button onClick={() => navigate("/view", { state: { request } })}>View</button>
+                    </div>
+                  ))
+                )}
+              </section>
+
 
             <section className={styles.activeLoans}>
               <h3>Active Loans</h3>
