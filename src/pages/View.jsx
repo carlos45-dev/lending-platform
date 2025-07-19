@@ -4,13 +4,18 @@ import styles from '../styles/View.module.css';
 import user from "../assets/user.jfif";
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { db } from '../firebase'; // Adjust this path as needed
-import { doc, deleteDoc } from 'firebase/firestore';
+import { db } from '../firebase';
+import { collection, addDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function View() {
   const location = useLocation();
   const navigate = useNavigate();
   const request = location.state?.request;
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
 
   useEffect(() => {
     const originalDisplay = document.body.style.display;
@@ -20,31 +25,43 @@ function View() {
     };
   }, []);
 
-  const handleApprove = () => {
-    if (!request?.borrowerPhone) {
-      alert("Borrower phone number is missing.");
-      return;
-    }
+  const approveLoan = async () => {
+    if (!request || !currentUser) return;
 
-    const message = `Hey, I'm ${request?.lenderUsername}. I want to approve the loan that you applied for, amounting to MWK ${request?.amount} for ${request?.weeks} weeks.`;
-    const encodedMessage = encodeURIComponent(message);
-    const phone = request.borrowerPhone.replace(/\D/g, ''); // remove non-digits
-    const whatsappURL = `https://wa.me/${phone}?text=${encodedMessage}`;
-    window.open(whatsappURL, "_blank");
+    const message = `Hey I'm ${currentUser.displayName || 'a lender'}, I want to approve the loan that you applied amounting MWK ${request.amount} for ${request.weeks} weeks.`;
+    const phone = request.borrowerPhone?.replace(/\s+/g, '');
+
+    const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+    const loanData = {
+      ...request,
+      lenderId: currentUser.uid,
+      lenderName: currentUser.displayName || 'Lender',
+      borrowedAt: Timestamp.now(),
+    };
+
+    try {
+      await addDoc(collection(db, 'pendingLoans'), loanData);
+      await deleteDoc(doc(db, 'loanRequests', request.id));
+      window.open(whatsappLink, '_blank');
+      toast.success('Loan approved and borrower notified via WhatsApp!');
+      navigate('/lend');
+    } catch (err) {
+      console.error(err);
+      toast.error('Something went wrong while approving the loan.');
+    }
   };
 
-  const handleReject = async () => {
+  const rejectLoan = async () => {
+    if (!request) return;
+
     try {
-      if (!request?.id) {
-        alert("Loan request ID is missing.");
-        return;
-      }
       await deleteDoc(doc(db, 'loanRequests', request.id));
-      alert("Loan request rejected and deleted.");
-      navigate("/lend");
-    } catch (error) {
-      console.error("Error deleting document:", error);
-      alert("Failed to reject loan. Try again.");
+      toast.info('Loan request rejected and removed.');
+      navigate('/lend');
+    } catch (err) {
+      console.error(err);
+      toast.error('Failed to reject the loan request.');
     }
   };
 
@@ -73,15 +90,12 @@ function View() {
           </div>
 
           <div className={styles.btns}>
-            <button className={styles.approve} onClick={handleApprove}>
-              Approve Loan
-            </button>
-            <button className={styles.reject} onClick={handleReject}>
-              Reject
-            </button>
+            <button onClick={approveLoan} className={styles.approve}>Approve Loan</button>
+            <button onClick={rejectLoan} className={styles.reject}>Reject</button>
           </div>
         </div>
       </div>
+      <ToastContainer />
       <Footer />
     </>
   );
