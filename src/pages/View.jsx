@@ -5,7 +5,7 @@ import user from "../assets/user.jfif";
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
-import { collection, addDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
+import { collection, setDoc, deleteDoc, doc, Timestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -41,7 +41,7 @@ function View() {
     };
 
     try {
-      await addDoc(collection(db, 'pendingLoans'), loanData);
+      await setDoc(doc(db, 'pendingLoans', request.id), loanData);
       await deleteDoc(doc(db, 'loanRequests', request.id));
       window.open(whatsappLink, '_blank');
       toast.success('Loan approved and borrower notified via WhatsApp!');

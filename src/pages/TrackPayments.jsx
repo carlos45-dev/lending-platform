@@ -28,7 +28,10 @@ function TrackPayments() {
     if (!currentUser) return;
     const q = query(collection(db, 'pendingLoans'), where('lenderId', '==', currentUser.uid));
     const snapshot = await getDocs(q);
-    const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const data = snapshot.docs.map(docSnap => ({
+      id: docSnap.id,
+      ...docSnap.data()
+    }));
     setPendingLoans(data);
   };
 
@@ -36,7 +39,10 @@ function TrackPayments() {
     if (!currentUser) return;
     const q = query(collection(db, 'activeLoans'), where('lenderId', '==', currentUser.uid));
     const snapshot = await getDocs(q);
-    const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const data = snapshot.docs.map(docSnap => ({
+      id: docSnap.id,
+      ...docSnap.data()
+    }));
     setActiveLoans(data);
   };
 
@@ -53,7 +59,9 @@ function TrackPayments() {
 
   const confirmAndTrack = async (loan) => {
     const today = Timestamp.now();
-    const dueDate = Timestamp.fromDate(new Date(Date.now() + loan.weeks * 7 * 24 * 60 * 60 * 1000));
+    const dueDate = Timestamp.fromDate(
+      new Date(Date.now() + loan.weeks * 7 * 24 * 60 * 60 * 1000)
+    );
 
     try {
       await addDoc(collection(db, 'activeLoans'), {
@@ -77,37 +85,29 @@ function TrackPayments() {
         userId: loan.borrowerId,
       });
 
-      await deleteDoc(doc(db, 'pendingLoans', loan.id));
-      toast.success('Tracking started for ' + loan.borrowerName);
-
+      console.log("Deleting loan with ID:", loan.id);
+      const loanRef = doc(db, 'pendingLoans', loan.id);
+      await deleteDoc(loanRef);
       setPendingLoans(prev => prev.filter(l => l.id !== loan.id));
+
+      toast.success('Tracking started for ' + loan.borrowerName);
       fetchActiveLoans();
     } catch (err) {
+      console.error(err);
       toast.error('Failed to start tracking.');
     }
   };
 
   const cancelLoan = async (loan) => {
     try {
-      await logLoanHistory({
-        type: 'lent',
-        amount: loan.amount,
-        reference: loan.borrowerName + ' (cancelled)',
-        userId: currentUser.uid,
-      });
-
-      await logLoanHistory({
-        type: 'borrowed',
-        amount: loan.amount,
-        reference: currentUser.displayName + ' (cancelled)',
-        userId: loan.borrowerId,
-      });
-
-      await deleteDoc(doc(db, 'pendingLoans', loan.id));
-      toast.success('Loan cancelled.');
+      console.log("Cancelling loan with ID:", loan.id);
+      const loanRef = doc(db, 'pendingLoans', loan.id);
+      await deleteDoc(loanRef);
       setPendingLoans(prev => prev.filter(l => l.id !== loan.id));
+      toast.success('Loan cancelled.');
     } catch (err) {
       toast.error('Could not cancel loan.');
+      console.error("Delete error:", err);
     }
   };
 
@@ -122,15 +122,14 @@ function TrackPayments() {
       <div className={styles.trackContainer} style={{ paddingTop: '7rem' }}>
         <h2 className={styles.title}>Track Payments</h2>
 
-        {/* Pending Loans */}
         <section className={styles.section}>
           <h3>Pending Loans</h3>
           {pendingLoans.length === 0 ? (
             <p className={styles.empty}>No pending loans.</p>
           ) : (
-            <div className={styles.grid}>
-              {pendingLoans.map((loan, index) => (
-                <div key={index} className={styles.card}>
+            <div className={styles.grid} style={{ marginTop: '1rem' }}>
+              {pendingLoans.map((loan) => (
+                <div key={loan.id} className={styles.card}>
                   <strong>{loan.borrowerName}</strong>
                   <p>Amount: MWK {loan.amount}</p>
                   <p>Weeks: {loan.weeks}</p>
@@ -138,10 +137,16 @@ function TrackPayments() {
                   <p>Total Repay: MWK {parseFloat(loan.amount) * (1 + loan.interest / 100)}</p>
                   <p>Date Borrowed: {loan.borrowedAt?.toDate().toDateString()}</p>
                   <div className={styles.actions}>
-                    <button onClick={() => confirmAndTrack(loan)} className={styles.confirmBtn}>
+                    <button
+                      onClick={() => confirmAndTrack(loan)}
+                      className={styles.confirmBtn}
+                    >
                       Confirm & Start
                     </button>
-                    <button onClick={() => cancelLoan(loan)} className={styles.cancelBtn}>
+                    <button
+                      onClick={() => cancelLoan(loan)}
+                      className={styles.cancelBtn}
+                    >
                       Cancel
                     </button>
                   </div>
@@ -151,20 +156,19 @@ function TrackPayments() {
           )}
         </section>
 
-        {/* Active Loans */}
         <section className={styles.section}>
           <h3>Active Loans</h3>
           {activeLoans.length === 0 ? (
             <p className={styles.empty}>No active loans.</p>
           ) : (
             <div className={styles.grid}>
-              {activeLoans.map((loan, index) => {
+              {activeLoans.map((loan) => {
                 const now = Date.now();
                 const due = loan.dueDate?.toDate();
                 const overdue = due && now > due.getTime();
 
                 return (
-                  <div key={index} className={styles.card}>
+                  <div key={loan.id} className={styles.card}>
                     <strong>{loan.borrowerName}</strong>
                     <p>Amount Returned: MWK {loan.amount}</p>
                     <p>Weeks: {loan.weeks}</p>
