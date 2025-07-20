@@ -74,14 +74,14 @@ function TrackPayments() {
       await logLoanHistory({
         type: 'lent',
         amount: loan.amount,
-        reference: loan.borrowerName,
+        reference: loan.id,
         userId: currentUser.uid,
       });
 
       await logLoanHistory({
         type: 'borrowed',
         amount: loan.amount,
-        reference: currentUser.displayName || 'Lender',
+        reference: LargestContentfulPaint.id,
         userId: loan.borrowerId,
       });
 
@@ -112,23 +112,31 @@ function TrackPayments() {
   };
 
   useEffect(() => {
+    const originalDisplay = document.body.style.display;
+    document.body.style.display = 'block';
     fetchPendingLoans();
     fetchActiveLoans();
+    return () => {
+      document.body.style.display = originalDisplay;
+    };
   }, []);
 
   return (
     <>
-      <Header />
-      <div className={styles.trackContainer} style={{ paddingTop: '7rem' }}>
-        <h2 className={styles.title}>Track Payments</h2>
+      <div className={styles.dashboard}>
+        <header className={styles.header} style={{marginTop:"20px"}}>
+          <Header />
+        </header>
 
-        <section className={styles.section}>
-          <h3>Pending Loans</h3>
-          {pendingLoans.length === 0 ? (
-            <p className={styles.empty}>No pending loans.</p>
-          ) : (
-            <div className={styles.grid} style={{ marginTop: '1rem' }}>
-              {pendingLoans.map((loan) => (
+        <h2 className={styles.title}>Track Payments </h2>
+
+        <div className={styles.container}>
+          <aside className={styles.sidebar}>
+            <h3>Pending Loans</h3>
+            {pendingLoans.length === 0 ? (
+              <p className={styles.empty}>No pending loans.</p>
+            ) : (
+              pendingLoans.map((loan) => (
                 <div key={loan.id} className={styles.card}>
                   <strong>{loan.borrowerName}</strong>
                   <p>Amount: MWK {loan.amount}</p>
@@ -137,57 +145,44 @@ function TrackPayments() {
                   <p>Total Repay: MWK {parseFloat(loan.amount) * (1 + loan.interest / 100)}</p>
                   <p>Date Borrowed: {loan.borrowedAt?.toDate().toDateString()}</p>
                   <div className={styles.actions}>
-                    <button
-                      onClick={() => confirmAndTrack(loan)}
-                      className={styles.confirmBtn}
-                    >
-                      Confirm & Start
-                    </button>
-                    <button
-                      onClick={() => cancelLoan(loan)}
-                      className={styles.cancelBtn}
-                    >
-                      Cancel
-                    </button>
+                    <button onClick={() => confirmAndTrack(loan)} className={styles.confirmBtn}>Confirm & Start</button>
+                    <button onClick={() => cancelLoan(loan)} className={styles.cancelBtn}>Cancel</button>
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
-        </section>
+              ))
+            )}
+          </aside>
 
-        <section className={styles.section}>
-          <h3>Active Loans</h3>
-          {activeLoans.length === 0 ? (
-            <p className={styles.empty}>No active loans.</p>
-          ) : (
-            <div className={styles.grid}>
-              {activeLoans.map((loan) => {
-                const now = Date.now();
-                const due = loan.dueDate?.toDate();
-                const overdue = due && now > due.getTime();
-
-                return (
-                  <div key={loan.id} className={styles.card}>
-                    <strong>{loan.borrowerName}</strong>
-                    <p>Amount Returned: MWK {loan.amount}</p>
-                    <p>Weeks: {loan.weeks}</p>
-                    <p>Interest: {loan.interest}%</p>
-                    <p>Start: {loan.startDate?.toDate().toDateString()}</p>
-                    <p>Due: {loan.dueDate?.toDate().toDateString()}</p>
-                    <p>Progress: {loan.progressWeeks}/{loan.weeks} weeks</p>
-                    {overdue && (
-                      <p className={styles.overdue}>⚠️ Overdue! Decrease credit score.</p>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </section>
+          <main className={styles.main}>
+            <section className={styles.loanRequests}>
+              <h3>Active Loans</h3>
+              {activeLoans.length === 0 ? (
+                <p className={styles.empty}>No active loans.</p>
+              ) : (
+                activeLoans.map((loan, index) => {
+                  const now = Date.now();
+                  const due = loan.dueDate?.toDate();
+                  const overdue = due && now > due.getTime();
+                  return (
+                    <div className={styles.card} key={index}>
+                      <strong>{loan.borrowerName}</strong>
+                      <p>Amount Returned: MWK {loan.amount}</p>
+                      <p>Weeks: {loan.weeks}</p>
+                      <p>Interest: {loan.interest}%</p>
+                      <p>Start: {loan.startDate?.toDate().toDateString()}</p>
+                      <p>Due: {loan.dueDate?.toDate().toDateString()}</p>
+                      <p>Progress: {loan.progressWeeks}/{loan.weeks} weeks</p>
+                      {overdue && <p className={styles.overdue}>⚠️ Overdue! Decrease credit score.</p>}
+                    </div>
+                  );
+                })
+              )}
+            </section>
+          </main>
+        </div>
       </div>
       <ToastContainer />
-      <Footer />
+      <Footer className={styles.footer} />
     </>
   );
 }
