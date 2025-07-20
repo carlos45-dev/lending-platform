@@ -1,21 +1,33 @@
 import styles from '../styles/Lend.module.css';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
+import { db } from '../firebase';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
 function BorrowPage() {
   const navigate = useNavigate();
   const { offers, currentUser } = useAuth();
+  const [activeLoans, setActiveLoans] = useState([]);
 
   useEffect(() => {
     const originalDisplay = document.body.style.display;
     document.body.style.display = 'block';
+    fetchActiveLoans();
     return () => {
       document.body.style.display = originalDisplay;
     };
   }, []);
+
+  const fetchActiveLoans = async () => {
+    if (!currentUser) return;
+    const q = query(collection(db, 'activeLoans'), where('borrowerId', '==', currentUser.uid));
+    const snapshot = await getDocs(q);
+    const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    setActiveLoans(data);
+  };
 
   const filteredOffers = offers.filter(
     (offer) => offer.lenderId !== currentUser?.uid
@@ -32,11 +44,21 @@ function BorrowPage() {
 
         <div className={styles.container}>
           <aside className={styles.sidebar}>
-            <h3>My Loan Summary</h3>
-            <ul>
-              <li>Completed Loans <b style={{ color: 'green' }}>(2)</b></li>
-              <li>Overdue Loan <b style={{ color: 'red' }}>(1)</b></li>
-            </ul>
+            <h3>My Borrowed Loans</h3>
+            {activeLoans.length === 0 ? (
+              <p style={{ color: 'gray' }}>No active loans.</p>
+            ) : (
+              activeLoans.map((loan) => (
+                <div className={styles.card} key={loan.id}>
+                  <strong>Borrowed From: {loan.lenderUsername || 'N/A'}</strong>
+                  <p>MWK {loan.amount} for {loan.weeks} weeks</p>
+                  <p>Interest: {loan.interest}%</p>
+                  <p>Start: {loan.startDate?.toDate().toDateString()}</p>
+                  <p>Due: {loan.dueDate?.toDate().toDateString()}</p>
+                  <button onClick={() => navigate("/mark-paid", { state: { loan } })}>Mark as Paid</button>
+                </div>
+              ))
+            )}
           </aside>
 
           <main className={styles.main}>
@@ -69,17 +91,6 @@ function BorrowPage() {
               ) : (
                 <p style={{ color: 'gray' }}>No offers available at the moment.</p>
               )}
-            </section>
-
-            <section className={styles.activeLoans}>
-              <h3>My Active Loans</h3>
-              <div className={styles.card}>
-                <strong>Borrowed From : Carlos Muleke</strong>
-                <p><span>MWK400000</span> for <span>2 weeks</span></p>
-                <p>Interest : <span>7.8%</span></p>
-                <p>Progress : <span style={{ color: 'red' }}>Due date in 2 days</span></p>
-                <button onClick={() => navigate("/mark-paid")}>Mark as Paid</button>
-              </div>
             </section>
           </main>
         </div>

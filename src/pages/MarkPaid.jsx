@@ -1,81 +1,83 @@
-import { useState } from 'react';
-import styles from '../styles/MarkAsPaid.module.css';
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import styles from '../styles/AddOfferPage.module.css';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
-function MarkAsPaid({ onClose, onSubmit }) {
+function MarkPaid() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const loan = location.state?.loan;
 
+  const [amountPaid, setAmountPaid] = useState('');
+  const [datePaid, setDatePaid] = useState('');
 
-  const [amount, setAmount] = useState('');
-  const [date, setDate] = useState('');
-  const [screenshot, setScreenshot] = useState(null);
-  const [error, setError] = useState('');
+  useEffect(() => {
+    const originalDisplay = document.body.style.display;
+    document.body.style.display = 'block';
+    return () => {
+      document.body.style.display = originalDisplay;
+    };
+  }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!amount || !date) {
-      setError('Please fill in all required fields.');
+
+    if (!loan?.id) {
+      alert('Loan information not available.');
       return;
     }
 
-    const formData = {
-      amount,
-      date,
-      screenshot,
-    };
-
-    onSubmit(formData);
+    try {
+      const loanRef = doc(db, 'activeLoans', loan.id);
+      console.log(loan.id);
+      await updateDoc(loanRef, {
+        amountPaid,
+        datePaid,
+      });
+      alert('Payment confirmed successfully.');
+      navigate('/borrowPage'); 
+    } catch (error) {
+      console.error('Error updating loan:', error);
+      alert('Failed to confirm payment.');
+    }
   };
 
-  const navigate = useNavigate();
-
   return (
-    <div className={styles.overlay}>
-      <div className={styles.modal}>
-        <h2 className={styles.title}>Mark Payment as Paid</h2>
+    <div className={styles.wrapper}>
+      <div className={styles.formBox}>
+        <h2>Confirm Repayment</h2>
         <form onSubmit={handleSubmit} className={styles.form}>
-          <label>
-            Amount Paid (MK)*
+          <div className={styles.group}>
+            <label htmlFor="amountPaid">Amount Paid (MWK)</label>
             <input
+              id="amountPaid"
               type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
+              placeholder="e.g. 400000"
+              value={amountPaid}
+              onChange={(e) => setAmountPaid(e.target.value)}
               required
             />
-          </label>
-
-          <label>
-            Date Paid*
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              required
-            />
-          </label>
-
-          <label>
-            Upload Proof (Screenshot)
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setScreenshot(e.target.files[0])}
-            />
-          </label>
-
-          {error && <div className={styles.error}>{error}</div>}
-
-          <div className={styles.actions}>
-            <button type="button" onClick={() => navigate("/track-payments")} className={styles.cancel}>
-              Cancel
-            </button>
-            <button type="submit" className={styles.submit}>
-              Submit
-            </button>
           </div>
+
+          <div className={styles.group}>
+            <label htmlFor="datePaid">Date Paid</label>
+            <input
+              id="datePaid"
+              type="date"
+              value={datePaid}
+              onChange={(e) => setDatePaid(e.target.value)}
+              required
+            />
+          </div>
+
+          <button type="submit" className={styles.submitBtn}>
+            Submit Payment
+          </button>
         </form>
       </div>
     </div>
   );
 }
 
-export default MarkAsPaid;
+export default MarkPaid;
