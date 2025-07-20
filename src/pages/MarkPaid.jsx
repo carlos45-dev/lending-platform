@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from '../styles/AddOfferPage.module.css';
-import { doc, updateDoc } from 'firebase/firestore';
-import { getDoc } from 'firebase/firestore';
-// ... rest of your code
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 function MarkPaid() {
@@ -32,13 +30,23 @@ function MarkPaid() {
 
     try {
       const loanRef = doc(db, 'activeLoans', loan.id);
-      console.log(loan.id);
+      const loanSnap = await getDoc(loanRef);
+
+      let existingAmount = 0;
+      if (loanSnap.exists()) {
+        const data = loanSnap.data();
+        existingAmount = parseFloat(data.amountPaid) || 0;
+      }
+
+      const totalAmountPaid = existingAmount + parseFloat(amountPaid);
+
       await updateDoc(loanRef, {
-        amountPaid,
+        amountPaid: totalAmountPaid,
         datePaid,
       });
+
       alert('Payment confirmed successfully.');
-      navigate('/borrow'); 
+      navigate('/borrow');
     } catch (error) {
       console.error('Error updating loan:', error);
       alert('Failed to confirm payment.');
