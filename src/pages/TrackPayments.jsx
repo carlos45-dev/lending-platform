@@ -12,6 +12,7 @@ import {
   deleteDoc,
   doc,
   addDoc,
+  updateDoc,
   Timestamp,
 } from 'firebase/firestore';
 import { toast, ToastContainer } from 'react-toastify';
@@ -69,6 +70,8 @@ function TrackPayments() {
         startDate: today,
         dueDate,
         progressWeeks: 0,
+        amountPaid: 0,
+        paidDate: null,
       });
 
       await logLoanHistory({
@@ -81,15 +84,12 @@ function TrackPayments() {
       await logLoanHistory({
         type: 'borrowed',
         amount: loan.amount,
-        reference: LargestContentfulPaint.id,
+        reference: loan.id,
         userId: loan.borrowerId,
       });
 
-      console.log("Deleting loan with ID:", loan.id);
-      const loanRef = doc(db, 'pendingLoans', loan.id);
-      await deleteDoc(loanRef);
+      await deleteDoc(doc(db, 'pendingLoans', loan.id));
       setPendingLoans(prev => prev.filter(l => l.id !== loan.id));
-
       toast.success('Tracking started for ' + loan.borrowerName);
       fetchActiveLoans();
     } catch (err) {
@@ -100,14 +100,54 @@ function TrackPayments() {
 
   const cancelLoan = async (loan) => {
     try {
-      console.log("Cancelling loan with ID:", loan.id);
-      const loanRef = doc(db, 'pendingLoans', loan.id);
-      await deleteDoc(loanRef);
+      await deleteDoc(doc(db, 'pendingLoans', loan.id));
       setPendingLoans(prev => prev.filter(l => l.id !== loan.id));
       toast.success('Loan cancelled.');
     } catch (err) {
       toast.error('Could not cancel loan.');
-      console.error("Delete error:", err);
+    }
+  };
+
+  const confirmFullRepayment = async (loan) => {
+    const now = new Date();
+    const dueDate = loan.dueDate?.toDate();
+    let borrowerRating = loan.borrowerRating || 3;
+
+    if (loan.paidDate?.toDate() <= dueDate) {
+      borrowerRating = Math.min(5, borrowerRating + 1);
+    } else {
+      borrowerRating = Math.max(1, borrowerRating - 1);
+    }
+
+    try {
+      const userRef = doc(db, 'users', loan.borrowerId);
+      await updateDoc(userRef, { trustRating: borrowerRating });
+
+      await logLoanHistory({
+        type: 'repaid',
+        amount: loan.amount,
+        reference: loan.id,
+        userId: loan.borrowerId,
+      });
+
+      await deleteDoc(doc(db, 'activeLoans', loan.id));
+      setActiveLoans(prev => prev.filter(l => l.id !== loan.id));
+
+      toast.success("Loan fully repaid and confirmed.");
+    } catch (err) {
+      toast.error("Failed to confirm repayment.");
+      console.error(err);
+    }
+  };
+   
+  const calculateTotalRepay = (loan) => {
+    if (loan.interestBreakdown?.length > 0) {
+      const interestSum = loan.interestBreakdown.reduce((sum, item) => {
+        return sum + ((parseFloat(loan.amount) * parseFloat(item.rate)) / 100);
+      }, 0);
+      return (parseFloat(loan.amount) + interestSum).toFixed(2);
+    } else {
+      return (parseFloat(loan.amount) * (1 + loan.interest / 100)).toFixed(2);
     }
   };
 
@@ -124,11 +164,11 @@ function TrackPayments() {
   return (
     <>
       <div className={styles.dashboard}>
-        <header className={styles.header} style={{marginTop:"20px"}}>
+        <header className={styles.header}>
           <Header />
         </header>
 
-        <h2 className={styles.title}>Track Payments </h2>
+        <h2 className={styles.title}>Track Payments</h2>
 
         <div className={styles.container}>
           <aside className={styles.sidebar}>
@@ -141,8 +181,15 @@ function TrackPayments() {
                   <strong>{loan.borrowerName}</strong>
                   <p>Amount: MWK {loan.amount}</p>
                   <p>Weeks: {loan.weeks}</p>
-                  <p>Interest: {loan.interest}%</p>
-                  <p>Total Repay: MWK {parseFloat(loan.amount) * (1 + loan.interest / 100)}</p>
+                  <p>
+                    Interest:{' '}
+                    {loan.interestBreakdown?.length > 0
+                      ? `${loan.interestBreakdown.reduce((sum, item) => sum + parseFloat(item.rate), 0)}%`
+                      : loan.interest !== undefined
+                      ? `${loan.interest}%`
+                      : 'N/A'}
+                  </p>
+                  <p>Total Repay: MWK {calculateTotalRepay(loan)}</p>
                   <p>Date Borrowed: {loan.borrowedAt?.toDate().toDateString()}</p>
                   <div className={styles.actions}>
                     <button onClick={() => confirmAndTrack(loan)} className={styles.confirmBtn}>Confirm & Start</button>
@@ -160,19 +207,34 @@ function TrackPayments() {
                 <p className={styles.empty}>No active loans.</p>
               ) : (
                 activeLoans.map((loan, index) => {
-                  const now = Date.now();
+                  const totalRepay = calculateTotalRepay(loan);
+                  const isFullyPaid = parseFloat(loan.amountPaid || 0) >= parseFloat(totalRepay);
                   const due = loan.dueDate?.toDate();
-                  const overdue = due && now > due.getTime();
+                  const overdue = due && new Date() > due;
+
                   return (
                     <div className={styles.card} key={index}>
                       <strong>{loan.borrowerName}</strong>
-                      <p>Amount Returned: MWK {loan.amount}</p>
-                      <p>Weeks: {loan.weeks}</p>
-                      <p>Interest: {loan.interest}%</p>
+                      <p>Amount Paid: MWK {loan.amountPaid || 0}/{totalRepay}</p>
+                      <p>Paid On: {loan.paidDate ? loan.paidDate.toDate().toDateString() : 'Not yet paid'}</p>
+                      <p>
+                        Interest:{' '}
+                        {loan.interestBreakdown?.length > 0
+                          ? `${loan.interestBreakdown.reduce((sum, item) => sum + parseFloat(item.rate), 0)}%`
+                          : loan.interest !== undefined
+                          ? `${loan.interest}%`
+                          : 'N/A'}
+                      </p>
                       <p>Start: {loan.startDate?.toDate().toDateString()}</p>
-                      <p>Due: {loan.dueDate?.toDate().toDateString()}</p>
+                      <p>Due: {due?.toDateString()}</p>
                       <p>Progress: {loan.progressWeeks}/{loan.weeks} weeks</p>
-                      {overdue && <p className={styles.overdue}>⚠️ Overdue! Decrease credit score.</p>}
+                      {overdue && !isFullyPaid && <p className={styles.overdue}>⚠️ Overdue!</p>}
+
+                      {isFullyPaid && (
+                        <button className={styles.confirmBtn} onClick={() => confirmFullRepayment(loan)}>
+                          Confirm Full Repayment
+                        </button>
+                      )}
                     </div>
                   );
                 })
@@ -181,6 +243,7 @@ function TrackPayments() {
           </main>
         </div>
       </div>
+
       <ToastContainer />
       <Footer className={styles.footer} />
     </>

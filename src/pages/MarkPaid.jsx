@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from '../styles/AddOfferPage.module.css';
 import { doc, updateDoc } from 'firebase/firestore';
+import { getDoc } from 'firebase/firestore';
+// ... rest of your code
 import { db } from '../firebase';
 
 function MarkPaid() {
@@ -36,7 +38,7 @@ function MarkPaid() {
         datePaid,
       });
       alert('Payment confirmed successfully.');
-      navigate('/borrowPage'); 
+      navigate('/borrow'); 
     } catch (error) {
       console.error('Error updating loan:', error);
       alert('Failed to confirm payment.');

@@ -64,6 +64,7 @@ function BorrowForm() {
       amount,
       weeks,
       collateral,
+      interestBreakdown: offer.weeklyRates || {}, 
       borrowerId: currentUser.uid,
       borrowerEmail: currentUser.email,
       borrowerName: borrowerName || "Anonymous",

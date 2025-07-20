@@ -21,13 +21,22 @@ function BorrowPage() {
     };
   }, []);
 
-  const fetchActiveLoans = async () => {
+  // In BorrowPage.jsx
+const fetchActiveLoans = async () => {
     if (!currentUser) return;
     const q = query(collection(db, 'activeLoans'), where('borrowerId', '==', currentUser.uid));
     const snapshot = await getDocs(q);
-    const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    const data = snapshot.docs.map(doc => {
+      const docData = doc.data(); 
+      return {
+        ...docData, 
+        id: doc.id  
+      };
+    });
+    console.log("Fetched active loans with correct IDs:", data); 
     setActiveLoans(data);
-  };
+};
+
 
   const filteredOffers = offers.filter(
     (offer) => offer.lenderId !== currentUser?.uid
