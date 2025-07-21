@@ -10,7 +10,7 @@ function MarkPaid() {
   const loan = location.state?.loan;
 
   const [amountPaid, setAmountPaid] = useState('');
-  const [datePaid, setDatePaid] = useState('');
+  const [paidDate, setDatePaid] = useState('');
 
   useEffect(() => {
     const originalDisplay = document.body.style.display;
@@ -42,7 +42,7 @@ function MarkPaid() {
 
       await updateDoc(loanRef, {
         amountPaid: totalAmountPaid,
-        datePaid,
+        paidDate,
       });
 
       alert('Payment confirmed successfully.');
