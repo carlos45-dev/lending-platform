@@ -18,7 +18,7 @@ import {
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-Wfunction TrackPayments() {
+function TrackPayments() {
   const auth = getAuth();
   const currentUser = auth.currentUser;
 
@@ -36,16 +36,17 @@ Wfunction TrackPayments() {
     setPendingLoans(data);
   };
 
-  const fetchActiveLoans = async () => {
-    if (!currentUser) return;
-    const q = query(collection(db, 'activeLoans'), where('lenderId', '==', currentUser.uid));
-    const snapshot = await getDocs(q);
-    const data = snapshot.docs.map(docSnap => ({
-      id: docSnap.id,
-      ...docSnap.data()
-    }));
-    setActiveLoans(data);
-  };
+      const fetchActiveLoans = async () => {
+      if (!currentUser) return;
+      const q = query(collection(db, 'activeLoans'), where('lenderId', '==', currentUser.uid));
+      const snapshot = await getDocs(q);
+      const data = snapshot.docs.map(docSnap => ({
+        ...docSnap.data(),
+        id: docSnap.id    
+      }));
+      setActiveLoans(data);
+    };
+
 
   const logLoanHistory = async (entry) => {
     try {
@@ -134,6 +135,7 @@ Wfunction TrackPayments() {
 
     // ✅ Correctly delete using loan.id (docId)
     await deleteDoc(doc(db, 'activeLoans', docId));
+    console.log(docId);
 
     setActiveLoans(prev => prev.filter(l => l.id !== docId));
     toast.success("Loan fully repaid and confirmed.");
