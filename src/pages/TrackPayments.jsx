@@ -18,7 +18,7 @@ import {
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function TrackPayments() {
+Wfunction TrackPayments() {
   const auth = getAuth();
   const currentUser = auth.currentUser;
 
@@ -72,6 +72,7 @@ function TrackPayments() {
         progressWeeks: 1,
         amountPaid: 0,
         paidDate: null,
+        lastProgressUpdate: Timestamp.now(),
       });
 
       await logLoanHistory({
@@ -109,40 +110,42 @@ function TrackPayments() {
   };
 
   const confirmFullRepayment = async (loan) => {
-    const now = new Date();
-    const dueDate = loan.dueDate?.toDate();
-    let borrowerRating = loan.borrowerRating || 3;
+  const docId = loan.id;
+  const now = new Date();
+  const dueDate = loan.dueDate?.toDate();
+  let borrowerRating = loan.borrowerRating || 3;
 
-    if (loan.paidDate?.toDate() <= dueDate) {
-      borrowerRating = Math.min(5, borrowerRating + 1);
-    } else {
-      borrowerRating = Math.max(1, borrowerRating - 1);
-    }
+  if (loan.paidDate?.toDate() <= dueDate) {
+    borrowerRating = Math.min(5, borrowerRating + 1);
+  } else {
+    borrowerRating = Math.max(1, borrowerRating - 1);
+  }
 
-    try {
-      const userRef = doc(db, 'users', loan.borrowerId);
-      await updateDoc(userRef, { borrowerRating: borrowerRating });
+  try {
+    const userRef = doc(db, 'users', loan.borrowerId);
+    await updateDoc(userRef, { borrowerRating });
 
-      await logLoanHistory({
-        type: 'repaid',
-        amount: loan.amount,
-        reference: loan.id,
-        userId: loan.borrowerId,
-      });
+    await logLoanHistory({
+      type: 'repaid',
+      amount: loan.amount,
+      reference: docId,
+      userId: loan.borrowerId,
+    });
 
-      await deleteDoc(doc(db, 'activeLoans', loan.id));
-      setActiveLoans(prev => prev.filter(l => l.id !== loan.id));
+    // ✅ Correctly delete using loan.id (docId)
+    await deleteDoc(doc(db, 'activeLoans', docId));
 
-      toast.success("Loan fully repaid and confirmed.");
-    } catch (err) {
-      toast.error("Failed to confirm repayment.");
-      console.error(err);
-    }
-  };
+    setActiveLoans(prev => prev.filter(l => l.id !== docId));
+    toast.success("Loan fully repaid and confirmed.");
+  } catch (err) {
+    toast.error("Failed to confirm repayment.");
+    console.error("Full Repayment Error:", err);
+  }
+};
+
 
   const calculateTotalRepay = (loan) => {
     const principal = parseFloat(loan.amount);
-
     if (loan.interestBreakdown?.length > 0 && loan.progressWeeks) {
       const currentWeek = Math.min(loan.progressWeeks, loan.weeks);
       const rateObj = loan.interestBreakdown.find(item => item.week === currentWeek);
@@ -150,21 +153,43 @@ function TrackPayments() {
       const interestAmount = (principal * interestRate) / 100;
       return (principal + interestAmount).toFixed(2);
     }
-
     if (loan.interest) {
       return (principal * (1 + loan.interest / 100)).toFixed(2);
     }
-
     return principal.toFixed(2);
   };
 
   useEffect(() => {
-    const originalDisplay = document.body.style.display;
+    const interval = setInterval(() => {
+      setActiveLoans(prevLoans =>
+        prevLoans.map(loan => {
+          const lastUpdate = loan.lastProgressUpdate?.toDate();
+          const now = new Date();
+          if (!lastUpdate || (now - lastUpdate) >= 7 * 24 * 60 * 60 * 1000) {
+            if (loan.progressWeeks < loan.weeks) {
+              const updatedLoan = { ...loan, progressWeeks: loan.progressWeeks + 1, lastProgressUpdate: Timestamp.now() };
+              const docRef = doc(db, 'activeLoans', loan.id);
+              updateDoc(docRef, {
+                progressWeeks: updatedLoan.progressWeeks,
+                lastProgressUpdate: updatedLoan.lastProgressUpdate,
+              });
+              return updatedLoan;
+            }
+          }
+          return loan;
+        })
+      );
+    }, 24 * 60 * 60 * 1000); // Check daily
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
     document.body.style.display = 'block';
     fetchPendingLoans();
     fetchActiveLoans();
     return () => {
-      document.body.style.display = originalDisplay;
+      document.body.style.display = 'none';
     };
   }, []);
 
@@ -174,9 +199,7 @@ function TrackPayments() {
         <header className={styles.header}>
           <Header />
         </header>
-
         <h2 className={styles.title}>Track Payments</h2>
-
         <div className={styles.container}>
           <aside className={styles.sidebar}>
             <h3>Pending Loans</h3>
@@ -213,14 +236,14 @@ function TrackPayments() {
               {activeLoans.length === 0 ? (
                 <p className={styles.empty}>No active loans.</p>
               ) : (
-                activeLoans.map((loan, index) => {
+                activeLoans.map((loan) => {
                   const totalRepay = calculateTotalRepay(loan);
                   const isFullyPaid = parseFloat(loan.amountPaid || 0) >= parseFloat(totalRepay);
                   const due = loan.dueDate?.toDate();
                   const overdue = due && new Date() > due;
 
                   return (
-                    <div className={styles.card} key={index}>
+                    <div className={styles.card} key={loan.id}>
                       <strong>{loan.borrowerName}</strong>
                       <p>Amount Paid: MWK {loan.amountPaid || 0}/{totalRepay}</p>
                       <p>Paid On: {loan.paidDate ? loan.paidDate.toDate().toDateString() : 'Not yet paid'}</p>

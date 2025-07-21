@@ -60,6 +60,16 @@ function BorrowForm() {
       return;
     }
 
+    if (parseFloat(amount) > parseFloat(offer.amount)) {
+      alert(`You cannot request more than ${offer.amount}`);
+      return;
+    }
+
+    if (parseInt(weeks) > parseInt(offer.weeklyRates.length)) {
+      alert(`You cannot request more than ${offer.weeklyRates.length} weeks`);
+      return;
+    }
+
     const requestData = {
       amount,
       weeks,
@@ -95,7 +105,7 @@ function BorrowForm() {
         <h2>Borrow Loan</h2>
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.group}>
-            <label htmlFor="amount">Amount to Borrow</label>
+            <label htmlFor="amount">Amount (max ${offer.amount})</label>
             <input
               id="amount"
               type="number"
@@ -107,7 +117,7 @@ function BorrowForm() {
           </div>
 
           <div className={styles.group}>
-            <label htmlFor="weeks">Number of Weeks</label>
+            <label htmlFor="weeks">Number of Weeks (max {offer.weeklyRates.length})</label>
             <input
               id="weeks"
               type="number"
