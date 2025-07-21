@@ -69,7 +69,7 @@ function TrackPayments() {
         ...loan,
         startDate: today,
         dueDate,
-        progressWeeks: 0,
+        progressWeeks: 1,
         amountPaid: 0,
         paidDate: null,
       });
@@ -121,7 +121,7 @@ function TrackPayments() {
 
     try {
       const userRef = doc(db, 'users', loan.borrowerId);
-      await updateDoc(userRef, { trustRating: borrowerRating });
+      await updateDoc(userRef, { borrowerRating: borrowerRating });
 
       await logLoanHistory({
         type: 'repaid',
@@ -139,16 +139,23 @@ function TrackPayments() {
       console.error(err);
     }
   };
-   
+
   const calculateTotalRepay = (loan) => {
-    if (loan.interestBreakdown?.length > 0) {
-      const interestSum = loan.interestBreakdown.reduce((sum, item) => {
-        return sum + ((parseFloat(loan.amount) * parseFloat(item.rate)) / 100);
-      }, 0);
-      return (parseFloat(loan.amount) + interestSum).toFixed(2);
-    } else {
-      return (parseFloat(loan.amount) * (1 + loan.interest / 100)).toFixed(2);
+    const principal = parseFloat(loan.amount);
+
+    if (loan.interestBreakdown?.length > 0 && loan.progressWeeks) {
+      const currentWeek = Math.min(loan.progressWeeks, loan.weeks);
+      const rateObj = loan.interestBreakdown.find(item => item.week === currentWeek);
+      const interestRate = rateObj ? parseFloat(rateObj.rate) : 0;
+      const interestAmount = (principal * interestRate) / 100;
+      return (principal + interestAmount).toFixed(2);
     }
+
+    if (loan.interest) {
+      return (principal * (1 + loan.interest / 100)).toFixed(2);
+    }
+
+    return principal.toFixed(2);
   };
 
   useEffect(() => {
@@ -184,7 +191,7 @@ function TrackPayments() {
                   <p>
                     Interest:{' '}
                     {loan.interestBreakdown?.length > 0
-                      ? `${loan.interestBreakdown.reduce((sum, item) => sum + parseFloat(item.rate), 0)}%`
+                      ? `${loan.interestBreakdown.map(item => `${item.rate}% (Week ${item.week})`).join(', ')}`
                       : loan.interest !== undefined
                       ? `${loan.interest}%`
                       : 'N/A'}
@@ -218,9 +225,12 @@ function TrackPayments() {
                       <p>Amount Paid: MWK {loan.amountPaid || 0}/{totalRepay}</p>
                       <p>Paid On: {loan.paidDate ? loan.paidDate.toDate().toDateString() : 'Not yet paid'}</p>
                       <p>
-                        Interest:{' '}
-                        {loan.interestBreakdown?.length > 0
-                          ? `${loan.interestBreakdown.reduce((sum, item) => sum + parseFloat(item.rate), 0)}%`
+                        Interest Rate:{' '}
+                        {loan.interestBreakdown?.length > 0 && loan.progressWeeks
+                          ? (() => {
+                              const rateObj = loan.interestBreakdown.find(item => item.week === loan.progressWeeks);
+                              return rateObj ? `${rateObj.rate}% (Week ${rateObj.week})` : 'N/A';
+                            })()
                           : loan.interest !== undefined
                           ? `${loan.interest}%`
                           : 'N/A'}

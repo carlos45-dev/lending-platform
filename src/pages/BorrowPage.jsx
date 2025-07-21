@@ -53,22 +53,50 @@ const fetchActiveLoans = async () => {
 
         <div className={styles.container}>
           <aside className={styles.sidebar}>
-            <h3>My Borrowed Loans</h3>
-            {activeLoans.length === 0 ? (
-              <p style={{ color: 'gray' }}>No active loans.</p>
-            ) : (
-              activeLoans.map((loan) => (
-                <div className={styles.card} key={loan.id}>
-                  <strong>Borrowed From: {loan.lenderUsername || 'N/A'}</strong>
-                  <p>MWK {loan.amount} for {loan.weeks} weeks</p>
-                  <p>Interest: {loan.interest}%</p>
-                  <p>Start: {loan.startDate?.toDate().toDateString()}</p>
-                  <p>Due: {loan.dueDate?.toDate().toDateString()}</p>
-                  <button onClick={() => navigate("/mark-paid", { state: { loan } })}>Mark as Paid</button>
-                </div>
-              ))
-            )}
-          </aside>
+                <h3>My Borrowed Loans</h3>
+                {activeLoans.length === 0 ? (
+                  <p style={{ color: 'gray' }}>No active loans.</p>
+                ) : (
+                  activeLoans.map((loan) => {
+                    const totalRepay = loan.interestBreakdown?.length
+                      ? loan.interestBreakdown.reduce((sum, item) => {
+                          return sum + ((parseFloat(loan.amount) * parseFloat(item.rate)) / 100);
+                        }, parseFloat(loan.amount))
+                      : parseFloat(loan.amount) * (1 + (loan.interest || 0) / 100);
+
+                    const isFullyPaid = parseFloat(loan.amountPaid || 0) >= totalRepay;
+                    const due = loan.dueDate?.toDate();
+                    const overdue = due && new Date() > due;
+
+                    return (
+                      <div className={styles.card} key={loan.id}>
+                        <strong>Borrowed From: {loan.lenderUsername || 'N/A'}</strong>
+                        <p>Amount Borrowed: MWK {loan.amount}</p>
+                        <p>Weeks: {loan.weeks}</p>
+                        <p>Amount Paid: MWK {loan.amountPaid || 0} / {totalRepay.toFixed(2)}</p>
+                        <p>Paid On: {loan.paidDate ? loan.paidDate.toDate().toDateString() : 'Not yet paid'}</p>
+                        <p>
+                          Interest:{' '}
+                          {loan.interestBreakdown?.length
+                            ? `${loan.interestBreakdown.reduce((sum, item) => sum + parseFloat(item.rate), 0)}%`
+                            : loan.interest !== undefined
+                            ? `${loan.interest}%`
+                            : 'N/A'}
+                        </p>
+                        <p>Start: {loan.startDate?.toDate().toDateString()}</p>
+                        <p>Due: {due?.toDateString()}</p>
+                        <p>Progress: {loan.progressWeeks}/{loan.weeks} weeks</p>
+                        {overdue && !isFullyPaid && (
+                          <p className={styles.overdue} style={{ color: 'red' }}>⚠️ Overdue!</p>
+                        )}
+                        <button onClick={() => navigate("/mark-paid", { state: { loan } })}>
+                          Mark as Paid
+                        </button>
+                      </div>
+                    );
+                  })
+                )}
+              </aside>
 
           <main className={styles.main}>
             <section className={styles.loanRequests}>
