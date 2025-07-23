@@ -325,17 +325,8 @@ function TrackPayments() {
 
                   return (
                     <div className={styles.card} key={loan.id}>
-                      <strong>{loan.borrowerName}</strong>
-                      <p>Amount Paid: MWK {loan.amountPaid || 0}/{totalRepay}</p>
-                      <p>
-                        Paid On:{' '}
-                        {loan.paidDate
-                          ? (loan.paidDate instanceof Timestamp
-                              ? loan.paidDate.toDate()
-                              : new Date(loan.paidDate)
-                            ).toDateString()
-                          : 'Not yet paid'}
-                      </p>
+                      <strong>Lent To: {loan.borrowerName}</strong>
+                      <p>Amount Lent: MWK {loan.amount}</p>
                       <p>
                         Interest Rate:{' '}
                         {loan.interestBreakdown?.length > 0 && loan.progressWeeks
@@ -347,11 +338,20 @@ function TrackPayments() {
                           ? `${loan.interest}%`
                           : 'N/A'}
                       </p>
+                      <p>Amount Returned: MWK {loan.amountPaid || 0}/{totalRepay}</p>
+                      <p>
+                        Paid On:{' '}
+                        {loan.paidDate
+                          ? (loan.paidDate instanceof Timestamp
+                              ? loan.paidDate.toDate()
+                              : new Date(loan.paidDate)
+                            ).toDateString()
+                          : 'Not yet paid'}
+                      </p>
                       <p>Start: {loan.startDate?.toDate().toDateString()}</p>
                       <p>Due: {due?.toDateString()}</p>
                       <p>Progress: {loan.progressWeeks}/{loan.weeks} weeks</p>
                       {overdue && !isFullyPaid && <p className={styles.overdue}>⚠️ Overdue!</p>}
-
                       {isFullyPaid && (
                         <button className={styles.confirmBtn} onClick={() => confirmFullRepayment(loan)}>
                           Confirm Full Repayment
