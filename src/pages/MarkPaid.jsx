@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from '../styles/AddOfferPage.module.css';
-import { doc, updateDoc, getDoc } from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 function MarkPaid() {
@@ -29,27 +29,22 @@ function MarkPaid() {
     }
 
     try {
-      const loanRef = doc(db, 'activeLoans', loan.id);
-      const loanSnap = await getDoc(loanRef);
-
-      let existingAmount = 0;
-      if (loanSnap.exists()) {
-        const data = loanSnap.data();
-        existingAmount = parseFloat(data.amountPaid) || 0;
-      }
-
-      const totalAmountPaid = existingAmount + parseFloat(amountPaid);
-
-      await updateDoc(loanRef, {
-        amountPaid: totalAmountPaid,
+      // Submit repayment to pendingRepayments collection
+      await addDoc(collection(db, 'pendingRepayments'), {
+        loanId: loan.id,
+        amountPaid: parseFloat(amountPaid),
         paidDate,
+        borrowerId: loan.borrowerId,
+        lenderId: loan.lenderId,
+        borrowerName: loan.borrowerName,
+        submittedAt: new Date().toISOString(),
       });
 
-      alert('Payment confirmed successfully.');
+      alert('Repayment submitted for lender approval.');
       navigate('/borrow');
     } catch (error) {
-      console.error('Error updating loan:', error);
-      alert('Failed to confirm payment.');
+      console.error('Error submitting repayment:', error);
+      alert('Failed to submit repayment.');
     }
   };
 
@@ -75,7 +70,7 @@ function MarkPaid() {
             <input
               id="datePaid"
               type="date"
-              value={datePaid}
+              value={paidDate}
               onChange={(e) => setDatePaid(e.target.value)}
               required
             />

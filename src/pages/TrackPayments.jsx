@@ -14,6 +14,7 @@ import {
   addDoc,
   updateDoc,
   Timestamp,
+  getDoc,
 } from 'firebase/firestore';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -24,6 +25,7 @@ function TrackPayments() {
 
   const [pendingLoans, setPendingLoans] = useState([]);
   const [activeLoans, setActiveLoans] = useState([]);
+  const [pendingRepayments, setPendingRepayments] = useState([]);
 
   const fetchPendingLoans = async () => {
     if (!currentUser) return;
@@ -36,17 +38,27 @@ function TrackPayments() {
     setPendingLoans(data);
   };
 
-      const fetchActiveLoans = async () => {
-      if (!currentUser) return;
-      const q = query(collection(db, 'activeLoans'), where('lenderId', '==', currentUser.uid));
-      const snapshot = await getDocs(q);
-      const data = snapshot.docs.map(docSnap => ({
-        ...docSnap.data(),
-        id: docSnap.id    
-      }));
-      setActiveLoans(data);
-    };
+  const fetchActiveLoans = async () => {
+    if (!currentUser) return;
+    const q = query(collection(db, 'activeLoans'), where('lenderId', '==', currentUser.uid));
+    const snapshot = await getDocs(q);
+    const data = snapshot.docs.map(docSnap => ({
+      ...docSnap.data(),
+      id: docSnap.id    
+    }));
+    setActiveLoans(data);
+  };
 
+  const fetchPendingRepayments = async () => {
+    if (!currentUser) return;
+    const q = query(collection(db, 'pendingRepayments'), where('lenderId', '==', currentUser.uid));
+    const snapshot = await getDocs(q);
+    const data = snapshot.docs.map(docSnap => ({
+      id: docSnap.id,
+      ...docSnap.data()
+    }));
+    setPendingRepayments(data);
+  };
 
   const logLoanHistory = async (entry) => {
     try {
@@ -110,41 +122,89 @@ function TrackPayments() {
     }
   };
 
+  const acceptRepayment = async (repayment) => {
+    try {
+      const loanRef = doc(db, 'activeLoans', repayment.loanId);
+      const loanSnap = await getDoc(loanRef);
+
+      if (!loanSnap.exists()) {
+        throw new Error('Loan document does not exist');
+      }
+
+      const data = loanSnap.data();
+      const existingAmount = parseFloat(data.amountPaid) || 0;
+      const totalAmountPaid = existingAmount + parseFloat(repayment.amountPaid);
+
+      // Convert repayment.paidDate (string) to Firestore Timestamp
+      const paidDate = Timestamp.fromDate(new Date(repayment.paidDate));
+
+      await updateDoc(loanRef, {
+        amountPaid: totalAmountPaid,
+        paidDate,
+      });
+
+      await logLoanHistory({
+        type: 'repaid',
+        amount: repayment.amountPaid,
+        reference: repayment.loanId,
+        userId: repayment.borrowerId,
+      });
+
+      await deleteDoc(doc(db, 'pendingRepayments', repayment.id));
+      setPendingRepayments(prev => prev.filter(r => r.id !== repayment.id));
+      toast.success('Repayment accepted and updated.');
+      fetchActiveLoans();
+    } catch (err) {
+      console.error('Error accepting repayment:', err.message);
+      toast.error(`Failed to accept repayment: ${err.message}`);
+    }
+  };
+
+  const rejectRepayment = async (repayment) => {
+    try {
+      await deleteDoc(doc(db, 'pendingRepayments', repayment.id));
+      setPendingRepayments(prev => prev.filter(r => r.id !== repayment.id));
+      toast.success('Repayment rejected.');
+    } catch (err) {
+      console.error('Error rejecting repayment:', err);
+      toast.error('Failed to reject repayment.');
+    }
+  };
+
   const confirmFullRepayment = async (loan) => {
-  const docId = loan.id;
-  const now = new Date();
-  const dueDate = loan.dueDate?.toDate();
-  let borrowerRating = loan.borrowerRating || 3;
+    const docId = loan.id;
+    const now = new Date();
+    const dueDate = loan.dueDate?.toDate();
+    let borrowerRating = loan.borrowerRating || 3;
 
-  if (loan.paidDate?.toDate() <= dueDate) {
-    borrowerRating = Math.min(5, borrowerRating + 1);
-  } else {
-    borrowerRating = Math.max(1, borrowerRating - 1);
-  }
+    if (loan.paidDate) {
+      const paidDate = loan.paidDate instanceof Timestamp ? loan.paidDate.toDate() : new Date(loan.paidDate);
+      if (paidDate <= dueDate) {
+        borrowerRating = Math.min(5, borrowerRating + 1);
+      } else {
+        borrowerRating = Math.max(1, borrowerRating - 1);
+      }
+    }
 
-  try {
-    const userRef = doc(db, 'users', loan.borrowerId);
-    await updateDoc(userRef, { borrowerRating });
+    try {
+      const userRef = doc(db, 'users', loan.borrowerId);
+      await updateDoc(userRef, { borrowerRating });
 
-    await logLoanHistory({
-      type: 'repaid',
-      amount: loan.amount,
-      reference: docId,
-      userId: loan.borrowerId,
-    });
+      await logLoanHistory({
+        type: 'repaid',
+        amount: loan.amount,
+        reference: docId,
+        userId: loan.borrowerId,
+      });
 
-    // ✅ Correctly delete using loan.id (docId)
-    await deleteDoc(doc(db, 'activeLoans', docId));
-    console.log(docId);
-
-    setActiveLoans(prev => prev.filter(l => l.id !== docId));
-    toast.success("Loan fully repaid and confirmed.");
-  } catch (err) {
-    toast.error("Failed to confirm repayment.");
-    console.error("Full Repayment Error:", err);
-  }
-};
-
+      await deleteDoc(doc(db, 'activeLoans', docId));
+      setActiveLoans(prev => prev.filter(l => l.id !== docId));
+      toast.success("Loan fully repaid and confirmed.");
+    } catch (err) {
+      toast.error("Failed to confirm repayment.");
+      console.error("Full Repayment Error:", err);
+    }
+  };
 
   const calculateTotalRepay = (loan) => {
     const principal = parseFloat(loan.amount);
@@ -190,6 +250,7 @@ function TrackPayments() {
     document.body.style.display = 'block';
     fetchPendingLoans();
     fetchActiveLoans();
+    fetchPendingRepayments();
     return () => {
       document.body.style.display = 'none';
     };
@@ -230,6 +291,24 @@ function TrackPayments() {
                 </div>
               ))
             )}
+            <h3>Pending Repayments</h3>
+            {pendingRepayments.length === 0 ? (
+              <p className={styles.empty}>No pending repayments.</p>
+            ) : (
+              pendingRepayments.map((repayment) => (
+                <div key={repayment.id} className={styles.card}>
+                  <strong>{repayment.borrowerName}</strong>
+                  <p>Loan ID: {repayment.loanId}</p>
+                  <p>Amount Paid: MWK {repayment.amountPaid}</p>
+                  <p>Date Paid: {new Date(repayment.paidDate).toDateString()}</p>
+                  <p>Submitted: {new Date(repayment.submittedAt).toDateString()}</p>
+                  <div className={styles.actions}>
+                    <button onClick={() => acceptRepayment(repayment)} className={styles.confirmBtn}>Accept</button>
+                    <button onClick={() => rejectRepayment(repayment)} className={styles.cancelBtn}>Reject</button>
+                  </div>
+                </div>
+              ))
+            )}
           </aside>
 
           <main className={styles.main}>
@@ -248,7 +327,15 @@ function TrackPayments() {
                     <div className={styles.card} key={loan.id}>
                       <strong>{loan.borrowerName}</strong>
                       <p>Amount Paid: MWK {loan.amountPaid || 0}/{totalRepay}</p>
-                      <p>Paid On: {loan.paidDate ? loan.paidDate.toDate().toDateString() : 'Not yet paid'}</p>
+                      <p>
+                        Paid On:{' '}
+                        {loan.paidDate
+                          ? (loan.paidDate instanceof Timestamp
+                              ? loan.paidDate.toDate()
+                              : new Date(loan.paidDate)
+                            ).toDateString()
+                          : 'Not yet paid'}
+                      </p>
                       <p>
                         Interest Rate:{' '}
                         {loan.interestBreakdown?.length > 0 && loan.progressWeeks
