@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
 import { collection, addDoc, serverTimestamp, doc, getDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import styles from '../styles/BorrowForm.module.css';
+import styles from '../styles/reset.module.css';
 
 function BorrowForm() {
   const [amount, setAmount] = useState('');

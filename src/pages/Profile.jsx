@@ -153,7 +153,7 @@ function Profile() {
         <div className={styles.actions}>
           <div>
             <FontAwesomeIcon icon={faLock} />
-            <p>Reset Password</p>
+            <p onClick={() => navigate("/reset")}>Reset Password</p>
           </div>
           <div onClick={() => navigate("/")}>
             <FontAwesomeIcon icon={faSignOutAlt} />
