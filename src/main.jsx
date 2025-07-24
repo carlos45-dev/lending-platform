@@ -18,6 +18,8 @@ import AddOfferPage from './pages/AddOfferPage.jsx';
 import VerifyEmail from './pages/VerifyEmail.jsx';
 import BorrowForm from './pages/BorrowForm.jsx';
 import Reset from './pages/Reset.jsx';
+import FAQs from './pages/FAQS.jsx';
+import Cookies from './pages/cookies.jsx';
 
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -42,6 +44,11 @@ const router = createBrowserRouter([
   { path: "/add-offer", element: <PrivateRoute><AddOfferPage /></PrivateRoute> },
   { path: "/verify-email", element: <PrivateRoute><VerifyEmail /></PrivateRoute> },
   { path: "/reset", element: <PrivateRoute><Reset /></PrivateRoute> },
+  { path: "/FAQS", element: <PrivateRoute><FAQs /></PrivateRoute> },
+  { path: "/cookies", element: <PrivateRoute><Cookies /></PrivateRoute> },
+
+
+
 
   { path: "/about", element: <AboutPage /> },
   { path: "/terms", element: <TermsPage /> },

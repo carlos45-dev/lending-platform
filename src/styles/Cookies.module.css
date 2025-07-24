@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.container {
+  padding: 80px 20px 40px;
+  min-height: calc(100vh - 120px);
+  background-color: white;
+  color: #1A2258;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+.sectionTitle {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1A2258;
+  margin-bottom: 15px;
+}
+
+.text {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #333c7b;
+  margin-bottom: 15px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px 0;
+}
+
+.list li {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #333c7b;
+  margin-bottom: 10px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #1A2258;
+  font-size: 1.2rem;
+}
+
+.link {
+  color: #1A2258;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.link:hover {
+  color: #333c7b;
+  text-decoration: underline;
+}
+
+/* PC Screens */
+@media (min-width: 1024px) {
+  .container {
+    padding: 100px 40px 60px;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.6rem;
+  }
+
+  .text {
+    font-size: 1.1rem;
+  }
+
+  .list li {
+    font-size: 1.1rem;
+  }
+}

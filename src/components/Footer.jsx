@@ -10,8 +10,8 @@ function Footer(){
       <div className={styles.footerContainer}>
        <div className={ styles.termscontainer}>
         <p onClick={() => navigate("/terms")}>Terms and Conditions</p>
-        <p>Cookies</p>
-        <p>FAQS</p>
+        <p onClick={() => navigate("/cookies")}>Cookies</p>
+        <p onClick={() => navigate("/FAQS")}>FAQS</p>
         <p>&copy; {new Date().getFullYear()} UniFund. All rights reserved.</p>
        </div>
        <div className={styles.social}>
