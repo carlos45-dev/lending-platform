@@ -45,7 +45,7 @@ function BorrowPage() {
     <>
       <div className={styles.dashboard}>
         <header className={styles.header}>
-          <Header />
+          <Header style={{color: '#1A2258',backgroundColor: 'white'}} />
         </header>
 
         <h2 className={styles.title}>Find trusted fellow Students Lenders</h2>
