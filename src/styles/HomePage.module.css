@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 30px;
 }
 .homeImage2{
     height:27vh;
@@ -24,6 +23,11 @@
 .processed{
     text-align: center;
     padding: 5px;
+}
+.intro{
+    background-color: #1A2258;
+    margin-top: -5%;
+    height: 100vh;
 }
 
 @media  (min-width: 768px) {

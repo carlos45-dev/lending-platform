@@ -5,10 +5,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  color: #1A2258;
-  border-bottom: 1px solid hsl(0, 0%, 84%);
-  box-shadow: 0 2px 4px hsla(0, 0%, 0%, 0.1);
-  background-color: #FFFFFF;
   position: fixed;
   top: 0;
   left: 0;
@@ -16,18 +12,33 @@
   height: 60px;
   z-index: 1000;
   font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-bottom: 1px solid hsl(0, 0%, 84%);
+  box-shadow: 0 2px 4px hsla(0, 0%, 0%, 0.1);
+}
+
+.initial {
+  background-color: #1A2258;
+  color: white;
+}
+
+.scrolled {
+  background-color: white;
+  color: #1A2258;
 }
 
 .user {
   display: flex;
   align-items: center;
   gap: 10px;
+  color: inherit;
+  text-decoration: none;
 }
 
 .title {
   font-size: 1.8rem;
   font-weight: 600;
-  color: #1A2258;
+  color: inherit;
 }
 
 .sidebar {
@@ -36,11 +47,20 @@
   right: -290px;
   width: 230px;
   height: calc(100vh - 60px);
-  background-color: #1A2258;
-  color: white;
-  transition: right 0.3s ease-in-out;
+  transition: right 0.3s ease-in-out, background-color 0.3s ease;
   z-index: 999;
   padding: 20px;
+  color: inherit;
+}
+
+.lightSidebar {
+  background-color: white;
+  color: #1A2258;
+}
+
+.darkSidebar {
+  background-color: #1A2258;
+  color: white;
 }
 
 .show {
@@ -58,17 +78,20 @@
 
 .menu {
   text-decoration: none;
-  color: white;
-  font: 1.2em 'Poppins', sans-serif;
+  font: 1em 'Poppins', sans-serif;
   font-weight: 500;
-  display: inline-block; /* Ensure consistent alignment for links and buttons */
-  padding: 8px 0; /* Consistent padding for alignment */
-  width: 100%; /* Ensure full width for click area */
-  text-align: left; /* Align text consistently */
+  padding: 8px 0;
+  width: 100%;
+  text-align: left;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
 }
 
 .menu:hover {
-  color: #cccccc; /* Subtle hover effect for sidebar items */
+  color: #cccccc;
 }
 
 .nav {
@@ -86,7 +109,7 @@
   }
 }
 
-.menu-item {
+.menuItem {
   opacity: 0;
   animation: slideInItem 0.4s ease forwards;
 }
@@ -97,12 +120,11 @@
 .menuItem:nth-child(4) { animation-delay: 0.4s; }
 .menuItem:nth-child(5) { animation-delay: 0.5s; }
 
-/* Media query for larger screens (PC) */
+/* PC Screens */
 @media (min-width: 1024px) {
   .nav {
     display: flex;
-    flex-direction: row;
-    gap: 30px; /* Increased gap for better spacing */
+    gap: 30px;
     list-style: none;
     font: 1.1em 'Poppins', sans-serif;
     font-weight: 600;
@@ -110,44 +132,34 @@
   }
 
   .nav li {
-    transition: transform 0.2s ease, color 0.2s ease; /* Smooth hover effect */
+    transition: transform 0.2s ease, color 0.2s ease;
   }
 
   .nav li:hover {
-    transform: translateY(-2px); /* Subtle lift effect on hover */
-    color: #333c7b; /* Lighter shade of #1A2258 for hover */
+    transform: translateY(-2px);
+    color: #333c7b;
   }
 
   .nav li button {
-    font: inherit; /* Inherit font from .nav */
-    color: #1A2258;
+    font: inherit;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0; /* Remove padding for consistent alignment */
-  }
-
-  .nav li button:hover {
-    color: #333c7b; /* Match hover color */
+    color: inherit;
   }
 
   .bars {
-    display: none; /* Hide hamburger menu on PC */
-  }
-
-  a {
-    text-decoration: none;
-    color: #1A2258;
+    display: none;
   }
 
   .title {
-    font-size: 1.5rem; /* Slightly larger for prominence */
-    position: absolute; /* Center title */
+    font-size: 1.5rem;
+    position: absolute;
     left: 11%;
     transform: translateX(-50%);
   }
 
   .user {
-    order: -1; /* Ensure user icon stays on the left */
+    order: -1;
   }
 }

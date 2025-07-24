@@ -47,6 +47,7 @@ function HomePage() {
   return (
     <>
       <Header />
+      <div className={styles.intro}>
       <h3
         style={{
           textAlign: 'center',
@@ -55,18 +56,12 @@ function HomePage() {
           marginTop: '80px',
           color: '#1A2258'
         }}
+      
         className={styles.welcome}
       >
         Welcome Back {userData?.username || 'Guest'}
       </h3>
 
-      <div className={styles.homeImage}>
-        <img
-          src={img}
-          className={styles.homeImage2}
-          alt="home Image"
-          style={{ borderRadius: '20px' }}
-        />
       </div>
 
       {/* Comment section */}
