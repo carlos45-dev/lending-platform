@@ -11,12 +11,18 @@ function Header() {
   const location = useLocation();
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 30);
-    };
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    // Only apply scroll effect on the homepage
+    if (location.pathname === '/home') {
+      const onScroll = () => {
+        setScrolled(window.scrollY > 30);
+      };
+      window.addEventListener('scroll', onScroll);
+      return () => window.removeEventListener('scroll', onScroll);
+    } else {
+      // Reset scrolled state for non-homepage routes
+      setScrolled(false);
+    }
+  }, [location.pathname]);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
   const closeSidebar = () => setIsOpen(false);
@@ -41,7 +47,7 @@ function Header() {
 
   return (
     <>
-      <div className={`${styles.header} ${scrolled ? styles.scrolled : styles.initial}`}>
+      <div className={`${styles.header} ${location.pathname === '/home' ? (scrolled ? styles.scrolled : styles.initial) : styles.static}`}>
         <Link to="/profile" className={styles.user}>
           <FontAwesomeIcon icon={faCircleUser} size="2x" />
         </Link>
@@ -50,7 +56,7 @@ function Header() {
 
         <ul className={styles.nav}>
           <li><Link to="/home" className={styles.menu} style={{fontWeight:'bold'}}>Home</Link></li>
-          <li><button onClick={scrollToServices} className={styles.menu} >Services</button></li>
+          <li><button onClick={scrollToServices} className={styles.menu}>Services</button></li>
           <li><Link to="/about" className={styles.menu} style={{fontWeight:'bold'}}>About</Link></li>
           <li><Link to="/contact" className={styles.menu} style={{fontWeight:'bold'}}>Contact</Link></li>
         </ul>
@@ -77,7 +83,7 @@ function Header() {
 
       <div
         className={`${styles.sidebar} ${isOpen ? styles.show : ''} ${
-          scrolled ? styles.darkSidebar : styles.lightSidebar
+          location.pathname === '/home' && scrolled ? styles.darkSidebar : styles.lightSidebar
         }`}
       >
         <ul className={styles.mainmenu}>

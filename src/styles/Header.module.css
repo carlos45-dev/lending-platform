@@ -10,7 +10,7 @@
   left: 0;
   right: 0;
   height: 60px;
-  z-index: 1000;
+  z-index: 2000;
   font-family: 'Poppins', sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
   border-bottom: 1px solid hsl(0, 0%, 84%);
@@ -23,6 +23,11 @@
 }
 
 .scrolled {
+  background-color: white;
+  color: #1A2258;
+}
+
+.static {
   background-color: white;
   color: #1A2258;
 }
@@ -48,7 +53,7 @@
   width: 230px;
   height: calc(100vh - 60px);
   transition: right 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.3s ease;
-  z-index: 999;
+  z-index: 1999;
   padding: 20px;
   color: inherit;
 }
