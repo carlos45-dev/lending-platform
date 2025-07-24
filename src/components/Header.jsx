@@ -52,7 +52,7 @@ function Header() {
           <FontAwesomeIcon icon={faCircleUser} size="2x" />
         </Link>
 
-        <h2 className={styles.title}>UniFund</h2>
+        
 
         <ul className={styles.nav}>
           <li><Link to="/home" className={styles.menu} style={{fontWeight:'bold'}}>Home</Link></li>
