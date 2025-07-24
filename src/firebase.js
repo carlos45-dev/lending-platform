@@ -1,10 +1,10 @@
-// Import Firebase modules
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
-// Your Firebase configuration (corrected)
+// Your Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDXQhkZ0-QC2lM4Xzy4wb_LruzkRuJfgrg",
   authDomain: "unifund-lending-applicat-c2347.firebaseapp.com",
@@ -19,9 +19,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-// Initialize Auth and Firestore
+// Initialize Auth, Firestore, and Storage
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 // Export for use in components
-export { app, auth, db, analytics };
+export { app, auth, db, storage, analytics };

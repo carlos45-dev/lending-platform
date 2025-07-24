@@ -2,18 +2,26 @@
   font-family: Arial, sans-serif;
   color: #1A2258;
   padding: 0 1rem;
+  min-height: 100vh; /* Ensure dashboard takes full viewport height */
+  display: flex;
+  flex-direction: column; /* Stack header, container, and footer vertically */
+  margin-top: -10%;
 }
+
 .title {
   text-align: center;
   margin: 2rem 0;
 }
-.header{
+
+.header {
   margin-bottom: 6rem;
 }
+
 .container {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  flex: 1; /* Expand container to push footer to bottom */
 }
 
 .sidebar {
@@ -21,6 +29,9 @@
   background-color: #f4f4f4;
   padding: 1rem;
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%; /* Ensure sidebar spans full height of container */
 }
 
 .sidebar h3 {
@@ -71,6 +82,7 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
 .addOfferBtn {
   margin-top: 1rem;
   background-color: #1A2258;
@@ -86,3 +98,7 @@
   background-color: #333c7b;
 }
 
+.footer {
+  margin-top: auto; 
+  width: 100%;
+}

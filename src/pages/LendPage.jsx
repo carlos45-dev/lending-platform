@@ -157,20 +157,6 @@ function LendPage() {
                   ))
                 )}
               </section>
-
-
-            <section className={styles.activeLoans}>
-              <h3>Active Loans</h3>
-              {activeLoans.map((loan, index) => (
-                <div className={styles.card} key={index}>
-                  <strong>Borrowed To: {loan.borrower}</strong>
-                  <p>Offered <span>{loan.amount}</span> for <span>{loan.duration}</span></p>
-                  <p>Interest: <span>{loan.interest}</span></p>
-                  <p>Progress: <span>{loan.progress}</span></p>
-                  <button onClick={() => sendReminder(loan.borrower)}>Remind</button>
-                </div>
-              ))}
-            </section>
           </main>
         </div>
       </div>
