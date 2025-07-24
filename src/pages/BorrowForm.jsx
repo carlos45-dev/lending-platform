@@ -102,7 +102,7 @@ function BorrowForm() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.formBox}>
-        <h2>Borrow Loan</h2>
+        <h2>Borrow Money</h2>
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.group}>
             <label htmlFor="amount">Amount (max MKW{offer.amount})</label>

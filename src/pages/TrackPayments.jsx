@@ -135,7 +135,7 @@ function TrackPayments() {
       const existingAmount = parseFloat(data.amountPaid) || 0;
       const totalAmountPaid = existingAmount + parseFloat(repayment.amountPaid);
 
-      // Convert repayment.paidDate (string) to Firestore Timestamp
+      
       const paidDate = Timestamp.fromDate(new Date(repayment.paidDate));
 
       await updateDoc(loanRef, {
@@ -241,7 +241,7 @@ function TrackPayments() {
           return loan;
         })
       );
-    }, 24 * 60 * 60 * 1000); // Check daily
+    }, 24 * 60 * 60 * 1000); 
 
     return () => clearInterval(interval);
   }, []);
@@ -285,8 +285,9 @@ function TrackPayments() {
                   <p>Total Repay: MWK {calculateTotalRepay(loan)}</p>
                   <p>Date Borrowed: {loan.borrowedAt?.toDate().toDateString()}</p>
                   <div className={styles.actions}>
-                    <button onClick={() => confirmAndTrack(loan)} className={styles.confirmBtn}>Confirm & Start</button>
-                    <button onClick={() => cancelLoan(loan)} className={styles.cancelBtn}>Cancel</button>
+                    <button onClick={() => confirmAndTrack(loan)} style={{ marginRight: '10px',backgroundColor: '#008000' }}>Start Tracking</button>
+                    <button onClick={() => cancelLoan(loan)}
+                      style={{ backgroundColor: 'red' }}>Cancel</button>
                   </div>
                 </div>
               ))
@@ -303,8 +304,8 @@ function TrackPayments() {
                   <p>Date Paid: {new Date(repayment.paidDate).toDateString()}</p>
                   <p>Submitted: {new Date(repayment.submittedAt).toDateString()}</p>
                   <div className={styles.actions}>
-                    <button onClick={() => acceptRepayment(repayment)} className={styles.confirmBtn}>Accept</button>
-                    <button onClick={() => rejectRepayment(repayment)} className={styles.cancelBtn}>Reject</button>
+                    <button onClick={() => acceptRepayment(repayment)} style={{ marginRight: '10px',backgroundColor: '#008000' }}>Accept</button>
+                    <button onClick={() => rejectRepayment(repayment)} style={{ backgroundColor: 'red' }}>Reject</button>
                   </div>
                 </div>
               ))

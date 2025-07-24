@@ -2,9 +2,9 @@
   font-family: Arial, sans-serif;
   color: #1A2258;
   padding: 0 1rem;
-  min-height: 100vh; /* Ensure dashboard takes full viewport height */
+  min-height: 100vh; 
   display: flex;
-  flex-direction: column; /* Stack header, container, and footer vertically */
+  flex-direction: column; 
   margin-top: -10%;
 }
 
@@ -31,7 +31,7 @@
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  min-height: 100%; /* Ensure sidebar spans full height of container */
+  min-height: 100%; 
 }
 
 .sidebar h3 {
