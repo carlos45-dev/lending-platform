@@ -15,7 +15,6 @@ function TermsPage() {
   return (
     <>
       <div className={styles.wrapper}>
-        <Header />
         <main className={styles.termsSection}>
           <h2 className={styles.heading}>Terms and Conditions</h2>
 
@@ -75,7 +74,6 @@ function TermsPage() {
             </p>
           </section>
         </main>
-        <Footer />
       </div>
     </>
   );
