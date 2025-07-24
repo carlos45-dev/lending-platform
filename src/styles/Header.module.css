@@ -47,7 +47,7 @@
   right: -290px;
   width: 230px;
   height: calc(100vh - 60px);
-  transition: right 0.3s ease-in-out, background-color 0.3s ease;
+  transition: right 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.3s ease;
   z-index: 999;
   padding: 20px;
   color: inherit;
@@ -101,7 +101,7 @@
 @keyframes slideInItem {
   from {
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateX(40px);
   }
   to {
     opacity: 1;
@@ -111,14 +111,14 @@
 
 .menuItem {
   opacity: 0;
-  animation: slideInItem 0.4s ease forwards;
+  animation: slideInItem 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .menuItem:nth-child(1) { animation-delay: 0.1s; }
-.menuItem:nth-child(2) { animation-delay: 0.2s; }
-.menuItem:nth-child(3) { animation-delay: 0.3s; }
-.menuItem:nth-child(4) { animation-delay: 0.4s; }
-.menuItem:nth-child(5) { animation-delay: 0.5s; }
+.menuItem:nth-child(2) { animation-delay: 0.15s; }
+.menuItem:nth-child(3) { animation-delay: 0.2s; }
+.menuItem:nth-child(4) { animation-delay: 0.25s; }
+.menuItem:nth-child(5) { animation-delay: 0.3s; }
 
 /* PC Screens */
 @media (min-width: 1024px) {

@@ -7,7 +7,7 @@ import img3 from '../assets/Lend.jfif';
 import img4 from '../assets/borrow.jfif';
 import img5 from '../assets/history.jfif';
 import Services from "../components/Services";
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../UserContext';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -17,17 +17,17 @@ function HomePage() {
   const navigate = useNavigate();
   const auth = getAuth();
   const [loading, setLoading] = useState(true);
+  const introRef = useRef(null);
 
   useEffect(() => {
     const originalDisplay = document.body.style.display;
     document.body.style.display = 'block';
 
-    // Check authentication state
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
-        navigate('/'); // Redirect to login if not authenticated
+        navigate('/');
       }
-      setLoading(false); // Set loading to false once auth state is resolved
+      setLoading(false);
     });
 
     return () => {
@@ -47,37 +47,23 @@ function HomePage() {
   return (
     <>
       <Header />
-      <div className={styles.intro}>
-      <h3
-        style={{
-          textAlign: 'center',
-          paddingTop: '10px',
-          fontFamily: 'Inter',
-          marginTop: '80px',
-          color: '#1A2258'
-        }}
-      
-        className={styles.welcome}
-      >
-        Welcome Back {userData?.username || 'Guest'}
-      </h3>
-
+      <div className={styles.intro} ref={introRef}>
+        <div className={styles.contentContainer}>
+          <p className={styles.welcome}>
+            Welcome back {userData?.username || 'User'}
+          </p>
+          <h1 className={styles.title}>UniFund</h1>
+          <h3 className={styles.subtitle}>Empowering students to support each other</h3>
+          <p className={styles.description}>
+            A peer-to-peer lending platform designed for students. Borrow with confidence, lend with transparency. Build trust, track repayments, and grow together.
+          </p>
+        </div>
+        <div className={styles.imageContainer}>
+          <img src={img} alt="Student with phone" className={styles.image} />
+        </div>
       </div>
 
-      {/* Comment section */}
-      <p
-        style={{
-          textAlign: 'center',
-          padding: '10px',
-          fontFamily: 'Inter',
-          marginTop: '50px',
-          color: '#1A2258'
-        }}
-      >
-        💬 'I borrowed K30,000 for textbooks and paid it off in 3 months — super helpful!' — James, UNIMA
-      </p>
 
-      {/* Cards to display services offered by unifund */}
       <div id="services" className={styles.servicesContainer}>
         <Services title={<p> Lend <br /> Money</p>} image={img3} onClick={() => navigate("/lend")} />
         <Services title={<p>Borrow <br/> Money</p>} image={img4} onClick={() => navigate("/borrow")} />
@@ -85,7 +71,6 @@ function HomePage() {
         <Services title={<p>Track <br/> Payments</p>} image={img2} onClick={() => navigate("/track-payments")} />
       </div>
 
-      {/* Impact on campus */}
       <h2 style={{ textAlign: 'center' }}>Our impact on campus</h2>
       <div className={styles.impact}>
         <div className={styles.processed}>

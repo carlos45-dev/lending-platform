@@ -34,6 +34,10 @@
 @media (min-width: 1024px) {
     .services{
         width: 200px;
+        height: 250px;
+    }
+    .image{
+        height: 140px;
     }
     
 }
