@@ -23,7 +23,7 @@ function VerifyEmail() {
 
         if (emailVerified) {
           console.log('Email verified, navigating to /home');
-          navigate('/home', { replace: true }); // Replace history to prevent back button issues
+          navigate('/'); 
         }
       } catch (err) {
         console.error('Error checking email verification:', err);
