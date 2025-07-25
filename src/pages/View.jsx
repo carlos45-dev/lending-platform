@@ -44,7 +44,7 @@ function View() {
       await setDoc(doc(db, 'pendingLoans', request.id), loanData);
       await deleteDoc(doc(db, 'loanRequests', request.id));
       window.open(whatsappLink, '_blank');
-      toast.success('Loan approved and borrower notified via WhatsApp!');
+      toast.success('Loan approved and remember to go to "trackPayments"  section to  track loan repayments.');
       navigate('/lend');
     } catch (err) {
       console.error(err);
