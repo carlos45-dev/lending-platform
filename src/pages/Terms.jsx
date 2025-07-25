@@ -21,7 +21,7 @@ function TermsPage() {
           <section className={styles.block}>
             <h3>1. Eligibility</h3>
             <p>
-              To use UniFund, you must be a registered student of the University of Malawi or a participating institution. 
+              To use UniFund, you must be a registered student of the participating University .
               Verification of student identity may be required before accessing certain features.
             </p>
           </section>
