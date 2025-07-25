@@ -150,8 +150,8 @@ function Profile() {
           <p>{userData?.phone || "N/A"}</p>
         </div>
 
-        <div onClick={() => navigate("/reset")} className={styles.actions}>
-          <div>
+        <div  className={styles.actions}>
+          <div onClick={() => navigate("/reset")}>
             <FontAwesomeIcon icon={faLock} />
             <p >Reset Password</p>
           </div>
