@@ -105,7 +105,7 @@ function BorrowForm() {
         <h2>Borrow Money</h2>
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.group}>
-            <label htmlFor="amount">Amount (max MKW{offer.amount})</label>
+            <label htmlFor="amount">Amount (max MKW {offer.amount})</label>
             <input
               id="amount"
               type="number"
