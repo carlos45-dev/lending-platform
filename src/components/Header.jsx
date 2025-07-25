@@ -37,7 +37,7 @@ function Header() {
     };
     if (location.pathname !== '/home') {
       navigate('/home');
-      setTimeout(scroll, 300);
+      setTimeout(scroll, 300); // Delay to ensure page renders before scrolling
     } else {
       scroll();
     }
@@ -52,13 +52,11 @@ function Header() {
           <FontAwesomeIcon icon={faCircleUser} size="2x" />
         </Link>
 
-        
-
         <ul className={styles.nav}>
-          <li><Link to="/home" className={styles.menu} style={{fontWeight:'bold'}}>Home</Link></li>
+          <li><Link to="/home" className={styles.menu} style={{ fontWeight: 'bold' }}>Home</Link></li>
           <li><button onClick={scrollToServices} className={styles.menu}>Services</button></li>
-          <li><Link to="/about" className={styles.menu} style={{fontWeight:'bold'}}>About</Link></li>
-          <li><Link to="/contact" className={styles.menu} style={{fontWeight:'bold'}}>Contact</Link></li>
+          <li><Link to="/about" className={styles.menu} style={{ fontWeight: 'bold' }}>About</Link></li>
+          <li><Link to="/contact" className={styles.menu} style={{ fontWeight: 'bold' }}>Contact</Link></li>
         </ul>
 
         <div onClick={toggleSidebar}>

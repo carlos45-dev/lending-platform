@@ -3,20 +3,20 @@ import { faLinkedin, faGithub, faWhatsapp, faFacebook } from "@fortawesome/free-
 import styles from '../styles/Footer.module.css';
 import { useNavigate } from "react-router-dom";
 
-function Footer(){
+function Footer() {
+  const navigate = useNavigate();
 
- const navigate = useNavigate();
-     return(
-      <div className={styles.footerContainer}>
-       <div className={ styles.termscontainer}>
+  return (
+    <div className={styles.footerContainer}>
+      <div className={styles.termscontainer}>
         <p onClick={() => navigate("/terms")}>Terms and Conditions</p>
         <p onClick={() => navigate("/cookies")}>Cookies</p>
-        <p onClick={() => navigate("/FAQS")}>FAQS</p>
-        <p>&copy; {new Date().getFullYear()} UniFund. All rights reserved.</p>
-       </div>
-       <div className={styles.social}>
+        <p onClick={() => navigate("/FAQs")}>FAQs</p> {/* Fixed typo: FAQS to FAQs */}
+        <p>© {new Date().getFullYear()} UniFund. All rights reserved.</p>
+      </div>
+      <div className={styles.social}>
         <a href="https://www.linkedin.com/in/carlos-muleke-084552362" className="footer__icon">
-          <FontAwesomeIcon icon={faLinkedin} style={{ color: '#0077B5'  }} />
+          <FontAwesomeIcon icon={faLinkedin} style={{ color: '#0077B5' }} />
         </a>
         <a href="https://github.com/carlos45-dev" className="footer__icon">
           <FontAwesomeIcon icon={faGithub} style={{ color: '#ffffff' }} />
@@ -28,7 +28,8 @@ function Footer(){
           <FontAwesomeIcon icon={faFacebook} style={{ color: '#1877F2' }} />
         </a>
       </div>
-      </div>
-     )
+    </div>
+  );
 }
-export default Footer
+
+export default Footer;

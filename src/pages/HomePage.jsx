@@ -25,7 +25,7 @@ function HomePage() {
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
-        navigate('/');
+        navigate('/'); // ScrollToTop will handle scrolling to top of login page
       }
       setLoading(false);
     });
@@ -63,12 +63,27 @@ function HomePage() {
         </div>
       </div>
 
-
       <div id="services" className={styles.servicesContainer}>
-        <Services title={<p> Lend <br /> Money</p>} image={img3} onClick={() => navigate("/lend")} />
-        <Services title={<p>Borrow <br/> Money</p>} image={img4} onClick={() => navigate("/borrow")} />
-        <Services title={<p>Loan <br/> History</p>} image={img5} onClick={() => navigate("/loan-history")} />
-        <Services title={<p>Track <br/> Payments</p>} image={img2} onClick={() => navigate("/track-payments")} />
+        <Services
+          title={<p> Lend <br /> Money</p>}
+          image={img3}
+          onClick={() => navigate("/lend")} // ScrollToTop handles scrolling
+        />
+        <Services
+          title={<p>Borrow <br/> Money</p>}
+          image={img4}
+          onClick={() => navigate("/borrow")} // ScrollToTop handles scrolling
+        />
+        <Services
+          title={<p>Loan <br/> History</p>}
+          image={img5}
+          onClick={() => navigate("/loan-history")} // ScrollToTop handles scrolling
+        />
+        <Services
+          title={<p>Track <br/> Payments</p>}
+          image={img2}
+          onClick={() => navigate("/track-payments")} // ScrollToTop handles scrolling
+        />
       </div>
 
       <h2 style={{ textAlign: 'center' }}>Our impact on campus</h2>
