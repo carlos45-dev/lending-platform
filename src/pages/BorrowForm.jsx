@@ -133,7 +133,7 @@ function BorrowForm() {
             <input
               id="collateral"
               type="text"
-              placeholder="e.g. Laptop, ID, Phone"
+              placeholder="e.g. Laptop, Phone"
               value={collateral}
               onChange={(e) => setCollateral(e.target.value)}
               required
