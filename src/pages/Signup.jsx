@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 import styles from '../styles/SignUp.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLock, faEyeSlash, faEye, faPhone, faUpRightFromSquare,faEnvelope, faEnvelopeCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock, faEyeSlash, faEye, faPhone, faUpRightFromSquare, faEnvelope, faEnvelopeCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { auth, db } from "../firebase";
@@ -30,7 +32,7 @@ function Signup() {
   const handlePasswordToggle2 = () => setShowPassword2(!showPassword2);
 
   const validatePhoneNumber = (number) => {
-    const phoneRegex = /^(\+?\d{10,15}|0\d{9})$/;
+    const phoneRegex = /^\+\d{10,15}$/;
     return phoneRegex.test(number);
   };
 
@@ -48,7 +50,7 @@ function Signup() {
     }
 
     if (!validatePhoneNumber(phone)) {
-      alert("Please enter a valid phone number.");
+      alert("Please enter a valid phone number with country code.");
       return;
     }
 
@@ -83,36 +85,74 @@ function Signup() {
     }
   };
 
+  useEffect(() => {
+    const originalDisplay = document.body.style.display;
+    document.body.style.display = 'block';
+    return () => {
+      document.body.style.display = originalDisplay;
+    };
+  }, []);
+
   return (
-    <>
+    <div className={styles.signupContainer}>
       <h2 className={styles.title}>Get started with your account</h2>
       <div className={styles.signup}>
         <form onSubmit={handleSubmit}>
           {/* Username */}
           <div className={styles.formGroup}>
-            <input type="text" className={styles.input} placeholder="John Doe"
-              value={username} onChange={(e) => setUsername(e.target.value)} required disabled={isLoading} />
+            <input
+              type="text"
+              className={styles.input}
+              placeholder="John Doe"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              disabled={isLoading}
+            />
             <FontAwesomeIcon className={styles["input-icon"]} icon={faUser} />
           </div>
 
           {/* Email */}
           <div className={styles.formGroup}>
-            <input type="email" className={styles.input} placeholder="example1@gmail.com"
-              value={email} onChange={(e) => setEmail(e.target.value)} required disabled={isLoading} />
+            <input
+              type="email"
+              className={styles.input}
+              placeholder="example1@gmail.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              disabled={isLoading}
+            />
             <FontAwesomeIcon className={styles["input-icon"]} icon={faEnvelope} />
           </div>
 
           {/* Phone */}
           <div className={styles.formGroup}>
-            <input type="tel" className={styles.input} placeholder="+265 9xxx xxxx"
-              value={phone} onChange={(e) => setPhone(e.target.value)} required disabled={isLoading} />
+            <PhoneInput
+              country={'mw'}
+              value={phone}
+              onChange={(phone) => setPhone(`+${phone}`)}
+              disabled={isLoading}
+              inputClass={styles.phoneInput}
+              containerClass={styles.phoneInputContainer}
+              buttonClass={styles.phoneInputButton}
+              dropdownClass={styles.phoneDropdown}
+              placeholder="Enter phone number"
+            />
             <FontAwesomeIcon className={styles["input-icon"]} icon={faPhone} />
           </div>
 
           {/* Password */}
           <div className={styles.formGroup}>
-            <input type={showPassword ? "text" : "password"} className={styles.input} placeholder="Password"
-              value={password} onChange={(e) => setPassword(e.target.value)} required disabled={isLoading} />
+            <input
+              type={showPassword ? "text" : "password"}
+              className={styles.input}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              disabled={isLoading}
+            />
             <FontAwesomeIcon className={styles["input-icon2"]} icon={faLock} />
             <span className={styles["eye-container"]} onClick={handlePasswordToggle}>
               {showPassword ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
@@ -121,8 +161,15 @@ function Signup() {
 
           {/* Confirm Password */}
           <div className={styles.formGroup}>
-            <input type={showPassword2 ? "text" : "password"} className={styles.input} placeholder="Confirm Password"
-              value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required disabled={isLoading} />
+            <input
+              type={showPassword2 ? "text" : "password"}
+              className={styles.input}
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              disabled={isLoading}
+            />
             <FontAwesomeIcon className={styles["input-icon2"]} icon={faLock} />
             <span className={styles["eye-container"]} onClick={handlePasswordToggle2}>
               {showPassword2 ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
@@ -133,8 +180,14 @@ function Signup() {
           <div className={styles.gender}>
             {["male", "female", "other"].map((value) => (
               <div key={value} className={styles.gender2}>
-                <input type="radio" name="gender" value={value} id={value}
-                  onChange={(e) => setGender(e.target.value)} disabled={isLoading} />
+                <input
+                  type="radio"
+                  name="gender"
+                  value={value}
+                  id={value}
+                  onChange={(e) => setGender(e.target.value)}
+                  disabled={isLoading}
+                />
                 <label htmlFor={value} className={styles.label}>
                   {value.charAt(0).toUpperCase() + value.slice(1)}
                 </label>
@@ -144,9 +197,16 @@ function Signup() {
 
           {/* Terms */}
           <div className={styles.checkbox}>
-            <input className={styles.checkbox1} type="checkbox" id="terms" required disabled={isLoading} />
+            <input
+              className={styles.checkbox1}
+              type="checkbox"
+              id="terms"
+              required
+              disabled={isLoading}
+            />
             <label htmlFor="terms" className={styles.label2}>
-              I agree to the <Link to="/terms" style={{ textDecoration: 'none' }}>
+              I agree to the{' '}
+              <Link to="/terms" style={{ textDecoration: 'none' }}>
                 terms and conditions <FontAwesomeIcon icon={faUpRightFromSquare} style={{ fontWeight: '1px' }} />
               </Link>
             </label>
@@ -159,18 +219,18 @@ function Signup() {
 
           {/* Submit */}
           <button type="submit" className={styles.submit} disabled={!recaptchaValue || isLoading}>
-            {isLoading ? "Creating Account..." : "Sign Up"}
+            {isLoading ? 'Creating Account...' : 'Sign Up'}
           </button>
 
           {/* Response Time */}
           {responseTime !== null && (
-            <p style={{ textAlign: "center", color: "#666", marginTop: "10px" }}>
+            <p style={{ textAlign: 'center', color: '#666', marginTop: '10px' }}>
               ⏱ Signup response time: {responseTime}ms
             </p>
           )}
         </form>
       </div>
-    </>
+    </div>
   );
 }
 
