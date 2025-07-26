@@ -139,7 +139,7 @@ function Signup() {
               dropdownClass={styles.phoneDropdown}
               placeholder="Enter phone number"
             />
-            <FontAwesomeIcon className={styles["input-icon"]} icon={faPhone} />
+            <FontAwesomeIcon className={styles["input-icon3"]} icon={faPhone} />
           </div>
 
           {/* Password */}
