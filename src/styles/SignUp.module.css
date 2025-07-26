@@ -2,7 +2,6 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   padding: 20px;
 }
@@ -13,13 +12,14 @@
   padding: 20px;
   background: #fff;
   border-radius: 10px;
+  margin-top: 4%;
 }
 
 .title {
   text-align: center;
   font-size: 1.2rem;
   color: #1A2258;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .input {
@@ -29,7 +29,7 @@
   border: 1px solid #ccc;
   font-size: 1rem;
   box-sizing: border-box;
-  margin-bottom: 15px;
+  margin-bottom: 2px;
   position: relative;
   height: 40px; /* Fixed height for consistency */
 }
@@ -85,7 +85,7 @@
 .input-icon,
 .input-icon2 {
   position: absolute;
-  top: 37%;
+  top: 45%;
   left: 10px;
   transform: translateY(-50%);
   color: #999;
@@ -225,7 +225,8 @@
   }
 
   .gender {
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 20px;
   }
 
   .gender2 {
