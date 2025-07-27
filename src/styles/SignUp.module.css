@@ -163,6 +163,7 @@
   margin-left: 5px;
   font-size: 0.9rem;
   color: #333;
+  margin-bottom:-3%;
 }
 
 .checkbox {
@@ -173,11 +174,13 @@
 
 .checkbox1 {
   margin-right: 10px;
+  margin-top:-0.001%;
 }
 
 .label2 {
   font-size: 0.85rem;
   color: #333;
+  margin-bottom:10%;
 }
 
 @media (min-width: 768px) {
