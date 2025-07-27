@@ -51,7 +51,7 @@
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  height: 40px; /* Match container height to input */
+  height: 40px; 
 }
 
 .phoneInputButton {
@@ -65,13 +65,13 @@
 }
 
 .phoneDropdown {
-  z-index: 1000; /* Ensure dropdown is above other elements */
+  z-index: 1000;
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
-  position: absolute; /* Ensure absolute positioning for offset */
-  left: 20px; /* Shift dropdown 20px to the left */
-  transform: translateX(0); /* Adjust for proper alignment */
+  position: absolute;
+  left: 12px; 
+  transform: translateX(0); 
 }
 
 .phoneInputContainer .react-tel-input .form-control {
@@ -232,7 +232,7 @@
   }
 
   .phoneDropdown {
-    left: 25px; 
+    left: 20px; 
   }
 
   .gender {
