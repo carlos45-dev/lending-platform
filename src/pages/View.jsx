@@ -28,7 +28,7 @@ function View() {
   const approveLoan = async () => {
     if (!request || !currentUser) return;
 
-    const message = `Hey I'm ${currentUser.username || 'a lender'}, I want to approve the loan that you applied on UniFund. The loan amounting MWK ${request.amount} for ${request.weeks} weeks.`;
+    const message = `Hey I'm ${currentUser.username || 'a lender'}, I want to approve the loan that you applied on UniFund. The loan amounting MWK ${request.amount} for ${request.weeks} ${request.weeks ? 'weeks' : 'week'}.`;
     const phone = request.borrowerPhone?.replace(/\s+/g, '');
 
     const whatsappLink = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
