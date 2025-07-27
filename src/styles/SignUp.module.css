@@ -31,18 +31,18 @@
   box-sizing: border-box;
   margin-bottom: 2px;
   position: relative;
-  height: 40px; /* Fixed height for consistency */
+  height: 40px;
 }
 
 .phoneInput {
   width: 100% !important;
-  padding: 10px 10px 10px 60px !important; /* Adjusted padding to match .input */
+  padding: 10px 10px 10px 60px !important; 
   border: none !important;
   outline: none !important;
   background: transparent;
   font-size: 1rem;
   box-sizing: border-box;
-  height: 40px !important; /* Enforce consistent height */
+  height: 40px !important; 
 }
 
 .phoneInputContainer {
@@ -69,14 +69,17 @@
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
+  position: absolute; /* Ensure absolute positioning for offset */
+  left: 20px; /* Shift dropdown 20px to the left */
+  transform: translateX(0); /* Adjust for proper alignment */
 }
 
 .phoneInputContainer .react-tel-input .form-control {
   width: 100% !important;
-  padding: 0 !important; /* Remove padding to avoid overlap */
+  padding: 0 !important; 
   border: none !important;
   outline: none !important;
-  height: 40px !important; /* Match height */
+  height: 40px !important; 
   box-sizing: border-box;
   font-size: 1rem;
   background: transparent;
@@ -197,21 +200,21 @@
   .input {
     padding: 12px 40px 12px 40px;
     font-size: 1.1rem;
-    height: 44px; /* Adjusted for larger screens */
+    height: 44px; 
   }
 
   .phoneInput {
     padding: 12px 10px 12px 60px !important;
     font-size: 1.1rem;
-    height: 44px !important; /* Match larger screen height */
+    height: 44px !important; 
   }
 
   .phoneInputContainer {
-    height: 44px; /* Match larger screen height */
+    height: 44px; 
   }
 
   .phoneInputContainer .react-tel-input .form-control {
-    height: 44px !important; /* Match larger screen height */
+    height: 44px !important; 
   }
 
   .input-icon,
@@ -226,6 +229,10 @@
 
   .eye-container {
     right: 15px;
+  }
+
+  .phoneDropdown {
+    left: 25px; 
   }
 
   .gender {
